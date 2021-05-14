@@ -33,7 +33,6 @@ class Sorting extends QueryHelper
 
     public static function timestampSort(string $timestampToSort, string $direction)
     {
-
         $propertySort = new Sorting($direction, null, $timestampToSort);
 
         return $propertySort;
