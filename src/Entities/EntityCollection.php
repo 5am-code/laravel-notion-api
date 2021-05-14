@@ -30,6 +30,7 @@ abstract class EntityCollection
 
         $this->responseData = $reponseData;
         $this->fillFromRaw();
+        $this->collectChildren();
     }
 
     protected function fillFromRaw()
@@ -40,7 +41,6 @@ abstract class EntityCollection
     protected function fillResult()
     {
         $this->rawResults = $this->responseData['results'];
-        $this->collectChildren();
     }
 
 

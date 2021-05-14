@@ -10,13 +10,6 @@ use Illuminate\Support\Collection;
 
 class PageCollection extends EntityCollection
 {
-
-    protected function setResponseData(array $responseData): void
-    {
-        parent::setResponseData($responseData);
-        $this->collectChildren();
-    }
-
     protected function collectChildren()
     {
         $this->collection = new Collection();
@@ -24,8 +17,4 @@ class PageCollection extends EntityCollection
             $this->collection->add(new Page($pageChild));
         }
     }
-
-
-
-
 }

@@ -10,13 +10,6 @@ use Illuminate\Support\Collection;
 
 class UserCollection extends EntityCollection
 {
-
-    protected function setResponseData(array $responseData): void
-    {
-        parent::setResponseData($responseData);
-        $this->collectChildren();
-    }
-
     protected function collectChildren()
     {
         $this->collection = new Collection();
