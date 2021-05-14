@@ -31,14 +31,14 @@ class Sorting extends QueryHelper
         $this->direction = $direction;
     }
 
-    public static function timestampSort(string $timestampToSort, string $direction)
+    public static function timestampSort(string $timestampToSort, string $direction): Sorting
     {
         $propertySort = new Sorting($direction, null, $timestampToSort);
 
         return $propertySort;
     }
 
-    public static function propertySort(string $property, string $direction)
+    public static function propertySort(string $property, string $direction): Sorting
     {
         $propertySort = new Sorting($direction, $property);
 
