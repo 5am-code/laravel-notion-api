@@ -30,23 +30,11 @@ class Database extends Endpoint
 
     public function query(): array
     {
-
-        $filterJson = '
-                {
-                  "property": "Tags",
-                  "multi_select": {
-                    "contains": "great"
-                  }
-                }';
-
-
-        $filter = json_decode($filterJson);
-
         if ($this->sorts->isNotEmpty())
             $postData["sorts"] = Sorting::sortQuery($this->sorts);
 
         if ($this->filter->isNotEmpty())
-            $postData["filter"] = []; //Filter::filterQuery($this->filter);
+            $postData["filter"]["or"] = Filter::filterQuery($this->filter); // TODO Compound filters!
 
         if ($this->startCursor !== null)
             $postData["start_cursor"] = $this->startCursor;
@@ -54,26 +42,26 @@ class Database extends Endpoint
         if ($this->pageSize !== null)
             $postData["page_size"] = $this->pageSize;
 
-        $response = $this->post(
-            $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
-            $postData
-        )
+        $response = $this
+            ->post(
+                $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
+                $postData
+            )
             ->json();
 
         // toDo return Database Entity
         dd($response);
     }
 
-    public function filterBy()
+    public function filterBy(Collection $filter)
     {
-
+        $this->filter = $filter;
         return $this;
     }
 
-    public function sortBy(Collection $sortings)
+    public function sortBy(Collection $sorts)
     {
-        $this->sorts = $sortings;
-
+        $this->sorts = $sorts;
         return $this;
     }
 }
