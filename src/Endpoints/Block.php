@@ -11,9 +11,22 @@ class Block extends Endpoint
 {
     private string $blockId;
 
-    public function __construct(Notion $notion, string $blockId){
+    public function __construct(Notion $notion, string $blockId)
+    {
         parent::__construct($notion);
         $this->blockId = $blockId;
+    }
+
+    /**
+     * Retrieve block children (as raw json-data)
+     * url: https://api.notion.com/{version}/blocks/{block_id}/children
+     * notion-api-docs: https://developers.notion.com/reference/get-block-children
+     *
+     * @return BlockCollection
+     */
+    public function children(): Collection
+    {
+        return $this->collectChildren()->getResults();
     }
 
     /**
@@ -23,7 +36,12 @@ class Block extends Endpoint
      *
      * @return BlockCollection
      */
-    public function children(): BlockCollection
+    public function childrenRaw(): Collection
+    {
+        return $this->collectChildren()->getRawResults();
+    }
+
+    private function collectChildren(): BlockCollection
     {
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
@@ -34,7 +52,6 @@ class Block extends Endpoint
 
 
         $blockCollection = new BlockCollection($response->json());
-
         return $blockCollection;
     }
 

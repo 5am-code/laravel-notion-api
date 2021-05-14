@@ -3,7 +3,6 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
-use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
@@ -11,11 +10,11 @@ use Illuminate\Support\Arr;
 
 class Database extends Entity
 {
-    private string $title = "";
-    private array $rawTitle = [];
-    private array $rawProperties = [];
-    private DateTime $createdTime;
-    private DateTime $lastEditedTime;
+    protected string $title = "";
+    protected array $rawTitle = [];
+    protected array $rawProperties = [];
+    protected DateTime $createdTime;
+    protected DateTime $lastEditedTime;
 
 
     protected function setResponseData(array $responseData): void
@@ -49,21 +48,6 @@ class Database extends Entity
             $this->rawProperties = $this->responseData['properties'];
         }
     }
-
-    private function fillCreatedTime()
-    {
-        if (Arr::exists($this->responseData, 'created_time')) {
-            $this->createdTime = new Carbon($this->responseData['created_time']);
-        }
-    }
-
-    private function fillLastEditedTime()
-    {
-        if (Arr::exists($this->responseData, 'last_edited_time')) {
-            $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
-        }
-    }
-
 
     public function getTitle(): string
     {
