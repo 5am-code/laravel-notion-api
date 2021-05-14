@@ -39,9 +39,9 @@ class Databases extends Endpoint implements EndpointInterface
      * url: https://api.notion.com/{version}/databases
      * notion-api-docs: https://developers.notion.com/reference/get-databases
      *
-     * @return DatabaseCollection
+     * @return array
      */
-    public function allRaw(): Collection
+    public function allRaw(): array
     {
         return $this->collect()->getRawResults();
     }

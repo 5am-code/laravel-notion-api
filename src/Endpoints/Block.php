@@ -34,9 +34,9 @@ class Block extends Endpoint
      * url: https://api.notion.com/{version}/blocks/{block_id}/children
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *
-     * @return BlockCollection
+     * @return array
      */
-    public function childrenRaw(): Collection
+    public function childrenRaw(): array
     {
         return $this->collectChildren()->getRawResults();
     }

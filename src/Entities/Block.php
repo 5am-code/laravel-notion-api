@@ -68,4 +68,14 @@ class Block extends Entity
     {
         return $this->hasChildren;
     }
+
+    public function getCreatedTime(): DateTime
+    {
+        return $this->createdTime;
+    }
+
+    public function getLastEditedTime(): DateTime
+    {
+        return $this->lastEditedTime;
+    }
 }
