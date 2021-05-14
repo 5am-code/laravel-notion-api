@@ -29,10 +29,20 @@ class QueryHelper
      */
     protected Collection $validDirections;
 
+    /**
+     * Contains all valid/implemented filter types.
+     *
+     * @see https://developers.notion.com/reference/post-database-query#post-database-query-filter
+     * @var Collection
+     */
+    protected Collection $validFilterTypes;
+
 
     public function __construct()
     {
         $this->validTimestamps = collect(["created_time", "last_edited_time"]);
         $this->validDirections = collect(["ascending", "descending"]);
+
+
     }
 }
