@@ -102,7 +102,7 @@ class Notion
      */
     public function database(string $databaseId): Database
     {
-        return new Database($this, $databaseId);
+        return new Database($databaseId, $this);
     }
 
     /**
