@@ -21,7 +21,7 @@ class Endpoint
 
 
     protected ?StartCursor $startCursor = null;
-    protected ?int $pageSize = null;
+    protected int $pageSize = 100;
 
     public function __construct(Notion $notion)
     {

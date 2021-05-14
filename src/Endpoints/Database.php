@@ -31,6 +31,8 @@ class Database extends Endpoint
 
     public function query(): Collection
     {
+        $postData = [];
+
         if ($this->sorts->isNotEmpty())
             $postData["sorts"] = Sorting::sortQuery($this->sorts);
 
@@ -43,15 +45,15 @@ class Database extends Endpoint
         if ($this->pageSize !== null)
             $postData["page_size"] = $this->pageSize;
 
+
         $response = $this
             ->post(
                 $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
                 $postData
             )
+
             ->json();
 
-        // toDo return Database Entity
-        // dd($response);
         $pageCollection = new PageCollection($response);
         return $pageCollection->getResults();
     }
