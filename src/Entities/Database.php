@@ -34,7 +34,7 @@ class Database extends Entity
         $this->fillLastEditedTime();
     }
 
-    private function fillTitle()
+    private function fillTitle() : void
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
             $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
@@ -42,7 +42,7 @@ class Database extends Entity
         }
     }
 
-    private function fillProperties()
+    private function fillProperties() : void
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
@@ -79,7 +79,6 @@ class Database extends Entity
     {
         return $this->createdTime;
     }
-
 
     public function getLastEditedTime(): DateTime
     {

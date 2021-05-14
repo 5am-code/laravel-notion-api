@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Entities\PageCollection;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filter;
@@ -28,7 +29,7 @@ class Database extends Endpoint
         parent::__construct($notion);
     }
 
-    public function query(): array
+    public function query(): Collection
     {
         if ($this->sorts->isNotEmpty())
             $postData["sorts"] = Sorting::sortQuery($this->sorts);
@@ -50,7 +51,9 @@ class Database extends Endpoint
             ->json();
 
         // toDo return Database Entity
-        dd($response);
+        // dd($response);
+        $pageCollection = new PageCollection($response);
+        return $pageCollection->getResults();
     }
 
     public function filterBy(Collection $filter)
