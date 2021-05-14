@@ -2,14 +2,15 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use FiveamCode\LaravelNotionApi\Endpoints\Blocks;
-use FiveamCode\LaravelNotionApi\Endpoints\Databases;
-use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
+use Illuminate\Http\Client\PendingRequest;
 use FiveamCode\LaravelNotionApi\Endpoints\Pages;
+use FiveamCode\LaravelNotionApi\Endpoints\Blocks;
 use FiveamCode\LaravelNotionApi\Endpoints\Search;
 use FiveamCode\LaravelNotionApi\Endpoints\Users;
+use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
+use FiveamCode\LaravelNotionApi\Endpoints\Database;
+use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 
 
 class Notion
@@ -27,16 +28,16 @@ class Notion
      */
     public function __construct(string $version = null, string $token = null)
     {
-        $this->endpoint = new Endpoint();
+        if ($token !== null) {
+            $this->setToken($token);
+        }
+
+        $this->endpoint = new Endpoint($this);
 
         if ($version !== null) {
             $this->setVersion($version);
         } else {
             $this->v1();
-        }
-
-        if ($token !== null) {
-            $this->setToken($token);
         }
     }
 
@@ -94,6 +95,14 @@ class Notion
     public function databases(): Databases
     {
         return new Databases($this);
+    }
+
+    /**
+     * @return Database
+     */
+    public function database(string $databaseId): Database
+    {
+        return new Database($this, $databaseId);
     }
 
     /**

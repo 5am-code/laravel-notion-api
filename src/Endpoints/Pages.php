@@ -3,15 +3,11 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 
 class Pages extends Endpoint implements EndpointInterface
 {
-
-    public function __construct(Notion $notion)
-    {
-        $this->notion = $notion;
-    }
 
     /**
      * Retrieve a page
@@ -23,10 +19,14 @@ class Pages extends Endpoint implements EndpointInterface
      */
     public function find(string $pageId): Page
     {
-        $jsonArray = $this->getJson(
+        $response = $this->get(
             $this->url(Endpoint::PAGES . "/" . $pageId)
         );
-        return new Page($jsonArray);
+
+        if(!$response->ok())
+            throw WrapperException::instance("Page not found.", ["pageId" => $pageId]);
+
+        return new Page($response->json());
     }
 
     public function create(): array{

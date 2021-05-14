@@ -3,15 +3,11 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\User;
+use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 
 class Users extends Endpoint implements EndpointInterface
 {
-
-    public function __construct(Notion $notion)
-    {
-        $this->notion = $notion;
-    }
 
     /**
      * List users
@@ -45,12 +41,12 @@ class Users extends Endpoint implements EndpointInterface
     public function limit()
     {
         //toDo
-        throw new \Exception("not implemented yet");
+        throw new WrapperException("not implemented yet");
     }
 
     public function offset()
     {
         //toDo
-        throw new \Exception("not implemented yet");
+        throw new WrapperException("not implemented yet");
     }
 }

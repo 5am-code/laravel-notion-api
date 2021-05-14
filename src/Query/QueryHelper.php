@@ -2,9 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
-class QueryHelper
+class QueryHelper extends JsonResource
 {
     /**
      * Contains the property name the query helper works with.

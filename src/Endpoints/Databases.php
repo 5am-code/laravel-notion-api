@@ -7,14 +7,7 @@ use FiveamCode\LaravelNotionApi\Notion;
 
 class Databases extends Endpoint implements EndpointInterface
 {
-    private string $databaseId;
 
-
-    public function __construct(Notion $notion)
-    {
-        $this->notion = $notion;
-        parent::__construct();
-    }
 
     /**
      * List databases
@@ -44,43 +37,4 @@ class Databases extends Endpoint implements EndpointInterface
         return new Database($jsonArray);
     }
 
-    public function query(string $databaseId): array
-    {
-
-        $filterJson = '
-                {
-                  "property": "Tags",
-                  "multi_select": {
-                    "contains": "great"
-                  }
-                }';
-
-        $filter = json_decode($filterJson);
-        $postData = ["filter" => $filter];
-
-        $response = $this->post(
-            $this->url(Endpoint::DATABASES . "/{$databaseId}/query"),
-            $postData
-        )
-            ->json();
-
-        dump($response);
-        return [];
-    }
-
-    public function filterBy()
-    {
-    }
-
-    public function sortBy()
-    {
-    }
-
-    public function limit()
-    {
-    }
-
-    public function offset()
-    {
-    }
 }

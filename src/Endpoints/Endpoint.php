@@ -18,9 +18,10 @@ class Endpoint
     public Notion $notion;
     private Collection $validVersions;
 
-    public function __construct()
+    public function __construct(Notion $notion)
     {
         $this->validVersions = collect(["v1"]);
+        $this->notion = $notion;
     }
 
     /**

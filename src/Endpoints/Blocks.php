@@ -7,11 +7,6 @@ use FiveamCode\LaravelNotionApi\Notion;
 
 class Blocks extends Endpoint implements EndpointInterface
 {
-    public function __construct(Notion $notion)
-    {
-        $this->notion = $notion;
-    }
-
     /**
      * Retrieve block children
      * url: https://api.notion.com/{version}/blocks/{block_id}/children
