@@ -8,6 +8,15 @@ use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 
+
+/**
+ * Class Databases
+ *
+ * This endpoint is not recommended by Notion anymore.
+ * Use the search() endpoint instead.
+ *
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Databases extends Endpoint implements EndpointInterface
 {
 

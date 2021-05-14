@@ -30,8 +30,7 @@ class Notion
     {
         if ($token !== null) {
             $this->setToken($token);
-        }
-        else{
+        } else {
             $this->setToken(config('laravel-notion-api.notion-api-token'));
         }
 

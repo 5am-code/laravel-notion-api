@@ -14,5 +14,9 @@ class Filter extends QueryHelper
 
     }
 
+//    public static function textFilter(string $property, ) {
+//
+//    }
+
 
 }

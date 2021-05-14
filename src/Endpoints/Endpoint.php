@@ -21,7 +21,7 @@ class Endpoint
 
 
     protected ?StartCursor $startCursor = null;
-    protected  ?int $pageSize = null;
+    protected ?int $pageSize = null;
 
     public function __construct(Notion $notion)
     {
@@ -31,7 +31,7 @@ class Endpoint
 
     /**
      * Checks if given version for notion-api is valid
-     * 
+     *
      * @param string $version
      */
     public function checkValidVersion(string $version): void
@@ -41,9 +41,9 @@ class Endpoint
         }
     }
 
-    
+
     /**
-     * 
+     *
      * @param string $endpoint
      * @return string
      */
@@ -52,9 +52,9 @@ class Endpoint
         return Endpoint::BASE_URL . "{$this->notion->getVersion()}/{$endpoint}";
     }
 
-    
+
     /**
-     * 
+     *
      * @param string $url
      * @return array
      */

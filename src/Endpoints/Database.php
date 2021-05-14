@@ -48,10 +48,10 @@ class Database extends Endpoint
         if ($this->filter->isNotEmpty())
             $postData["filter"] = []; //Filter::filterQuery($this->filter);
 
-        if($this->startCursor !== null)
+        if ($this->startCursor !== null)
             $postData["start_cursor"] = $this->startCursor;
 
-        if($this->pageSize !== null)
+        if ($this->pageSize !== null)
             $postData["page_size"] = $this->pageSize;
 
         $response = $this->post(
