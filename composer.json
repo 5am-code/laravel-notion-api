@@ -1,0 +1,56 @@
+{
+    "name": "fiveam-code/laravel-notion-api",
+    "description": "Laravel Wrapper for the Notion API",
+    "keywords": [
+        "fiveam-code",
+        "laravel-notion-api"
+    ],
+    "homepage": "https://github.com/fiveam-code/laravel-notion-api",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Diana Scharf",
+            "email": "hello@dianaweb.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FiveamCode\\LaravelNotionApi\\": "src",
+            "FiveamCode\\LaravelNotionApi\\Exceptions\\": "src/Exceptions",
+            "FiveamCode\\LaravelNotionApi\\Endpoints\\": "src/Endpoints"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FiveamCode\\LaravelNotionApi\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FiveamCode\\LaravelNotionApi\\LaravelNotionApiServiceProvider"
+            ],
+            "aliases": {
+                "LaravelNotionApi": "FiveamCode\\LaravelNotionApi\\LaravelNotionApiFacade"
+            }
+        }
+    }
+}
