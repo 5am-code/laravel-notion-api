@@ -5,31 +5,57 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 
 //TODO:WORK IN PROGRESS
-class EntityCollection
+abstract class EntityCollection
 {
-    protected array $raw;
-    protected Notion $notion;
+    protected array $responseData = [];
+    protected array $rawResults = [];
+    protected Collection $collection;
 
-    public function __construct(Notion $notion = null, array $raw = null)
+    public function __construct(array $reponseData = null)
     {
-        $this->notion = $notion;
-        $this->setRaw($raw);
+        $this->setResponseData($reponseData);
     }
 
-    protected function setRaw(array $raw): void
-    {
-        if (!Arr::exists($raw, 'object')) throw WrapperException::instance("invalid json-array: no object given");
-        if (!Arr::exists($raw, 'results')) throw WrapperException::instance("invalid json-array: no results given");
-        if ($raw['object'] != 'list') throw WrapperException::instance("invalid json-array: the given object is not a list");
+    protected abstract function collectChildren();
 
-        $this->raw = $raw;
+    protected function setResponseData(array $reponseData): void
+    {
+        if (!Arr::exists($reponseData, 'object')) throw WrapperException::instance("invalid json-array: no object given");
+        if (!Arr::exists($reponseData, 'results')) throw WrapperException::instance("invalid json-array: no results given");
+        if ($reponseData['object'] !== 'list') throw WrapperException::instance("invalid json-array: the given object is not a list");
+
+        $this->responseData = $reponseData;
+        $this->fillFromRaw();
     }
+
+    protected function fillFromRaw()
+    {
+        $this->fillResult();
+    }
+
+    protected function fillResult()
+    {
+        $this->rawResults = $this->responseData['results'];
+        $this->collectChildren();
+    }
+
 
     public function getRaw(): array
     {
-        return $this->raw;
+        return $this->responseData;
+    }
+
+    public function getRawResults(): array
+    {
+        return $this->rawResults;
+    }
+
+    public function getResults(): Collection
+    {
+        return $this->collection;
     }
 }

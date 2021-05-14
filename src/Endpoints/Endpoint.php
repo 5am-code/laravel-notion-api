@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
@@ -18,14 +19,19 @@ class Endpoint
     public Notion $notion;
     private Collection $validVersions;
 
-    public function __construct()
+
+    protected ?StartCursor $startCursor = null;
+    protected int $pageSize = 100;
+
+    public function __construct(Notion $notion)
     {
         $this->validVersions = collect(["v1"]);
+        $this->notion = $notion;
     }
 
     /**
      * Checks if given version for notion-api is valid
-     * 
+     *
      * @param string $version
      */
     public function checkValidVersion(string $version): void
@@ -35,9 +41,9 @@ class Endpoint
         }
     }
 
-    
+
     /**
-     * 
+     *
      * @param string $endpoint
      * @return string
      */
@@ -46,9 +52,9 @@ class Endpoint
         return Endpoint::BASE_URL . "{$this->notion->getVersion()}/{$endpoint}";
     }
 
-    
+
     /**
-     * 
+     *
      * @param string $url
      * @return array
      */
@@ -58,10 +64,49 @@ class Endpoint
     }
 
     /**
-     * 
+     *
      */
     protected function get(string $url)
     {
         return $this->notion->getConnection()->get($url);
     }
+
+    /**
+     *
+     */
+    protected function post(string $url, array $body)
+    {
+        return $this->notion->getConnection()->post($url, $body);
+    }
+
+
+    protected function buildPaginationQuery(): string
+    {
+        $paginationQuery = "";
+
+        if ($this->pageSize !== null)
+            $paginationQuery = "page_size={$this->pageSize}&";
+
+        if ($this->startCursor !== null)
+            $paginationQuery .= "start_cursor={$this->startCursor}";
+
+        return $paginationQuery;
+    }
+
+    public function limit(int $limit): Endpoint
+    {
+        $this->pageSize = min($limit, 100);
+
+        return $this;
+    }
+
+    public function offset(StartCursor $startCursor): Endpoint
+    {
+        // toDo
+        throw WrapperException::instance("Not implemented yet.");
+
+        $this->startCursor = $startCursor;
+        return $this;
+    }
+
 }
