@@ -117,7 +117,7 @@ class Notion
     }
 
     /**
-     * @return Blocks
+     * @return Block
      */
     public function block(string $blockId): Block
     {

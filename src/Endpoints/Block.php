@@ -21,13 +21,12 @@ class Block extends Endpoint
      * url: https://api.notion.com/{version}/blocks/{block_id}/children
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *
-     * @param string $blockId
      * @return BlockCollection
      */
     public function children(): BlockCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children")
+            $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
 
         if (!$response->ok())

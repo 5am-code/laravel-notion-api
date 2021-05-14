@@ -6,6 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\DatabaseCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
 
 class Databases extends Endpoint implements EndpointInterface
 {
@@ -20,7 +21,7 @@ class Databases extends Endpoint implements EndpointInterface
      */
     public function all(): DatabaseCollection
     {
-        $resultData = $this->getJson($this->url(Endpoint::DATABASES));
+        $resultData = $this->getJson($this->url(Endpoint::DATABASES) . "?{$this->buildPaginationQuery()}");
         return new DatabaseCollection($resultData);
     }
 
@@ -30,7 +31,8 @@ class Databases extends Endpoint implements EndpointInterface
      * notion-api-docs: https://developers.notion.com/reference/get-database
      *
      * @param string $databaseId
-     * @return array
+     * @return Database
+     * @throws WrapperException
      */
     public function find(string $databaseId): Database
     {

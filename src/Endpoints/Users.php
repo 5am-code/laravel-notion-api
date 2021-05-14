@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
 
 class Users extends Endpoint implements EndpointInterface
 {
@@ -18,8 +19,7 @@ class Users extends Endpoint implements EndpointInterface
      */
     public function all(): array
     {
-        // toDo: Limit & offset, rename to get() like in eloquent?
-        return $this->getJson($this->url(Endpoint::USERS));
+        return $this->getJson($this->url(Endpoint::USERS . "?{$this->buildPaginationQuery()}"));
     }
 
     /**
@@ -38,15 +38,4 @@ class Users extends Endpoint implements EndpointInterface
         return new User($jsonArray);
     }
 
-    public function limit()
-    {
-        //toDo
-        throw new WrapperException("not implemented yet");
-    }
-
-    public function offset()
-    {
-        //toDo
-        throw new WrapperException("not implemented yet");
-    }
 }

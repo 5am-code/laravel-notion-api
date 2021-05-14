@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
@@ -17,6 +18,10 @@ class Endpoint
 
     public Notion $notion;
     private Collection $validVersions;
+
+
+    protected ?StartCursor $startCursor = null;
+    protected  ?int $pageSize = null;
 
     public function __construct(Notion $notion)
     {
@@ -72,6 +77,36 @@ class Endpoint
     protected function post(string $url, array $body)
     {
         return $this->notion->getConnection()->post($url, $body);
+    }
+
+
+    protected function buildPaginationQuery(): string
+    {
+        $paginationQuery = "";
+
+        if ($this->pageSize !== null)
+            $paginationQuery = "page_size={$this->pageSize}&";
+
+        if ($this->startCursor !== null)
+            $paginationQuery .= "start_cursor={$this->startCursor}";
+
+        return $paginationQuery;
+    }
+
+    public function limit(int $limit): Endpoint
+    {
+        $this->pageSize = min($limit, 100);
+
+        return $this;
+    }
+
+    public function offset(StartCursor $startCursor): Endpoint
+    {
+        // toDo
+        throw WrapperException::instance("Not implemented yet.");
+
+        $this->startCursor = $startCursor;
+        return $this;
     }
 
 }

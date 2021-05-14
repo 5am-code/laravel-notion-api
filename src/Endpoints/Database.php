@@ -8,6 +8,7 @@ use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class Database extends Endpoint
 {
@@ -15,9 +16,6 @@ class Database extends Endpoint
 
     private Collection $filter;
     private Collection $sorts;
-
-    private ?StartCursor $startCursor = null;
-    private ?int $pageSize = null;
 
 
     public function __construct(string $databaseId, Notion $notion)
@@ -56,8 +54,6 @@ class Database extends Endpoint
         if($this->pageSize !== null)
             $postData["page_size"] = $this->pageSize;
 
-
-
         $response = $this->post(
             $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
             $postData
@@ -78,22 +74,6 @@ class Database extends Endpoint
     {
         $this->sorts = $sortings;
 
-        return $this;
-    }
-
-    public function limit(int $limit)
-    {
-        $this->pageSize = min($limit, 100);
-
-        return $this;
-    }
-
-    public function offset(StartCursor $startCursor)
-    {
-        // toDo
-        throw WrapperException::instance("Not implemented yet.");
-
-        $this->startCursor = $startCursor;
         return $this;
     }
 }
