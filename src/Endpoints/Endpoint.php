@@ -58,10 +58,19 @@ class Endpoint
     }
 
     /**
-     * 
+     *
      */
     protected function get(string $url)
     {
         return $this->notion->getConnection()->get($url);
     }
+
+    /**
+     *
+     */
+    protected function post(string $url, array $body)
+    {
+        return $this->notion->getConnection()->post($url, $body);
+    }
+
 }
