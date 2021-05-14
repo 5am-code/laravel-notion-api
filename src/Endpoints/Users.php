@@ -39,7 +39,7 @@ class Users extends Endpoint implements EndpointInterface
         $jsonArray = $this->getJson(
             $this->url(Endpoint::USERS . "/" . $userId)
         );
-        return new User($this->notion, $jsonArray);
+        return new User($jsonArray);
     }
 
     public function limit()

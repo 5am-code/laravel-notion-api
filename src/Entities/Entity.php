@@ -10,11 +10,9 @@ class Entity
 {
     private string $id;
     private array $raw;
-    private Notion $notion;
 
-    public function __construct(Notion $notion = null, array $raw = null)
+    public function __construct(array $raw = null)
     {
-        $this->notion = $notion;
         $this->setRaw($raw);
     }
 
@@ -28,12 +26,12 @@ class Entity
     }
 
 
-    public function getId()
+    public function getId() : string
     {
         return $this->id;
     }
 
-    public function getRaw()
+    public function getRaw() : array
     {
         return $this->raw;
     }

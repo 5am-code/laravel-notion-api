@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Endpoints\Blocks;
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
@@ -16,15 +17,22 @@ class Notion
     private Endpoint $endpoint;
     private string $version;
     private string $token;
-    private $connection;
+    private PendingRequest $connection;
 
 
+    /**
+     * Notion constructor.
+     * @param string|null $version
+     * @param string|null $token
+     */
     public function __construct(string $version = null, string $token = null)
     {
         $this->endpoint = new Endpoint();
 
         if ($version !== null) {
             $this->setVersion($version);
+        } else {
+            $this->v1();
         }
 
         if ($token !== null) {
@@ -33,10 +41,10 @@ class Notion
     }
 
     /**
-     * 
+     *
      * @return Notion
      */
-    private function connect()
+    private function connect(): Notion
     {
         $this->connection = Http::withToken($this->token);
         return $this;
@@ -44,7 +52,7 @@ class Notion
 
     /**
      * Set version of notion-api
-     * 
+     *
      * @param string $version
      * @return Notion
      */
@@ -55,18 +63,24 @@ class Notion
         return $this;
     }
 
-    public function v1(){
+    /**
+     * Wrapper function to set version to v1.
+     *
+     * @return $this
+     */
+    public function v1(): Notion
+    {
         $this->setVersion("v1");
         return $this;
     }
 
-        /**
+    /**
      * Set notion-api bearer-token
-     * 
+     *
      * @param string $token
      * @return Notion
      */
-    public function setToken($token)
+    public function setToken(string $token): Notion
     {
         $this->token = $token;
         $this->connect();
@@ -74,29 +88,59 @@ class Notion
     }
 
 
-    public function databases(){
+    /**
+     * @return Databases
+     */
+    public function databases(): Databases
+    {
         return new Databases($this);
     }
-    public function pages(){
+
+    /**
+     * @return Pages
+     */
+    public function pages(): Pages
+    {
         return new Pages($this);
     }
-    public function blocks(){
+
+    /**
+     * @return Blocks
+     */
+    public function blocks(): Blocks
+    {
         return new Blocks($this);
     }
 
-    public function users(){
+    /**
+     * @return Users
+     */
+    public function users(): Users
+    {
         return new Users($this);
     }
 
-    public function search(){
+    /**
+     * @return Search
+     */
+    public function search(): Search
+    {
         return new Search($this);
     }
 
-    public function getVersion(){
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
         return $this->version;
     }
 
-    public function getConnection(){
+    /**
+     * @return PendingRequest
+     */
+    public function getConnection(): PendingRequest
+    {
         return $this->connection;
     }
 }

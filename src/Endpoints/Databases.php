@@ -37,7 +37,7 @@ class Databases extends Endpoint implements EndpointInterface
         $jsonArray = $this->getJson(
             $this->url(Endpoint::DATABASES . "/" . $databaseId)
         );
-        return new Database($this->notion, $jsonArray);
+        return new Database($jsonArray);
     }
 
     public function query(): array

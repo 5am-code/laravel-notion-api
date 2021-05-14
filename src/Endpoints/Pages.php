@@ -26,7 +26,7 @@ class Pages extends Endpoint implements EndpointInterface
         $jsonArray = $this->getJson(
             $this->url(Endpoint::PAGES . "/" . $pageId)
         );
-        return new Page($this->notion, $jsonArray); 
+        return new Page($jsonArray);
     }
 
     public function create(): array{

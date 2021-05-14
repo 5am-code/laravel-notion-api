@@ -11,6 +11,6 @@ class Block extends Entity
     protected function setRaw(array $raw): void
     {
         parent::setRaw($raw);
-        if ($raw['object'] != 'block') throw WrapperException::instance("invalid json-array: the given object is not a block");
+        if ($raw['object'] !== 'block') throw WrapperException::instance("invalid json-array: the given object is not a block");
     }
 }

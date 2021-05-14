@@ -25,7 +25,7 @@ class Blocks extends Endpoint implements EndpointInterface
         $jsonArray = $this->getJson(
             $this->url(Endpoint::BLOCKS . "/" . $blockId . "/children")
         );
-        return new Block($this->notion, $jsonArray); 
+        return new Block($jsonArray);
     }
 
     public function create(): array{
