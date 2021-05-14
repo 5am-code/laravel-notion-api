@@ -5,13 +5,13 @@ namespace FiveamCode\LaravelNotionApi\Query;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
-class QueryHelper extends JsonResource
+class QueryHelper
 {
     /**
      * Contains the property name the query helper works with.
      * @var
      */
-    protected string $property;
+    protected ?string $property = null;
 
     /**
      * Contains all valid timestamps to sort against.
@@ -20,6 +20,7 @@ class QueryHelper extends JsonResource
      * @var Collection
      */
     protected Collection $validTimestamps;
+
     /**
      * Contains all valid directions to sort by.
      *
