@@ -3,6 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Entities\DatabaseCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 
 class Databases extends Endpoint implements EndpointInterface
@@ -14,11 +16,12 @@ class Databases extends Endpoint implements EndpointInterface
      * url: https://api.notion.com/{version}/databases
      * notion-api-docs: https://developers.notion.com/reference/get-databases
      *
-     * @return array
+     * @return DatabaseCollection
      */
-    public function all(): array
+    public function all(): DatabaseCollection
     {
-        return $this->getJson($this->url(Endpoint::DATABASES));
+        $resultData = $this->getJson($this->url(Endpoint::DATABASES));
+        return new DatabaseCollection($resultData);
     }
 
     /**
@@ -31,10 +34,14 @@ class Databases extends Endpoint implements EndpointInterface
      */
     public function find(string $databaseId): Database
     {
-        $jsonArray = $this->getJson(
+        $response = $this->get(
             $this->url(Endpoint::DATABASES . "/{$databaseId}")
         );
-        return new Database($jsonArray);
+
+        if (!$response->ok())
+            throw WrapperException::instance("Database not found.", ["databaseId" => $databaseId]);
+
+        return new Database($response->json());
     }
 
 }

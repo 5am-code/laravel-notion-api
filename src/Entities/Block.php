@@ -8,9 +8,9 @@ use Illuminate\Support\Arr;
 
 class Block extends Entity
 {
-    protected function setRaw(array $raw): void
+    protected function setResponseData(array $responseData): void
     {
-        parent::setRaw($raw);
-        if ($raw['object'] !== 'block') throw WrapperException::instance("invalid json-array: the given object is not a block");
+        parent::setResponseData($responseData);
+        if ($responseData['object'] !== 'block') throw WrapperException::instance("invalid json-array: the given object is not a block");
     }
 }

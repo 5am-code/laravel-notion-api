@@ -5,7 +5,7 @@ namespace FiveamCode\LaravelNotionApi;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
 use FiveamCode\LaravelNotionApi\Endpoints\Pages;
-use FiveamCode\LaravelNotionApi\Endpoints\Blocks;
+use FiveamCode\LaravelNotionApi\Endpoints\Block;
 use FiveamCode\LaravelNotionApi\Endpoints\Search;
 use FiveamCode\LaravelNotionApi\Endpoints\Users;
 use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
@@ -116,9 +116,9 @@ class Notion
     /**
      * @return Blocks
      */
-    public function blocks(): Blocks
+    public function block(string $blockId): Block
     {
-        return new Blocks($this);
+        return new Block($this, $blockId);
     }
 
     /**

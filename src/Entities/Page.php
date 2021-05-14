@@ -7,9 +7,9 @@ use FiveamCode\LaravelNotionApi\Notion;
 
 class Page extends Entity
 {
-    protected function setRaw(array $raw): void
+    protected function setResponseData(array $responseData): void
     {
-        parent::setRaw($raw);
-        if ($raw['object'] !== 'page') throw WrapperException::instance("invalid json-array: the given object is not a page");
+        parent::setResponseData($responseData);
+        if ($responseData['object'] !== 'page') throw WrapperException::instance("invalid json-array: the given object is not a page");
     }
 }

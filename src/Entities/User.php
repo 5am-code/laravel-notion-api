@@ -7,9 +7,9 @@ use FiveamCode\LaravelNotionApi\Notion;
 
 class User extends Entity
 {
-    protected function setRaw(array $raw): void
+    protected function setResponseData(array $responseData): void
     {
-        parent::setRaw($raw);
-        if ($raw['object'] !== 'user') throw WrapperException::instance("invalid json-array: the given object is not a user");
+        parent::setResponseData($responseData);
+        if ($responseData['object'] !== 'user') throw WrapperException::instance("invalid json-array: the given object is not a user");
     }
 }
