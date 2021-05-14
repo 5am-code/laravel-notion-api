@@ -1,8 +1,15 @@
+<div style="text-align:center">
+
 # Laravel Notion API
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
-![GitHub Actions](https://github.com/fiveam-code/laravel-notion-api/actions/workflows/main.yml/badge.svg)
+
+[comment]: <> (![GitHub Actions]&#40;https://github.com/fiveam-code/laravel-notion-api/actions/workflows/main.yml/badge.svg&#41;)
+
+<img src="https://5amco.de/images/5am.png" style="width:300px; height:auto;">
+
+</div>
 
 ## Installation
 
@@ -13,10 +20,7 @@ composer require fiveam-code/laravel-notion-api
 ```
 
 ## Usage
-
-```php
-// Usage description here
-```
+It's too early for a documentation, so we collected some working examples in our [Notion Workspace](https://www.notion.so/5amcode/Working-Examples-813998dab4244158b51ea3b25b420c60).
 
 ### Testing
 
