@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class Page extends Entity
 {
-
+    protected string $title = "";
     protected array $rawProperties = [];
     protected Collection $propertyCollection;
     protected DateTime $createdTime;
@@ -29,6 +29,7 @@ class Page extends Entity
     {
         $this->fillId();
         $this->fillProperties();
+        $this->fillTitle();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
@@ -44,6 +45,27 @@ class Page extends Entity
         }
     }
 
+    private function fillTitle(): void
+    {
+        $titleProperty = $this->propertyCollection->filter(function ($property) {
+            return $property->getType() == "title";
+        })->first();
+
+        if ($titleProperty !== null) {
+            $rawTitleProperty = $titleProperty->getRawContent();
+            if (is_array($rawTitleProperty) && count($rawTitleProperty) >= 1) {
+                if (Arr::exists($rawTitleProperty[0], 'plain_text')) {
+                    $this->title = $rawTitleProperty[0]['plain_text'];
+                }
+            }
+        }
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
 
     public function getProperties(): Collection
     {
@@ -52,7 +74,7 @@ class Page extends Entity
 
     public function getProperty(string $propertyName): ?Property
     {
-        $property = $this->propertyCollection->filter(function($property) use($propertyName) {
+        $property = $this->propertyCollection->filter(function ($property) use ($propertyName) {
             return $property->getTitle() == $propertyName;
         })->first();
 
