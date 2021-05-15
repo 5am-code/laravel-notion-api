@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\BlockCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Collection;

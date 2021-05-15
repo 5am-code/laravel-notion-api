@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
@@ -49,7 +50,7 @@ class Page extends Entity
         return $this->propertyCollection;
     }
 
-    public function getProperty(string $propertyName): Property
+    public function getProperty(string $propertyName): ?Property
     {
         $property = $this->propertyCollection->filter(function($property) use($propertyName) {
             return $property->getTitle() == $propertyName;

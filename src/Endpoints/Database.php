@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\PageCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filter;

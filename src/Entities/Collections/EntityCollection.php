@@ -1,6 +1,6 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Entities;
+namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;

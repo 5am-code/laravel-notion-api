@@ -1,8 +1,9 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Entities;
+namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
