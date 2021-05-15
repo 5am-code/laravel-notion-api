@@ -37,15 +37,20 @@ class Property extends Entity
 
     private function fillType(): void
     {
-        $this->type = $this->responseData['type'];
+        if (Arr::exists($this->responseData, 'type')) {
+            $this->type = $this->responseData['type'];
+        }
     }
 
     private function fillContent(): void
     {
-        $this->rawContent = $this->responseData[$this->getType()];
+        if (Arr::exists($this->responseData, $this->getType())) {
+            $this->rawContent = $this->responseData[$this->getType()];
+        }
     }
 
-    public function getTitle():string{
+    public function getTitle(): string
+    {
         return $this->title;
     }
 

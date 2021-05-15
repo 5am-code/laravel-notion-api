@@ -18,7 +18,7 @@ class Block extends Endpoint
     }
 
     /**
-     * Retrieve block children (as raw json-data)
+     * Retrieve block children
      * url: https://api.notion.com/{version}/blocks/{block_id}/children
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *
@@ -30,7 +30,7 @@ class Block extends Endpoint
     }
 
     /**
-     * Retrieve block children
+     * Retrieve block children (as raw json-data)
      * url: https://api.notion.com/{version}/blocks/{block_id}/children
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *

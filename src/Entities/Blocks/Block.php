@@ -43,8 +43,8 @@ class Block extends Entity
 
     private function fillContent(): void
     {
-        if (Arr::exists($this->responseData, $this->type)) {
-            $this->rawContent = $this->responseData[$this->type];
+        if (Arr::exists($this->responseData, $this->getType())) {
+            $this->rawContent = $this->responseData[$this->getType()];
         }
     }
 
