@@ -32,7 +32,7 @@ NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
 
 ## Usage
 
-Head over to the [Documentation](https://www.notion.so/5amcode/Working-Examples-813998dab4244158b51ea3b25b420c60) of this package in Notion.
+Head over to the [Documentation](https://5amco.de/docs) of this package.
 
 ### 🔥 Code Examples to jumpstart your Notion API Project
 
