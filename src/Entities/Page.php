@@ -3,13 +3,17 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class Page extends Entity
 {
+
     protected array $rawProperties = [];
+    protected Collection $propertyCollection;
     protected DateTime $createdTime;
     protected DateTime $lastEditedTime;
 
@@ -29,18 +33,30 @@ class Page extends Entity
         $this->fillLastEditedTime();
     }
 
-    private function fillProperties() : void
+    private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
+            $this->propertyCollection = new Collection();
+            foreach (array_keys($this->rawProperties) as $propertyKey) {
+                $this->propertyCollection->add(new Property($propertyKey, $this->rawProperties[$propertyKey]));
+            }
         }
     }
 
-    
-    public function getProperties()
+
+    public function getProperties(): Collection
     {
-        //TODO: return collection of property-entities (id, type, title)
-        throw new \Exception("not implemented yet");
+        return $this->propertyCollection;
+    }
+
+    public function getProperty(string $propertyName): ?Property
+    {
+        $property = $this->propertyCollection->filter(function($property) use($propertyName) {
+            return $property->getTitle() == $propertyName;
+        })->first();
+
+        return $property;
     }
 
     public function getRawProperties(): array

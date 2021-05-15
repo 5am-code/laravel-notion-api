@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\User;
-use FiveamCode\LaravelNotionApi\Entities\UserCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;

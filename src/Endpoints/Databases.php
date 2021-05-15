@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Entities\DatabaseCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
