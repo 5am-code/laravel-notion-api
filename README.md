@@ -10,13 +10,7 @@
 
 [comment]: <> (![GitHub Actions]&#40;https://github.com/fiveam-code/laravel-notion-api/actions/workflows/main.yml/badge.svg&#41;)
 
-5amcode proudly presents its first Laravel specific package - a wrapper for the Notion API!
-This package will provide a simple and crisp way to access the various Notion API endpoints, query data and manipulate
-entries.
-
-### Important note!
-
-This package is in an early stage and receives continuious improvements. DO NOT USE IN PRODUCTION.
+This package provides a simple and crisp way to access the Notion API endpoints, query data and update existing entries.
 
 ## Installation
 
@@ -26,21 +20,19 @@ You can install the package via composer:
 composer require fiveam-code/laravel-notion-api
 ```
 
-Get your Notion API access token like explained in [their documentation](https://developers.notion.com/). It's also
-important to grant access to the integration within your Notion pages, which is described in Notions docs as well.
+### Authorization
 
-Add a new entry to your `.env` like the following:
+The Notion API requires an access token and a Notion integration, [the Notion documentation](https://developers.notion.com/docs/getting-started#before-we-begin) explains how this works. It's important to grant access to the integration within your Notion account to enable the API access.
+
+Add your Notion API token to your `.env` file:
 
 ```
 NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
 ```
 
-And you're ready to go!
-
 ## Usage
 
-It's too early for a documentation, so we collected some working examples in
-our [Notion Workspace](https://www.notion.so/5amcode/Working-Examples-813998dab4244158b51ea3b25b420c60).
+Head over to the [Documentation](https://www.notion.so/5amcode/Working-Examples-813998dab4244158b51ea3b25b420c60) of this package in Notion.
 
 ### Testing
 
