@@ -34,6 +34,54 @@ NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
 
 Head over to the [Documentation](https://www.notion.so/5amcode/Working-Examples-813998dab4244158b51ea3b25b420c60) of this package in Notion.
 
+### 🔥 Code Examples to jumpstart your Notion API Project
+
+#### Basic Setup
+```php
+use FiveamCode\LaravelNotionApi\Notion;
+use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Query\Sorting;
+use FiveamCode\LaravelNotionApi\Query\Filter;
+
+// Setup basic API connection
+$notion = new Notion();
+$notion->v1();
+```
+
+#### Fetch Page Information
+```php
+// Returns a specific page
+$notion->pages()->find($yourPageId);
+```
+
+#### Query Database
+```php
+// Queries a specific database and returns a collection of pages (= database entries)
+$sortings = new Collection();
+$filters = new Collection();
+
+$sortings
+  ->add(Sorting::propertySort("Ordered", "ascending"));
+$sortings
+  ->add(Sorting::timestampSort("created_time", "ascending"));
+
+$filters
+  ->add(Filter::textFilter("title", ["contains" => "new"]));
+// or
+$filters
+  ->add(Filter::rawFilter("Tags", ["multi_select" => ["contains" => "great"]]));
+  
+$notion
+  ->database($yourDatabaseId)
+  ->filterBy($filters) // filters are optional
+  ->sortBy($sortings) // sorts are optional
+  ->limit(5) // limit is optional
+  ->query(); 
+```
+
+
+
+
 ### Testing
 
 ```bash
