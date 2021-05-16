@@ -15,16 +15,13 @@ use Symfony\Component\VarDumper\Cloner\Data;
 class Search extends Endpoint
 {
     private string $searchText;
-    private Collection $filter;
-    private Collection $sorts;
+    private ?string $filter = null;
+    private ?Sorting $sort = null;
 
 
     public function __construct(Notion $notion, string $searchText = "")
     {
-        $this->sorts = new Collection();
-        $this->filter = new Collection();
         $this->searchText = $searchText;
-
         parent::__construct($notion);
     }
 
@@ -32,11 +29,11 @@ class Search extends Endpoint
     {
         $postData = [];
 
-        // if ($this->sorts->isNotEmpty())
-        //     $postData["sort"] = Sorting::sortQuery($this->sorts);
+        if ($this->sort !== null)
+            $postData["sort"] = $this->sort->toArray();
 
-        // if ($this->filter->isNotEmpty())
-        //     $postData["filter"]["or"] = Filter::filterQuery($this->filter); // TODO Compound filters!
+        if ($this->filter !== null)
+            $postData["filter"] = ['property' => 'object', 'value' => $this->filter]; 
 
         if ($this->startCursor !== null)
             $postData["start_cursor"] = $this->startCursor;
@@ -44,7 +41,7 @@ class Search extends Endpoint
         if ($this->pageSize !== null)
             $postData["page_size"] = $this->pageSize;
 
-        if($this->searchText !== null)
+        if ($this->searchText !== null)
             $postData['query'] = $this->searchText;
 
 
@@ -54,7 +51,6 @@ class Search extends Endpoint
                 $this->url(Endpoint::SEARCH),
                 $postData
             )
-
             ->json();
 
         $pageCollection = new EntityCollection($response);
@@ -62,15 +58,45 @@ class Search extends Endpoint
         return $pageCollection->getResults();
     }
 
-    // public function filterBy(Collection $filter)
-    // {
-    //     $this->filter = $filter;
-    //     return $this;
-    // }
+    public function sortByLastEditedTime(string $direction = "ascending"): Search
+    {
+        $this->sort = Sorting::timestampSort("last_edited_time", $direction);
+        return $this;
+    }
 
-    // public function sortBy(Collection $sorts)
-    // {
-    //     $this->sorts = $sorts;
-    //     return $this;
-    // }
+    public function onlyDatabases() : Search
+    {
+        $this->filter = "database";
+        return $this;
+    }
+
+    public function onlyPages() : Search
+    {
+        $this->filter = "page";
+        return $this;
+    }
+
+    public function getTitles()
+    {
+        $titleCollection = new Collection();
+        $results = $this->query();
+
+        foreach ($results as $result) {
+            $titleCollection->add($result->getTitle());
+        }
+
+        return $titleCollection;
+    }
+
+    public function filterBy(string $filter)
+    {
+        $this->filter = $filter;
+        return $this;
+    }
+
+    public function sortBy(Sorting $sort)
+    {
+        $this->sort = $sort;
+        return $this;
+    }
 }
