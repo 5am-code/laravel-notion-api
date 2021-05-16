@@ -17,27 +17,16 @@ class Endpoint
     const SEARCH = 'search';
 
     public Notion $notion;
-    private Collection $validVersions;
-
 
     protected ?StartCursor $startCursor = null;
     protected int $pageSize = 100;
 
     public function __construct(Notion $notion)
     {
-        $this->validVersions = collect(["v1"]);
         $this->notion = $notion;
-    }
 
-    /**
-     * Checks if given version for notion-api is valid
-     *
-     * @param string $version
-     */
-    public function checkValidVersion(string $version): void
-    {
-        if (!$this->validVersions->contains($version)) {
-            throw WrapperException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
+        if ($this->notion->getConnection() === null) {
+            throw WrapperException::instance("Connection could not be established, please check your token.");
         }
     }
 
