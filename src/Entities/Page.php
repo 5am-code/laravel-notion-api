@@ -39,7 +39,7 @@ class Page extends Entity
     private function fillObjectType(): void
     {
         if (Arr::exists($this->responseData, 'object')) {
-            $this->type = $this->responseData['object'];
+            $this->objectType = $this->responseData['object'];
         }
     }
 
