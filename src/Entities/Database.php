@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 class Database extends Entity
 {
     protected string $title = "";
+    protected string $objectType = "";
     protected array $rawTitle = [];
     protected array $rawProperties = [];
     protected DateTime $createdTime;
@@ -29,12 +30,13 @@ class Database extends Entity
     {
         $this->fillId();
         $this->fillTitle();
+        $this->fillObjectType();
         $this->fillProperties();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
 
-    private function fillTitle() : void
+    private function fillTitle(): void
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
             $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
@@ -42,12 +44,25 @@ class Database extends Entity
         }
     }
 
-    private function fillProperties() : void
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
+    }
+
+    private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
         }
     }
+
+    public function getObjectType(): string
+    {
+        return $this->objectType;
+    }
+
 
     public function getTitle(): string
     {
