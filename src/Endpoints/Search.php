@@ -88,6 +88,16 @@ class Search extends Endpoint
         return $titleCollection;
     }
 
+    public function getIds(){
+        $idCollection = new Collection();
+        $results = $this->query();
+
+        foreach ($results as $result) {
+            $idCollection->add($result->getId());
+        }
+        return $idCollection;
+    }
+
     public function filterBy(string $filter)
     {
         $this->filter = $filter;
