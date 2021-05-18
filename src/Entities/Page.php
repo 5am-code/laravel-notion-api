@@ -4,7 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -21,7 +21,7 @@ class Page extends Entity
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'page') throw WrapperException::instance("invalid json-array: the given object is not a page");
+        if ($responseData['object'] !== 'page') throw HandlingException::instance("invalid json-array: the given object is not a page");
         $this->fillFromRaw();
     }
 

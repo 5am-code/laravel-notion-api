@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
 use FiveamCode\LaravelNotionApi\Entities\User;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;

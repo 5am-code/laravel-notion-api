@@ -4,7 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
@@ -60,7 +60,7 @@ class Users extends Endpoint implements EndpointInterface
         );
 
         if (!$response->ok())
-            throw WrapperException::instance("User not found.", ["userId" => $userId]);
+            throw HandlingException::instance("User not found.", ["userId" => $userId]);
 
 
         return new User($response->json());

@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
@@ -14,7 +14,7 @@ class User extends Entity
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'user') throw WrapperException::instance("invalid json-array: the given object is not a user");
+        if ($responseData['object'] !== 'user') throw HandlingException::instance("invalid json-array: the given object is not a user");
         $this->fillFromRaw();
     }
 

@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
@@ -20,8 +20,8 @@ class Entity
 
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'object')) throw WrapperException::instance("invalid json-array: no object given");
-        if (!Arr::exists($responseData, 'id')) throw WrapperException::instance("invalid json-array: no id provided");
+        if (!Arr::exists($responseData, 'object')) throw HandlingException::instance("invalid json-array: no object given");
+        if (!Arr::exists($responseData, 'id')) throw HandlingException::instance("invalid json-array: no id provided");
 
         $this->responseData = $responseData;
     }

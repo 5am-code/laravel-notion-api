@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
@@ -171,7 +171,7 @@ class Notion
     public function checkValidVersion(string $version): void
     {
         if (!$this->validVersions->contains($version)) {
-            throw WrapperException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
+            throw HandlingException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
         }
     }
 }

@@ -2,10 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 class Endpoint
 {
@@ -21,12 +22,14 @@ class Endpoint
     protected ?StartCursor $startCursor = null;
     protected int $pageSize = 100;
 
+    protected ?\Illuminate\Http\Client\Response $response = null;
+
     public function __construct(Notion $notion)
     {
         $this->notion = $notion;
 
         if ($this->notion->getConnection() === null) {
-            throw WrapperException::instance("Connection could not be established, please check your token.");
+            throw HandlingException::instance("Connection could not be established, please check your token.");
         }
     }
 
@@ -49,7 +52,10 @@ class Endpoint
      */
     protected function getJson(string $url): array
     {
-        return $this->get($url)->json();
+        if ($this->response === null)
+            $this->get($url);
+
+        return $this->response->json();
     }
 
     /**
@@ -57,7 +63,12 @@ class Endpoint
      */
     protected function get(string $url)
     {
-        return $this->notion->getConnection()->get($url);
+        $response = $this->notion->getConnection()->get($url);
+
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
+
+        $this->response = $response;
     }
 
     /**
@@ -92,7 +103,7 @@ class Endpoint
     public function offset(StartCursor $startCursor): Endpoint
     {
         // toDo
-        throw WrapperException::instance("Not implemented yet.");
+        throw HandlingException::instance("Not implemented yet.");
 
         $this->startCursor = $startCursor;
         return $this;

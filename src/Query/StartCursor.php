@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
 
 class StartCursor {

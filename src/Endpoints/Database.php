@@ -8,7 +8,7 @@ use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 class Database extends Endpoint
