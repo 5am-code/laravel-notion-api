@@ -46,7 +46,6 @@ class Block extends Endpoint
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
-
         if (!$response->ok())
             throw HandlingException::instance("Block not found.", ["blockId" => $this->blockId]);
 

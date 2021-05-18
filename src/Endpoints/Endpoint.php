@@ -69,6 +69,7 @@ class Endpoint
             throw NotionException::fromResponse($response);
 
         $this->response = $response;
+        return $response;
     }
 
     /**
