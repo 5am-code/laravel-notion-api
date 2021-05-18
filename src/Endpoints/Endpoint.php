@@ -2,11 +2,13 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use Illuminate\Support\Collection;
+use Illuminate\Http\Client\Response;
 use FiveamCode\LaravelNotionApi\Notion;
+use GuzzleHttp\Promise\PromiseInterface;
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException;
 
 class Endpoint
 {
@@ -22,8 +24,14 @@ class Endpoint
     protected ?StartCursor $startCursor = null;
     protected int $pageSize = 100;
 
-    protected ?\Illuminate\Http\Client\Response $response = null;
+    protected ?Response $response = null;
 
+    /**
+     * Endpoint constructor.
+     * @param Notion $notion
+     * @throws HandlingException
+     * @throws LaravelNotionAPIException
+     */
     public function __construct(Notion $notion)
     {
         $this->notion = $notion;
@@ -49,6 +57,7 @@ class Endpoint
      *
      * @param string $url
      * @return array
+     * @throws NotionException|HandlingException
      */
     protected function getJson(string $url): array
     {
@@ -59,7 +68,9 @@ class Endpoint
     }
 
     /**
-     *
+     * @param string $url
+     * @throws HandlingException
+     * @throws NotionException
      */
     protected function get(string $url)
     {
@@ -72,7 +83,9 @@ class Endpoint
     }
 
     /**
-     *
+     * @param string $url
+     * @param array $body
+     * @return PromiseInterface|Response
      */
     protected function post(string $url, array $body)
     {
@@ -80,6 +93,9 @@ class Endpoint
     }
 
 
+    /**
+     * @return string
+     */
     protected function buildPaginationQuery(): string
     {
         $paginationQuery = "";
@@ -93,6 +109,10 @@ class Endpoint
         return $paginationQuery;
     }
 
+    /**
+     * @param int $limit
+     * @return $this
+     */
     public function limit(int $limit): Endpoint
     {
         $this->pageSize = min($limit, 100);
@@ -100,13 +120,16 @@ class Endpoint
         return $this;
     }
 
+    /**
+     * @param StartCursor $startCursor
+     * @return Endpoint
+     * @throws HandlingException
+     * @throws LaravelNotionAPIException
+     */
     public function offset(StartCursor $startCursor): Endpoint
     {
         // toDo
         throw HandlingException::instance("Not implemented yet.");
-
-        $this->startCursor = $startCursor;
-        return $this;
     }
 
 }

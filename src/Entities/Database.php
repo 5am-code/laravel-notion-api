@@ -21,7 +21,8 @@ class Database extends Entity
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'database') throw HandlingException::instance("invalid json-array: the given object is not a database");
+        if ($responseData['object'] !== 'database')
+            throw HandlingException::instance("invalid json-array: the given object is not a database");
         $this->fillFromRaw();
     }
 

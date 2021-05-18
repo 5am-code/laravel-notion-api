@@ -17,7 +17,7 @@ abstract class LaravelNotionAPIException extends \Exception
      *
      * @var array
      */
-    private array $payload = [];
+    protected array $payload = [];
 
     /**
      * Handy method to create a *Exception with payload.
@@ -26,13 +26,7 @@ abstract class LaravelNotionAPIException extends \Exception
      * @param array $payload
      * @return HandlingException
      */
-    public static function instance(string $message, array $payload = []): LaravelNotionAPIException
-    {
-        $e = new HandlingException($message);
-        $e->payload = $payload;
-
-        return $e;
-    }
+    public abstract static function instance(string $message, array $payload = []): LaravelNotionAPIException;
 
 
     /**

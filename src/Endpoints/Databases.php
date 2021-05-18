@@ -65,13 +65,9 @@ class Databases extends Endpoint implements EndpointInterface
      */
     public function find(string $databaseId): Database
     {
-        $response = $this->get(
-            $this->url(Endpoint::DATABASES . "/{$databaseId}")
-        );
+        $result = $this
+            ->getJson($this->url(Endpoint::DATABASES . "/{$databaseId}"));
 
-        if (!$response->ok())
-            throw HandlingException::instance("Database not found.", ["databaseId" => $databaseId]);
-
-        return new Database($response->json());
+        return new Database($result);
     }
 }
