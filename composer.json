@@ -49,7 +49,7 @@
                 "FiveamCode\\LaravelNotionApi\\LaravelNotionApiServiceProvider"
             ],
             "aliases": {
-                "LaravelNotionApi": "FiveamCode\\LaravelNotionApi\\LaravelNotionApiFacade"
+                "Notion": "FiveamCode\\LaravelNotionApi\\NotionFacade"
             }
         }
     }

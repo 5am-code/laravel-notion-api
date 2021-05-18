@@ -26,21 +26,13 @@ class Notion
      * @param string|null $version
      * @param string|null $token
      */
-    public function __construct(string $version = null, string $token = null)
+    public function __construct(string $token, string $version = "v1")
     {
-        if ($token !== null) {
-            $this->setToken($token);
-        } else {
-            $this->setToken(config('laravel-notion-api.notion-api-token'));
-        }
+        $this->setToken($token);
 
         $this->endpoint = new Endpoint($this);
 
-        if ($version !== null) {
-            $this->setVersion($version);
-        } else {
-            $this->v1();
-        }
+        $this->setVersion($version);
     }
 
     /**
