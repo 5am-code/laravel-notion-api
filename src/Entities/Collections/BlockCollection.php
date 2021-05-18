@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class BlockCollection extends EntityCollection
 {
-    protected function collectChildren()
+    protected function collectChildren() : void
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $blockChild) {

@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 class Page extends Entity
 {
     protected string $title = "";
+    protected string $objectType = "";
     protected array $rawProperties = [];
     protected Collection $propertyCollection;
     protected DateTime $createdTime;
@@ -28,10 +29,18 @@ class Page extends Entity
     private function fillFromRaw(): void
     {
         $this->fillId();
+        $this->fillObjectType();
         $this->fillProperties();
-        $this->fillTitle();
+        $this->fillTitle(); //!Warning: call after 'fillProperties', since title is included within properties
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
+    }
+
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
     }
 
     private function fillProperties(): void
@@ -44,6 +53,7 @@ class Page extends Entity
             }
         }
     }
+
 
     private function fillTitle(): void
     {
@@ -79,6 +89,11 @@ class Page extends Entity
         })->first();
 
         return $property;
+    }
+
+    public function getObjectType(): string
+    {
+        return $this->objectType;
     }
 
     public function getRawProperties(): array

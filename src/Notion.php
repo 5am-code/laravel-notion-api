@@ -142,9 +142,10 @@ class Notion
     /**
      * @return Search
      */
-    public function search(): Search
+    public function search(?string $searchText = ""): Search
     {
-        return new Search($this);
+        $search = new Search($this, $searchText);
+        return $search;
     }
 
     /**

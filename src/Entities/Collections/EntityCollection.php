@@ -2,14 +2,15 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
+
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 
-//TODO:WORK IN PROGRESS
-abstract class EntityCollection
+class EntityCollection
 {
     protected array $responseData = [];
     protected array $rawResults = [];
@@ -20,8 +21,6 @@ abstract class EntityCollection
         $this->setResponseData($reponseData);
     }
 
-    protected abstract function collectChildren();
-
     protected function setResponseData(array $reponseData): void
     {
         if (!Arr::exists($reponseData, 'object')) throw HandlingException::instance("invalid json-array: no object given");
@@ -31,6 +30,17 @@ abstract class EntityCollection
         $this->responseData = $reponseData;
         $this->fillFromRaw();
         $this->collectChildren();
+    }
+
+    protected function collectChildren(): void
+    {
+        $this->collection = new Collection();
+        foreach ($this->rawResults as $pageChild) {
+            if (Arr::exists($pageChild, 'object')) {
+                if($pageChild['object'] == 'page') $this->collection->add(new Page($pageChild));
+                if($pageChild['object'] == 'database') $this->collection->add(new Database($pageChild));
+            }
+        }
     }
 
     protected function fillFromRaw()
