@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
 
 class Sorting extends QueryHelper
@@ -16,13 +16,13 @@ class Sorting extends QueryHelper
         parent::__construct();
 
         if ($timestamp !== null && !$this->validTimestamps->contains($timestamp))
-            throw WrapperException::instance(
+            throw HandlingException::instance(
                 "Invalid sorting timestamp provided.", ["invalidTimestamp" => $timestamp]
             );
 
 
         if (!$this->validDirections->contains($direction))
-            throw WrapperException::instance(
+            throw HandlingException::instance(
                 "Invalid sorting direction provided.", ["invalidDirection" => $direction]
             );
 

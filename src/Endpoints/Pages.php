@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 
 class Pages extends Endpoint implements EndpointInterface
@@ -24,7 +24,7 @@ class Pages extends Endpoint implements EndpointInterface
         );
 
         if(!$response->ok())
-            throw WrapperException::instance("Page not found.", ["pageId" => $pageId]);
+            throw HandlingException::instance("Page not found.", ["pageId" => $pageId]);
 
         return new Page($response->json());
     }

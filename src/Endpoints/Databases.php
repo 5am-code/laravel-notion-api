@@ -4,7 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
@@ -46,6 +46,7 @@ class Databases extends Endpoint implements EndpointInterface
         return $this->collect()->getRawResults();
     }
 
+    // TODO rename this function - receive, access, fetch?
     private function collect(): DatabaseCollection
     {
         $resultData = $this->getJson($this->url(Endpoint::DATABASES) . "?{$this->buildPaginationQuery()}");
@@ -60,17 +61,13 @@ class Databases extends Endpoint implements EndpointInterface
      *
      * @param string $databaseId
      * @return Database
-     * @throws WrapperException
+     * @throws HandlingException
      */
     public function find(string $databaseId): Database
     {
-        $response = $this->get(
-            $this->url(Endpoint::DATABASES . "/{$databaseId}")
-        );
+        $result = $this
+            ->getJson($this->url(Endpoint::DATABASES . "/{$databaseId}"));
 
-        if (!$response->ok())
-            throw WrapperException::instance("Database not found.", ["databaseId" => $databaseId]);
-
-        return new Database($response->json());
+        return new Database($result);
     }
 }

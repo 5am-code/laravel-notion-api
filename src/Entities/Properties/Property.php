@@ -4,7 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
@@ -23,7 +23,7 @@ class Property extends Entity
 
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'id')) throw WrapperException::instance("invalid json-array: no id provided");
+        if (!Arr::exists($responseData, 'id')) throw HandlingException::instance("invalid json-array: no id provided");
         $this->responseData = $responseData;
         $this->fillFromRaw();
     }

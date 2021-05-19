@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Collection;
 
@@ -46,9 +46,8 @@ class Block extends Endpoint
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
-
         if (!$response->ok())
-            throw WrapperException::instance("Block not found.", ["blockId" => $this->blockId]);
+            throw HandlingException::instance("Block not found.", ["blockId" => $this->blockId]);
 
 
         $blockCollection = new BlockCollection($response->json());

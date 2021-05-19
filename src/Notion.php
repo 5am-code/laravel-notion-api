@@ -2,6 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
 use FiveamCode\LaravelNotionApi\Endpoints\Pages;
@@ -18,8 +20,9 @@ class Notion
     private Endpoint $endpoint;
     private string $version;
     private string $token;
-    private PendingRequest $connection;
+    private ?PendingRequest $connection = null;
 
+    private Collection $validVersions;
 
     /**
      * Notion constructor.
@@ -30,11 +33,16 @@ class Notion
     {
         if ($token !== null) {
             $this->setToken($token);
-        } else {
-            $this->setToken(config('laravel-notion-api.notion-api-token'));
+        } elseif ($token === null) {
+
+            // check if Notion integration token is set in config
+            $token = config('laravel-notion-api.notion-api-token');
+
+            if ($token !== null)
+                $this->setToken($token);
         }
 
-        $this->endpoint = new Endpoint($this);
+        $this->validVersions = collect(["v1"]);
 
         if ($version !== null) {
             $this->setVersion($version);
@@ -61,7 +69,7 @@ class Notion
      */
     public function setVersion(string $version): Notion
     {
-        $this->endpoint->checkValidVersion($version);
+        $this->checkValidVersion($version);
         $this->version = $version;
         return $this;
     }
@@ -149,10 +157,22 @@ class Notion
     }
 
     /**
-     * @return PendingRequest
+     * @return PendingRequest|null
      */
-    public function getConnection(): PendingRequest
+    public function getConnection(): ?PendingRequest
     {
         return $this->connection;
+    }
+
+    /**
+     * Checks if given version for notion-api is valid
+     *
+     * @param string $version
+     */
+    public function checkValidVersion(string $version): void
+    {
+        if (!$this->validVersions->contains($version)) {
+            throw HandlingException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
+        }
     }
 }

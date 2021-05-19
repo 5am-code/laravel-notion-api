@@ -3,7 +3,11 @@
     "description": "Laravel Wrapper for the Notion API",
     "keywords": [
         "fiveam-code",
-        "laravel-notion-api"
+        "laravel-notion-api",
+        "laravel",
+        "notion",
+        "notion-api",
+        "api-wrapper"
     ],
     "homepage": "https://github.com/fiveam-code/laravel-notion-api",
     "license": "MIT",
@@ -13,10 +17,16 @@
             "name": "Diana Scharf",
             "email": "hello@dianaweb.dev",
             "role": "Developer"
+        },
+        {
+            "name": "Johannes Güntner",
+            "email": "johannes.guentner@it-guentner.de",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.0.1",
         "illuminate/support": "^8.0"
     },
     "require-dev": {

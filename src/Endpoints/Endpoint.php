@@ -2,10 +2,13 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use Illuminate\Support\Collection;
+use Illuminate\Http\Client\Response;
 use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use GuzzleHttp\Promise\PromiseInterface;
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException;
 
 class Endpoint
 {
@@ -17,27 +20,24 @@ class Endpoint
     const SEARCH = 'search';
 
     public Notion $notion;
-    private Collection $validVersions;
-
 
     protected ?StartCursor $startCursor = null;
     protected int $pageSize = 100;
 
-    public function __construct(Notion $notion)
-    {
-        $this->validVersions = collect(["v1"]);
-        $this->notion = $notion;
-    }
+    protected ?Response $response = null;
 
     /**
-     * Checks if given version for notion-api is valid
-     *
-     * @param string $version
+     * Endpoint constructor.
+     * @param Notion $notion
+     * @throws HandlingException
+     * @throws LaravelNotionAPIException
      */
-    public function checkValidVersion(string $version): void
+    public function __construct(Notion $notion)
     {
-        if (!$this->validVersions->contains($version)) {
-            throw WrapperException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
+        $this->notion = $notion;
+
+        if ($this->notion->getConnection() === null) {
+            throw HandlingException::instance("Connection could not be established, please check your token.");
         }
     }
 
@@ -57,22 +57,36 @@ class Endpoint
      *
      * @param string $url
      * @return array
+     * @throws NotionException|HandlingException
      */
     protected function getJson(string $url): array
     {
-        return $this->get($url)->json();
+        if ($this->response === null)
+            $this->get($url);
+
+        return $this->response->json();
     }
 
     /**
-     *
+     * @param string $url
+     * @throws HandlingException
+     * @throws NotionException
      */
     protected function get(string $url)
     {
-        return $this->notion->getConnection()->get($url);
+        $response = $this->notion->getConnection()->get($url);
+
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
+
+        $this->response = $response;
+        return $response;
     }
 
     /**
-     *
+     * @param string $url
+     * @param array $body
+     * @return PromiseInterface|Response
      */
     protected function post(string $url, array $body)
     {
@@ -80,6 +94,9 @@ class Endpoint
     }
 
 
+    /**
+     * @return string
+     */
     protected function buildPaginationQuery(): string
     {
         $paginationQuery = "";
@@ -93,6 +110,10 @@ class Endpoint
         return $paginationQuery;
     }
 
+    /**
+     * @param int $limit
+     * @return $this
+     */
     public function limit(int $limit): Endpoint
     {
         $this->pageSize = min($limit, 100);
@@ -100,13 +121,16 @@ class Endpoint
         return $this;
     }
 
+    /**
+     * @param StartCursor $startCursor
+     * @return Endpoint
+     * @throws HandlingException
+     * @throws LaravelNotionAPIException
+     */
     public function offset(StartCursor $startCursor): Endpoint
     {
         // toDo
-        throw WrapperException::instance("Not implemented yet.");
-
-        $this->startCursor = $startCursor;
-        return $this;
+        throw HandlingException::instance("Not implemented yet.");
     }
 
 }

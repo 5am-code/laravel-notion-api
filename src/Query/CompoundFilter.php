@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 class CompoundFilter extends QueryHelper
 {
@@ -11,6 +11,6 @@ class CompoundFilter extends QueryHelper
     public function __construct()
     {
         parent::__construct();
-        throw new WrapperException("not implemented yet.");
+        throw new HandlingException("not implemented yet.");
     }
 }

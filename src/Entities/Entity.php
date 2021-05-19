@@ -2,7 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
@@ -20,8 +21,21 @@ class Entity
 
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'object')) throw WrapperException::instance("invalid json-array: no object given");
-        if (!Arr::exists($responseData, 'id')) throw WrapperException::instance("invalid json-array: no id provided");
+        if (!Arr::exists($responseData, 'object'))
+            throw new HandlingException("invalid json-array: no object given");
+
+        // TODO
+        // Currently, the API returns not-found objects with status code 200 -
+        // so we have to check here on the given status code in the paylaod,
+        // if the object was not found.
+        if(
+            $responseData['object'] === 'error'
+            && Arr::exists($responseData, 'status') && $responseData['status'] === 404
+        ) {
+            throw NotionException::instance("Not found", compact("responseData"));
+        }
+
+        if (!Arr::exists($responseData, 'id')) throw HandlingException::instance("invalid json-array: no id provided");
 
         $this->responseData = $responseData;
     }
