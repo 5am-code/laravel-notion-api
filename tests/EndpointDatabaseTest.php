@@ -5,9 +5,6 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
 
@@ -22,6 +19,17 @@ use Orchestra\Testbench\TestCase;
 class EndpointDatabaseTest extends TestCase
 {
 
+    protected function getPackageProviders($app)
+    {
+        return ['FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider'];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Notion' => \FiveamCode\LaravelNotionApi\NotionFacade::class
+        ];
+    }
 
     /** @test */
     public function it_returns_a_list_of_database_objects()
@@ -36,10 +44,7 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $notion = new Notion();
-        $notion->v1()->setToken("secret_*");
-
-        $result = $notion->databases()->all();
+        $result = \Notion::databases()->all();
 
         $this->assertIsIterable($result);
         $this->assertCount(2, $result);
@@ -58,10 +63,7 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $notion = new Notion();
-        $notion->v1()->setToken("secret_*");
-
-        $result = $notion->databases()->all();
+        $result = \Notion::databases()->all();
 
         // TODO check class here
         $this->assertIsIterable($result);
@@ -80,14 +82,11 @@ class EndpointDatabaseTest extends TestCase
                 ['Headers']
             )
         ]);
-        $notion = new Notion();
-        $notion->v1()->setToken("secret_*");
-
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage("Bad Request");
 
-        $result = $notion->databases()->all();
+        \Notion::databases()->all();
     }
 
     /** @test */
@@ -103,10 +102,7 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $notion = new Notion();
-        $notion->v1()->setToken("secret_*");
-
-        $databaseResult = $notion->databases()->find("668d797c-76fa-4934-9b05-ad288df2d136");
+        $databaseResult = \Notion::databases()->find("668d797c-76fa-4934-9b05-ad288df2d136");
 
         $this->assertInstanceOf(Database::class, $databaseResult);
 
@@ -134,13 +130,10 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $notion = new Notion();
-        $notion->v1()->setToken("secret_*");
-
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage("Not found");
-        $databaseResult = $notion->databases()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
 
+        \Notion::databases()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
     }
 
 }

@@ -29,26 +29,14 @@ class Notion
      * @param string|null $version
      * @param string|null $token
      */
-    public function __construct(string $version = null, string $token = null)
+    public function __construct(string $token, string $version = "v1")
     {
-        if ($token !== null) {
-            $this->setToken($token);
-        } elseif ($token === null) {
-
-            // check if Notion integration token is set in config
-            $token = config('laravel-notion-api.notion-api-token');
-
-            if ($token !== null)
-                $this->setToken($token);
-        }
+        $this->setToken($token);
 
         $this->validVersions = collect(["v1"]);
 
-        if ($version !== null) {
-            $this->setVersion($version);
-        } else {
-            $this->v1();
-        }
+        $this->setVersion($version);
+
     }
 
     /**

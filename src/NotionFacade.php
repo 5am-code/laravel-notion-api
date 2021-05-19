@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \FiveamCode\LaravelNotionApi\Skeleton\SkeletonClass
  */
-class LaravelNotionApiFacade extends Facade
+class NotionFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelNotionApiFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-notion-api';
+        return Notion::class;
     }
 }

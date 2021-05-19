@@ -1,8 +1,13 @@
 <?php
 
-/*
- * You can place your custom package configuration in here.
- */
 return [
+	/**
+	 * The default Notion API version to use.
+	 */
+	'version' => 'v1',
+
+	/**
+	 * Your Notion API token.
+	 */
     'notion-api-token' => env('NOTION_API_TOKEN', '')
 ];

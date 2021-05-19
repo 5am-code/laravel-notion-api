@@ -19,7 +19,7 @@ abstract class LaravelNotionAPIException extends \Exception
      */
     protected array $payload = [];
 
-    /**
+    /**w
      * Handy method to create a *Exception with payload.
      *
      * @param string $message
