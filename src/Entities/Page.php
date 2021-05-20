@@ -28,7 +28,7 @@ class Page extends Entity
 
     private function fillFromRaw(): void
     {
-        $this->fillId();
+        $this->fillId();    
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); //!Warning: call after 'fillProperties', since title is included within properties
@@ -49,7 +49,7 @@ class Page extends Entity
             $this->rawProperties = $this->responseData['properties'];
             $this->propertyCollection = new Collection();
             foreach (array_keys($this->rawProperties) as $propertyKey) {
-                $this->propertyCollection->add(new Property($propertyKey, $this->rawProperties[$propertyKey]));
+                $this->propertyCollection->add(Property::fromResponse($propertyKey, $this->rawProperties[$propertyKey]));
             }
         }
     }
