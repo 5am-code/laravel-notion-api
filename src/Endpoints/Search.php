@@ -25,7 +25,7 @@ class Search extends Endpoint
         parent::__construct($notion);
     }
 
-    public function query(): Collection
+    public function query(): EntityCollection
     {
         $postData = [];
 
@@ -43,9 +43,7 @@ class Search extends Endpoint
 
         if ($this->searchText !== null)
             $postData['query'] = $this->searchText;
-
-
-
+        
         $response = $this
             ->post(
                 $this->url(Endpoint::SEARCH),
@@ -53,9 +51,7 @@ class Search extends Endpoint
             )
             ->json();
 
-        $pageCollection = new EntityCollection($response);
-
-        return $pageCollection->getResults();
+        return new EntityCollection($response);
     }
 
     public function sortByLastEditedTime(string $direction = "ascending"): Search

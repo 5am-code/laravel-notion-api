@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
 
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
@@ -64,8 +65,14 @@ class EntityCollection
         return $this->rawResults;
     }
 
-    public function getResults(): Collection
+    public function getResults(): Collection // toDo: rename asCollection()
     {
         return $this->collection;
+    }
+
+    public function asJson(): string {
+        return $this->collection->map(function (Entity $item) {
+            return $item->toArray();
+        });
     }
 }
