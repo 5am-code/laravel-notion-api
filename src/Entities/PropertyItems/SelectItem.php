@@ -11,8 +11,8 @@ use Illuminate\Support\Collection;
 
 class SelectItem extends Entity
 {
-    private string $color;
-    private string $name;
+    protected string $color;
+    protected string $name;
 
     public function __construct(array $responseData)
     {

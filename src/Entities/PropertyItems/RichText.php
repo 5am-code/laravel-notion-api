@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class RichText extends Entity
 {
-    private string $plainText = "";
+    protected string $plainText = "";
 
     public function __construct(array $responseData)
     {

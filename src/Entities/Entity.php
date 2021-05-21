@@ -7,8 +7,9 @@ use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
+use JsonSerializable;
 
-class Entity
+class Entity implements JsonSerializable
 {
     private string $id;
     protected array $responseData = [];
@@ -67,6 +68,11 @@ class Entity
     public function getRaw(): array
     {
         return $this->responseData;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     public function toArray(): array {

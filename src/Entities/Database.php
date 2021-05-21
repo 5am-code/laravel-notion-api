@@ -14,6 +14,7 @@ class Database extends Entity
     protected string $objectType = "";
     protected array $rawTitle = [];
     protected array $rawProperties = [];
+    protected array $propertyNames = [];
     protected DateTime $createdTime;
     protected DateTime $lastEditedTime;
 
@@ -56,6 +57,7 @@ class Database extends Entity
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
+            $this->propertyNames = array_keys($this->rawProperties);
         }
     }
 
@@ -88,7 +90,7 @@ class Database extends Entity
 
     public function getPropertyNames(): array
     {
-        return array_keys($this->rawProperties);
+        return $this->propertyNames;
     }
 
     public function getCreatedTime(): DateTime

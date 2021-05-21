@@ -29,7 +29,7 @@ class Database extends Endpoint
         parent::__construct($notion);
     }
 
-    public function query(): Collection
+    public function query(): PageCollection
     {
         $postData = [];
 
@@ -54,8 +54,7 @@ class Database extends Endpoint
 
             ->json();
 
-        $pageCollection = new PageCollection($response);
-        return $pageCollection->getResults();
+        return new PageCollection($response);
     }
 
     public function filterBy(Collection $filter)

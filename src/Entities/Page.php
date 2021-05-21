@@ -14,7 +14,8 @@ class Page extends Entity
     protected string $title = "";
     protected string $objectType = "";
     protected array $rawProperties = [];
-    protected Collection $propertyCollection;
+    protected array $propertyMap = [];
+    protected Collection $properties;
     protected DateTime $createdTime;
     protected DateTime $lastEditedTime;
 
@@ -47,17 +48,18 @@ class Page extends Entity
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
-            $this->propertyCollection = new Collection();
+            $this->properties = new Collection();
             foreach (array_keys($this->rawProperties) as $propertyKey) {
-                $this->propertyCollection->add(Property::fromResponse($propertyKey, $this->rawProperties[$propertyKey]));
+                $property = Property::fromResponse($propertyKey, $this->rawProperties[$propertyKey]);
+                $this->properties->add($property);
+                $this->propertyMap[$propertyKey] = $property;
             }
         }
     }
 
-
     private function fillTitle(): void
     {
-        $titleProperty = $this->propertyCollection->filter(function ($property) {
+        $titleProperty = $this->properties->filter(function ($property) {
             return $property->getType() == "title";
         })->first();
 
@@ -76,19 +78,15 @@ class Page extends Entity
         return $this->title;
     }
 
-
     public function getProperties(): Collection
     {
-        return $this->propertyCollection;
+        return $this->properties;
     }
 
     public function getProperty(string $propertyName): ?Property
     {
-        $property = $this->propertyCollection->filter(function ($property) use ($propertyName) {
-            return $property->getTitle() == $propertyName;
-        })->first();
-
-        return $property;
+        //TODO:Handle undefined propertyNames (exception/null/?)
+        return $this->propertyMap[$propertyName];
     }
 
     public function getObjectType(): string
