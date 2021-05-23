@@ -9,6 +9,11 @@
     },
     "archived": false,
     "properties": {
+        "NumberProp": {
+            "id": ">d{N",
+            "type": "number",
+            "number": 500
+        },
         "Last edit": {
             "id": "Jwcd",
             "type": "last_edited_time",

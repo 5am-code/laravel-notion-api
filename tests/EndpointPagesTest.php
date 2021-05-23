@@ -58,8 +58,10 @@ class EndpointPagesTest extends NotionApiTest
         // check properties
         $this->assertSame("Notion Is Awesome", $pageResult->getTitle());
         $this->assertSame("page", $pageResult->getObjectType());
+        $this->assertCount(7, $pageResult->getRawProperties());
+        $this->assertCount(7, $pageResult->getProperties());
+        $this->assertCount(7, $pageResult->getPropertyKeys());
 
-        $this->assertCount(6, $pageResult->getRawProperties());
 
         $this->assertInstanceOf(Carbon::class, $pageResult->getCreatedTime());
         $this->assertInstanceOf(Carbon::class, $pageResult->getLastEditedTime());

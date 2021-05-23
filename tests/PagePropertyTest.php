@@ -4,8 +4,10 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
 use Illuminate\Support\Facades\Http;
@@ -107,5 +109,56 @@ class PagePropertyTest extends NotionApiTest
         $this->assertInstanceOf(RichText::class, $text->getContent());
         $this->assertSame("this is a nice Text :-)", $text->getRichText()->getPlainText());
         $this->assertCount(2, $text->getRichText()->getRaw());
+    }
+
+
+    /** @test */
+    public function it_checks_if_specific_page_property_is_a_valid_number_property()
+    {
+        // successful /v1/pages/PAGE_DOES_EXIST
+        Http::fake([
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
+            => Http::response(
+                json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
+                200,
+                ['Headers']
+            )
+        ]);
+
+        $pageResult = \Notion::pages()->find("afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8");
+        $number = $pageResult->getProperty('NumberProp');
+
+        $this->assertInstanceOf(Page::class, $pageResult);
+
+        $this->assertInstanceOf(Number::class, $number);
+        $this->assertSame('number', $number->getType());
+        $this->assertSame(">d{N", $number->getId());
+        $this->assertSame(500.0, $number->getNumber());
+        $this->assertSame(500.0, $number->getContent());
+    }
+
+    /** @test */
+    public function it_checks_if_specific_page_property_is_a_valid_title_property()
+    {
+        // successful /v1/pages/PAGE_DOES_EXIST
+        Http::fake([
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
+            => Http::response(
+                json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
+                200,
+                ['Headers']
+            )
+        ]);
+
+        $pageResult = \Notion::pages()->find("afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8");
+        $title = $pageResult->getProperty('Name');
+
+        $this->assertInstanceOf(Page::class, $pageResult);
+        $this->assertInstanceOf(Title::class, $title);
+        $this->assertSame('title', $title->getType());
+        $this->assertSame("title", $title->getId());
+        $this->assertSame("Notion Is Awesome", $title->getPlainText());
+        $this->assertInstanceOf(RichText::class, $title->getContent());
+        $this->assertSame("Notion Is Awesome", $title->getContent()->getPlainText());
     }
 }
