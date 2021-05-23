@@ -29,13 +29,6 @@ class Databases extends Endpoint implements EndpointInterface
      */
     public function all(): DatabaseCollection
     {
-        return $this->collect();
-    }
-
-
-    // TODO rename this function - receive, access, fetch?
-    private function collect(): DatabaseCollection
-    {
         $resultData = $this->getJson($this->url(Endpoint::DATABASES) . "?{$this->buildPaginationQuery()}");
         return new DatabaseCollection($resultData);
     }

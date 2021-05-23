@@ -21,14 +21,10 @@ class Users extends Endpoint implements EndpointInterface
      */
     public function all(): UserCollection
     {
-        return $this->collect();
-    }
-
-    private function collect(): UserCollection{
         $result = $this->get(
             $this->url(Endpoint::USERS . "?{$this->buildPaginationQuery()}")
         );
-
+        
         return new UserCollection($result->json());
     }
 

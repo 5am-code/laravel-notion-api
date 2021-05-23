@@ -55,14 +55,9 @@ class EntityCollection
     }
 
 
-    public function getRaw(): array
+    public function getRawResponse(): array
     {
         return $this->responseData;
-    }
-
-    public function asRaw(): array
-    {
-        return $this->rawResults;
     }
 
     public function asCollection(): Collection

@@ -26,16 +26,9 @@ class Block extends Endpoint
      */
     public function children(): BlockCollection
     {
-        return $this->collectChildren();
-    }
-
-    private function collectChildren(): BlockCollection
-    {
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
-        if (!$response->ok())
-            throw HandlingException::instance("Block not found.", ["blockId" => $this->blockId]);
 
         return new BlockCollection($response->json());
     }
