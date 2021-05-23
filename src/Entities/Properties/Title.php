@@ -5,7 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
-class Text extends Property
+class Title extends Property
 {
     protected string $plainText = "";
 
@@ -13,12 +13,12 @@ class Text extends Property
     {
         parent::fillFromRaw();
         if (!is_array($this->rawContent))
-            throw HandlingException::instance("The property-type is text, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.");
+            throw HandlingException::instance("The property-type is title, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.");
 
         $this->fillText();
     }
 
-    protected function fillText(): void
+    private function fillText(): void
     {
         $this->content = new RichText($this->rawContent);
         $this->plainText = $this->content->getPlaintext();

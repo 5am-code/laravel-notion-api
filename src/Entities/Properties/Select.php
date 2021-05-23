@@ -2,13 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
-use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class Select extends Property
 {

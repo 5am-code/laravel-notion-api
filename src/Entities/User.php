@@ -3,7 +3,6 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
 class User extends Entity

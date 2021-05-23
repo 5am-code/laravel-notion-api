@@ -2,9 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Collection;
-
 class StartCursor {
     private string $cursor;
 

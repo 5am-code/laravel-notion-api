@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
 class QueryHelper

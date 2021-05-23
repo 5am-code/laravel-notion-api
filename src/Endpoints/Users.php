@@ -5,8 +5,6 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 
 class Users extends Endpoint implements EndpointInterface

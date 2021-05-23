@@ -5,7 +5,6 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
 class Block extends Entity

@@ -2,10 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
-use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
 class Property extends Entity
@@ -47,6 +45,7 @@ class Property extends Entity
     {
         if (Arr::exists($this->responseData, $this->getType())) {
             $this->rawContent = $this->responseData[$this->getType()];
+            $this->content = $this->rawContent;
         }
     }
 
@@ -78,8 +77,12 @@ class Property extends Entity
             return new Select($propertyKey, $rawContent);
         } else if ($rawContent['type'] == 'text') {
             return new Text($propertyKey, $rawContent);
-        } else if($rawContent['type'] == 'created_by'){
+        } else if ($rawContent['type'] == 'created_by') {
             return new CreatedBy($propertyKey, $rawContent);
+        } else if ($rawContent['type'] == 'title') {
+            return new Title($propertyKey, $rawContent);
+        } else if ($rawContent['type'] == 'number') {
+            return new Number($propertyKey, $rawContent);
         }
 
 

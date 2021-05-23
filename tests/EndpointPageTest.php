@@ -3,7 +3,6 @@
 namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;

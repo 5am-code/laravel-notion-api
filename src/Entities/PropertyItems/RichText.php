@@ -2,16 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\PropertyItems;
 
-use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class RichText extends Entity
 {
-    private string $plainText = "";
+    protected string $plainText = "";
 
     public function __construct(array $responseData)
     {
