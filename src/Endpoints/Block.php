@@ -29,18 +29,6 @@ class Block extends Endpoint
         return $this->collectChildren();
     }
 
-    // /**
-    //  * Retrieve block children (as raw json-data)
-    //  * url: https://api.notion.com/{version}/blocks/{block_id}/children
-    //  * notion-api-docs: https://developers.notion.com/reference/get-block-children
-    //  *
-    //  * @return array
-    //  */
-    // public function childrenRaw(): array
-    // {
-    //     return $this->collectChildren()->getRawResults();
-    // }
-
     private function collectChildren(): BlockCollection
     {
         $response = $this->get(
