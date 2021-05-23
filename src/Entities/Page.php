@@ -5,7 +5,6 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 

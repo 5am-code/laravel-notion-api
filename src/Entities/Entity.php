@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use JsonSerializable;
