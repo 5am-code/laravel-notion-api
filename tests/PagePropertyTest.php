@@ -22,20 +22,8 @@ use Orchestra\Testbench\TestCase;
  *
  * @package FiveamCode\LaravelNotionApi\Tests
  */
-class EnpointPagePropertyTest extends TestCase
+class PagePropertyTest extends NotionApiTest
 {
-
-    protected function getPackageProviders($app)
-    {
-        return ['FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider'];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Notion' => \FiveamCode\LaravelNotionApi\NotionFacade::class
-        ];
-    }
 
     /** @test */
     public function it_checks_if_specific_page_property_is_a_valid_multi_select_property()

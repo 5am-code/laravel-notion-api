@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
-use Orchestra\Testbench\TestCase;
 
 /**
  * Class EndpointDatabaseTest
@@ -16,20 +15,8 @@ use Orchestra\Testbench\TestCase;
  *
  * @package FiveamCode\LaravelNotionApi\Tests
  */
-class EndpointDatabaseTest extends TestCase
+class EndpointDatabaseTest extends NotionApiTest
 {
-
-    protected function getPackageProviders($app)
-    {
-        return ['FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider'];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Notion' => \FiveamCode\LaravelNotionApi\NotionFacade::class
-        ];
-    }
 
     /** @test */
     public function it_returns_a_list_of_database_objects()

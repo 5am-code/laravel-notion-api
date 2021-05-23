@@ -17,20 +17,8 @@ use Orchestra\Testbench\TestCase;
  *
  * @package FiveamCode\LaravelNotionApi\Tests
  */
-class EndpointPageTest extends TestCase
+class EndpointPagesTest extends NotionApiTest
 {
-
-    protected function getPackageProviders($app)
-    {
-        return ['FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider'];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Notion' => \FiveamCode\LaravelNotionApi\NotionFacade::class
-        ];
-    }
 
     /** @test */
     public function it_throws_a_notion_exception_bad_request()
