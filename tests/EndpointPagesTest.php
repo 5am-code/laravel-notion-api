@@ -23,7 +23,7 @@ class EndpointPagesTest extends NotionApiTest
     /** @test */
     public function it_throws_a_notion_exception_bad_request()
     {
-        // failing /v1/databases
+        // failing /v1
         Http::fake([
             'https://api.notion.com/v1/pages*'
             => Http::response(

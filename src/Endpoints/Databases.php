@@ -3,11 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
 
 
 /**

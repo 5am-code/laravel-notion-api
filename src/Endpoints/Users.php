@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
@@ -24,7 +25,7 @@ class Users extends Endpoint implements EndpointInterface
         $result = $this->get(
             $this->url(Endpoint::USERS . "?{$this->buildPaginationQuery()}")
         );
-        
+
         return new UserCollection($result->json());
     }
 
@@ -42,8 +43,8 @@ class Users extends Endpoint implements EndpointInterface
             $this->url(Endpoint::USERS . "/" . $userId)
         );
 
-        if (!$response->ok())
-            throw HandlingException::instance("User not found.", ["userId" => $userId]);
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
 
 
         return new User($response->json());

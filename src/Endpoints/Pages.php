@@ -3,8 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 
 class Pages extends Endpoint implements EndpointInterface
 {
@@ -23,19 +22,21 @@ class Pages extends Endpoint implements EndpointInterface
             $this->url(Endpoint::PAGES . "/" . $pageId)
         );
 
-        if(!$response->ok())
-            throw HandlingException::instance("Page not found.", ["pageId" => $pageId]);
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
 
         return new Page($response->json());
     }
 
-    public function create(): array{
+    public function create(): array
+    {
         //toDo
         throw new \Exception("not implemented yet");
     }
 
 
-    public function updateProperties(): array{
+    public function updateProperties(): array
+    {
         //toDo
         throw new \Exception("not implemented yet");
     }

@@ -2,10 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 
 class Block extends Endpoint
 {
@@ -29,6 +28,9 @@ class Block extends Endpoint
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
+
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
 
         return new BlockCollection($response->json());
     }
