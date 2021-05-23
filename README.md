@@ -37,11 +37,9 @@ Head over to the [Documentation](https://5amco.de/docs) of this package.
 ### 🔥 Code Examples to jumpstart your Notion API Project
 
 #### Basic Setup
+
 ```php
 use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Query\Sorting;
-use FiveamCode\LaravelNotionApi\Query\Filter;
 
 // Setup basic API connection
 $notion = new Notion();

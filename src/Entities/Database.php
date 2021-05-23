@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
 
@@ -14,7 +13,7 @@ class Database extends Entity
     protected string $objectType = "";
     protected array $rawTitle = [];
     protected array $rawProperties = [];
-    protected array $propertyNames = [];
+    protected array $propertyKeys = [];
     protected DateTime $createdTime;
     protected DateTime $lastEditedTime;
 
@@ -57,7 +56,7 @@ class Database extends Entity
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
-            $this->propertyNames = array_keys($this->rawProperties);
+            $this->propertyKeys = array_keys($this->rawProperties);
         }
     }
 
@@ -88,9 +87,9 @@ class Database extends Entity
         return $this->rawProperties;
     }
 
-    public function getPropertyNames(): array
+    public function getPropertyKeys(): array
     {
-        return $this->propertyNames;
+        return $this->propertyKeys;
     }
 
     public function getCreatedTime(): DateTime

@@ -2,15 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
 

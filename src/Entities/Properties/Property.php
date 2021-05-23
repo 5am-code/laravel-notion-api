@@ -2,10 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
-use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 
 class Property extends Entity

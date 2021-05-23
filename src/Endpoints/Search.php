@@ -2,15 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
-use Symfony\Component\VarDumper\Cloner\Data;
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 
 class Search extends Endpoint
 {
@@ -43,7 +38,7 @@ class Search extends Endpoint
 
         if ($this->searchText !== null)
             $postData['query'] = $this->searchText;
-        
+
         $response = $this
             ->post(
                 $this->url(Endpoint::SEARCH),
