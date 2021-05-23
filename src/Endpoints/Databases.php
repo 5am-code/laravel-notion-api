@@ -20,8 +20,6 @@ use Illuminate\Support\Collection;
  */
 class Databases extends Endpoint implements EndpointInterface
 {
-
-
     /**
      * List databases
      * url: https://api.notion.com/{version}/databases
@@ -29,29 +27,17 @@ class Databases extends Endpoint implements EndpointInterface
      *
      * @return DatabaseCollection
      */
-    public function all(): Collection
+    public function all(): DatabaseCollection
     {
-        return $this->collect()->getResults();
+        return $this->collect();
     }
 
-    /**
-     * List databases (raw json-data)
-     * url: https://api.notion.com/{version}/databases
-     * notion-api-docs: https://developers.notion.com/reference/get-databases
-     *
-     * @return array
-     */
-    public function allRaw(): array
-    {
-        return $this->collect()->getRawResults();
-    }
 
     // TODO rename this function - receive, access, fetch?
     private function collect(): DatabaseCollection
     {
         $resultData = $this->getJson($this->url(Endpoint::DATABASES) . "?{$this->buildPaginationQuery()}");
-        $databaseCollection = new DatabaseCollection($resultData);
-        return $databaseCollection;
+        return new DatabaseCollection($resultData);
     }
 
     /**

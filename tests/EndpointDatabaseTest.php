@@ -44,7 +44,7 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $result = \Notion::databases()->all();
+        $result = \Notion::databases()->all()->asCollection();
 
         $this->assertIsIterable($result);
         $this->assertCount(2, $result);
@@ -63,7 +63,7 @@ class EndpointDatabaseTest extends TestCase
             )
         ]);
 
-        $result = \Notion::databases()->all();
+        $result = \Notion::databases()->all()->asCollection();
 
         // TODO check class here
         $this->assertIsIterable($result);

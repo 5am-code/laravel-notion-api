@@ -60,12 +60,12 @@ class EntityCollection
         return $this->responseData;
     }
 
-    public function getRawResults(): array
+    public function asRaw(): array
     {
         return $this->rawResults;
     }
 
-    public function getResults(): Collection // toDo: rename asCollection()
+    public function asCollection(): Collection
     {
         return $this->collection;
     }

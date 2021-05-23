@@ -24,22 +24,22 @@ class Block extends Endpoint
      *
      * @return BlockCollection
      */
-    public function children(): Collection
+    public function children(): BlockCollection
     {
-        return $this->collectChildren()->getResults();
+        return $this->collectChildren();
     }
 
-    /**
-     * Retrieve block children (as raw json-data)
-     * url: https://api.notion.com/{version}/blocks/{block_id}/children
-     * notion-api-docs: https://developers.notion.com/reference/get-block-children
-     *
-     * @return array
-     */
-    public function childrenRaw(): array
-    {
-        return $this->collectChildren()->getRawResults();
-    }
+    // /**
+    //  * Retrieve block children (as raw json-data)
+    //  * url: https://api.notion.com/{version}/blocks/{block_id}/children
+    //  * notion-api-docs: https://developers.notion.com/reference/get-block-children
+    //  *
+    //  * @return array
+    //  */
+    // public function childrenRaw(): array
+    // {
+    //     return $this->collectChildren()->getRawResults();
+    // }
 
     private function collectChildren(): BlockCollection
     {
@@ -49,9 +49,7 @@ class Block extends Endpoint
         if (!$response->ok())
             throw HandlingException::instance("Block not found.", ["blockId" => $this->blockId]);
 
-
-        $blockCollection = new BlockCollection($response->json());
-        return $blockCollection;
+        return new BlockCollection($response->json());
     }
 
     public function create(): array
