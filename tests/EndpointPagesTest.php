@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
@@ -84,6 +85,25 @@ class EndpointPagesTest extends NotionApiTest
         $this->expectExceptionMessage("Not found");
 
         \Notion::pages()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
+    }
+
+
+    /** @test */
+    public function it_throws_a_handling_exception_not_implemented_for_create() {
+
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("Not implemented");
+
+        \Notion::pages()->create();
+    }
+
+    /** @test */
+    public function it_throws_a_handling_exception_not_implemented_for_update_properties() {
+
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("Not implemented");
+
+        \Notion::pages()->updateProperties();
     }
 
 }

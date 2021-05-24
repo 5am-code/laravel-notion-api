@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
@@ -29,15 +30,11 @@ class Block extends Endpoint
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
 
-        if ($response->failed())
-            throw NotionException::fromResponse($response);
-
         return new BlockCollection($response->json());
     }
 
     public function create(): array
     {
-        //toDo
-        throw new \Exception("not implemented yet");
+        throw new HandlingException("Not implemented");
     }
 }

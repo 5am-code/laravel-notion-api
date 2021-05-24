@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
@@ -86,6 +87,15 @@ class EndpointBlocksTest extends NotionApiTest
         $this->expectExceptionMessage("Not found");
 
         \Notion::block("b55c9c91-384d-452b-81db-d1ef79372b11")->children();
+    }
+
+    /** @test */
+    public function it_throws_a_handling_exception_not_implemented() {
+
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("Not implemented");
+
+        \Notion::block("")->create();
     }
 
 }

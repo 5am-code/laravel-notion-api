@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use Orchestra\Testbench\TestCase;
 
@@ -36,5 +37,15 @@ class NotionApiTest extends TestCase
 
         $this->assertInstanceOf(Notion::class, $notion);
         $this->assertNotEmpty($notion->getConnection());
+    }
+
+
+    /** @test */
+    public function it_throws_a_handling_exception_invalid_version()
+    {
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("invalid version for notion-api");
+
+        $notion = new Notion("secret_*", "v-does-not-exist");
     }
 }

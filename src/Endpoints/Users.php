@@ -38,10 +38,6 @@ class Users extends Endpoint implements EndpointInterface
             $this->url(Endpoint::USERS . "/" . $userId)
         );
 
-        if ($response->failed())
-            throw NotionException::fromResponse($response);
-
-
         return new User($response->json());
     }
 }
