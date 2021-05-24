@@ -64,7 +64,7 @@ class Entity implements JsonSerializable
         return $this->id;
     }
 
-    public function getRaw(): array
+    public function getRawResponse(): array
     {
         return $this->responseData;
     }

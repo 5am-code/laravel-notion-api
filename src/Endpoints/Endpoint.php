@@ -90,7 +90,13 @@ class Endpoint
      */
     protected function post(string $url, array $body)
     {
-        return $this->notion->getConnection()->post($url, $body);
+        $response = $this->notion->getConnection()->post($url, $body);
+
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
+
+        $this->response = $response;
+        return $response;
     }
 
 

@@ -26,7 +26,7 @@ class EndpointUsersTest extends NotionApiTest
     /** @test */
     public function it_throws_a_notion_exception_bad_request()
     {
-        // failing /v1
+        // failing /v1/users
         Http::fake([
             'https://api.notion.com/v1/users?*'
             => Http::response(
