@@ -104,4 +104,23 @@ class EndpointDatabaseTest extends NotionApiTest
         $this->assertEquals("Betty Holberton", $page->getTitle());
     }
 
+    /** @test */
+    public function it_throws_a_notion_exception_bad_request()
+    {
+        // failing /v1/databases
+        Http::fake([
+            'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*'
+            => Http::response(
+                json_decode('{}', true),
+                400,
+                ['Headers']
+            )
+        ]);
+
+        $this->expectException(NotionException::class);
+        $this->expectExceptionMessage("Bad Request");
+
+        \Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")->query();
+    }
+
 }
