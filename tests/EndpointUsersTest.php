@@ -2,15 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
-use FiveamCode\LaravelNotionApi\Entities\Page;
+use Notion;
+use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use Illuminate\Support\Facades\Http;
-use Orchestra\Testbench\TestCase;
+use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 
 /**
  * Class EndpointUsersTest
@@ -37,9 +33,9 @@ class EndpointUsersTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::users()->all();
+        Notion::users()->all();
     }
 
     /** @test */
@@ -55,7 +51,7 @@ class EndpointUsersTest extends NotionApiTest
             )
         ]);
 
-        $users = \Notion::users()->all();
+        $users = Notion::users()->all();
 
         $this->assertInstanceOf(UserCollection::class, $users);
 
@@ -67,8 +63,8 @@ class EndpointUsersTest extends NotionApiTest
         $user = $userCollection->first();
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals("Avocado Lovelace", $user->getName());
-        $this->assertEquals("https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg", $user->getAvatarUrl());
+        $this->assertEquals('Avocado Lovelace', $user->getName());
+        $this->assertEquals('https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg', $user->getAvatarUrl());
     }
 
     /** @test */
@@ -84,11 +80,11 @@ class EndpointUsersTest extends NotionApiTest
             )
         ]);
 
-        $user = \Notion::users()->find("d40e767c-d7af-4b18-a86d-55c61f1e39a4");
+        $user = Notion::users()->find('d40e767c-d7af-4b18-a86d-55c61f1e39a4');
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals("Avocado Lovelace", $user->getName());
-        $this->assertEquals("https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg", $user->getAvatarUrl());
+        $this->assertEquals('Avocado Lovelace', $user->getName());
+        $this->assertEquals('https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg', $user->getAvatarUrl());
     }
 
     /** @test */
@@ -105,9 +101,9 @@ class EndpointUsersTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Not found");
+        $this->expectExceptionMessage('Not found');
 
-        \Notion::users()->find("d40e767c-d7af-4b18-a86d-55c61f1e39a1");
+        Notion::users()->find('d40e767c-d7af-4b18-a86d-55c61f1e39a1');
     }
 
 }

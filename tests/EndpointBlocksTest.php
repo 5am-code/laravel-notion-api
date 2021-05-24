@@ -2,10 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Notion;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 
 /**
@@ -33,9 +34,9 @@ class EndpointBlocksTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::block("b55c9c91-384d-452b-81db-d1ef79372b76")->children();
+        Notion::block('b55c9c91-384d-452b-81db-d1ef79372b76')->children();
     }
 
     /** @test */
@@ -51,7 +52,7 @@ class EndpointBlocksTest extends NotionApiTest
             )
         ]);
 
-        $blockChildren = \Notion::block("b55c9c91-384d-452b-81db-d1ef79372b76")->children();
+        $blockChildren = Notion::block('b55c9c91-384d-452b-81db-d1ef79372b76')->children();
         $this->assertInstanceOf(BlockCollection::class, $blockChildren);
 
         $blockChildrenCollection = $blockChildren->asCollection();
@@ -62,12 +63,12 @@ class EndpointBlocksTest extends NotionApiTest
         // check first child
         $blockChild = $blockChildrenCollection->first();
         $this->assertInstanceOf(Block::class, $blockChild);
-        $this->assertEquals("heading_2", $blockChild->getType());
+        $this->assertEquals('heading_2', $blockChild->getType());
         $this->assertFalse($blockChild->hasChildren());
-        $this->assertArrayHasKey("text", $blockChild->getRawContent());
-        $this->assertArrayHasKey(0, $blockChild->getRawContent()["text"]);
-        $this->assertArrayHasKey("plain_text", $blockChild->getRawContent()["text"][0]);
-        $this->assertEquals("Lacinato kale", $blockChild->getRawContent()["text"][0]["plain_text"]);
+        $this->assertArrayHasKey('text', $blockChild->getRawContent());
+        $this->assertArrayHasKey(0, $blockChild->getRawContent()['text']);
+        $this->assertArrayHasKey('plain_text', $blockChild->getRawContent()['text'][0]);
+        $this->assertEquals('Lacinato kale', $blockChild->getRawContent()['text'][0]['plain_text']);
     }
 
     /** @test */
@@ -84,18 +85,19 @@ class EndpointBlocksTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Not found");
+        $this->expectExceptionMessage('Not found');
 
-        \Notion::block("b55c9c91-384d-452b-81db-d1ef79372b11")->children();
+        Notion::block('b55c9c91-384d-452b-81db-d1ef79372b11')->children();
     }
 
     /** @test */
-    public function it_throws_a_handling_exception_not_implemented() {
+    public function it_throws_a_handling_exception_not_implemented()
+    {
 
         $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage("Not implemented");
+        $this->expectExceptionMessage('Not implemented');
 
-        \Notion::block("")->create();
+        Notion::block('')->create();
     }
 
 }

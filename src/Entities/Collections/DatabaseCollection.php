@@ -2,13 +2,17 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Entities\Database;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Database;
 
-
+/**
+ * Class DatabaseCollection
+ * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ */
 class DatabaseCollection extends EntityCollection
 {
-    protected function collectChildren() : void
+
+    protected function collectChildren(): void
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $databaseChild) {

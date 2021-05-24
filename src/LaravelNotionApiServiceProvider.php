@@ -4,6 +4,10 @@ namespace FiveamCode\LaravelNotionApi;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class LaravelNotionApiServiceProvider
+ * @package FiveamCode\LaravelNotionApi
+ */
 class LaravelNotionApiServiceProvider extends ServiceProvider
 {
     /**

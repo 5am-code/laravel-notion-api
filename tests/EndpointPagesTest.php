@@ -2,12 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use Notion;
 use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
-use Orchestra\Testbench\TestCase;
+use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class EndpointPageTest
@@ -34,9 +34,9 @@ class EndpointPagesTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::pages()->find("afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8");
+        Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
     }
 
     /** @test */
@@ -52,13 +52,13 @@ class EndpointPagesTest extends NotionApiTest
             )
         ]);
 
-        $pageResult = \Notion::pages()->find("afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8");
+        $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
 
         $this->assertInstanceOf(Page::class, $pageResult);
 
         // check properties
-        $this->assertSame("Notion Is Awesome", $pageResult->getTitle());
-        $this->assertSame("page", $pageResult->getObjectType());
+        $this->assertSame('Notion Is Awesome', $pageResult->getTitle());
+        $this->assertSame('page', $pageResult->getObjectType());
         $this->assertCount(7, $pageResult->getRawProperties());
         $this->assertCount(7, $pageResult->getProperties());
         $this->assertCount(7, $pageResult->getPropertyKeys());
@@ -82,28 +82,30 @@ class EndpointPagesTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Not found");
+        $this->expectExceptionMessage('Not found');
 
-        \Notion::pages()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
+        Notion::pages()->find('b55c9c91-384d-452b-81db-d1ef79372b79');
     }
 
 
     /** @test */
-    public function it_throws_a_handling_exception_not_implemented_for_create() {
+    public function it_throws_a_handling_exception_not_implemented_for_create()
+    {
 
         $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage("Not implemented");
+        $this->expectExceptionMessage('Not implemented');
 
-        \Notion::pages()->create();
+        Notion::pages()->create();
     }
 
     /** @test */
-    public function it_throws_a_handling_exception_not_implemented_for_update_properties() {
+    public function it_throws_a_handling_exception_not_implemented_for_update_properties()
+    {
 
         $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage("Not implemented");
+        $this->expectExceptionMessage('Not implemented');
 
-        \Notion::pages()->updateProperties();
+        Notion::pages()->updateProperties();
     }
 
 }

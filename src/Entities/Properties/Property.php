@@ -2,17 +2,42 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Arr;
 
+/**
+ * Class Property
+ * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ */
 class Property extends Entity
 {
+    /**
+     * @var string
+     */
     protected string $title;
+
+    /**
+     * @var string
+     */
     protected string $type;
+
+    /**
+     * @var
+     */
     protected $rawContent;
+
+    /**
+     * @var
+     */
     protected $content;
 
+    /**
+     * Property constructor.
+     * @param string $title
+     * @param array $responseData
+     * @throws HandlingException
+     */
     public function __construct(string $title, array $responseData)
     {
         $this->title = $title;
@@ -20,6 +45,10 @@ class Property extends Entity
     }
 
 
+    /**
+     * @param array $responseData
+     * @throws HandlingException
+     */
     protected function setResponseData(array $responseData): void
     {
         if (!Arr::exists($responseData, 'id')) throw HandlingException::instance("invalid json-array: no id provided");
@@ -27,6 +56,9 @@ class Property extends Entity
         $this->fillFromRaw();
     }
 
+    /**
+     *
+     */
     protected function fillFromRaw(): void
     {
         $this->fillId();
@@ -34,6 +66,9 @@ class Property extends Entity
         $this->fillContent();
     }
 
+    /**
+     *
+     */
     private function fillType(): void
     {
         if (Arr::exists($this->responseData, 'type')) {
@@ -41,6 +76,9 @@ class Property extends Entity
         }
     }
 
+    /**
+     *
+     */
     private function fillContent(): void
     {
         if (Arr::exists($this->responseData, $this->getType())) {
@@ -49,26 +87,44 @@ class Property extends Entity
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRawContent()
     {
         return $this->rawContent;
     }
 
+    /**
+     * @return mixed
+     */
     public function getContent()
     {
         return $this->rawContent;
     }
 
+    /**
+     * @param $propertyKey
+     * @param $rawContent
+     * @return Property
+     * @throws HandlingException
+     */
     public static function fromResponse($propertyKey, $rawContent): Property
     {
         if ($rawContent['type'] == 'multi_select') {

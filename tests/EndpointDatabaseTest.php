@@ -2,14 +2,15 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use \FiveamCode\LaravelNotionApi\Endpoints\Database;
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
-use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Query\Filter;
-use FiveamCode\LaravelNotionApi\Query\Sorting;
+use Notion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use FiveamCode\LaravelNotionApi\Query\Filter;
+use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Query\Sorting;
+use FiveamCode\LaravelNotionApi\Endpoints\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 
 /**
  * Class EndpointDatabaseTest
@@ -34,7 +35,7 @@ class EndpointDatabaseTest extends NotionApiTest
     /** @test */
     public function it_returns_a_database_endpoint_instance()
     {
-        $endpoint = \Notion::database("897e5a76ae524b489fdfe71f5945d1af");
+        $endpoint = Notion::database('897e5a76ae524b489fdfe71f5945d1af');
 
         $this->assertInstanceOf(Database::class, $endpoint);
     }
@@ -52,6 +53,7 @@ class EndpointDatabaseTest extends NotionApiTest
 
     /** @test
      * @dataProvider limitProvider
+     * @param $limit
      */
     public function it_queries_a_database_with_filter_and_sorting_and_processes_result($limit)
     {
@@ -71,21 +73,21 @@ class EndpointDatabaseTest extends NotionApiTest
         $filters = new Collection();
 
         $sortings->add(
-            Sorting::propertySort("Birth year", "descending")
+            Sorting::propertySort('Birth year', 'descending')
         );
 
         $filters
             ->add(
                 Filter::rawFilter(
-                    "Known for",
+                    'Known for',
                     [
-                        "multi_select" =>
-                            ["contains" => "UNIVAC"]
+                        'multi_select' =>
+                            ['contains' => 'UNIVAC']
                     ]
                 )
             );
 
-        $result = \Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+        $result = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
             ->filterBy($filters)
             ->sortBy($sortings)
             ->limit($limit)
@@ -101,7 +103,7 @@ class EndpointDatabaseTest extends NotionApiTest
 
         // check page object
         $page = $resultCollection->first();
-        $this->assertEquals("Betty Holberton", $page->getTitle());
+        $this->assertEquals('Betty Holberton', $page->getTitle());
     }
 
     /** @test */
@@ -111,7 +113,7 @@ class EndpointDatabaseTest extends NotionApiTest
         Http::fake([
             'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*'
             => Http::response(
-                json_decode(file_get_contents("tests/stubs/endpoints/databases/response_query_no_result_200.json"), true),
+                json_decode(file_get_contents('tests/stubs/endpoints/databases/response_query_no_result_200.json'), true),
                 200,
                 ['Headers']
             )
@@ -123,15 +125,15 @@ class EndpointDatabaseTest extends NotionApiTest
         $filters
             ->add(
                 Filter::rawFilter(
-                    "Known for",
+                    'Known for',
                     [
-                        "multi_select" =>
-                            ["contains" => "something that doesn't exists"]
+                        'multi_select' =>
+                            ['contains' => "something that doesn't exists"]
                     ]
                 )
             );
 
-        $result = \Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+        $result = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
             ->filterBy($filters)
             ->query();
 
@@ -157,9 +159,9 @@ class EndpointDatabaseTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")->query();
+        Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')->query();
     }
 
 }

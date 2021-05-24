@@ -2,10 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use Notion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use Illuminate\Support\Facades\Http;
 
 /**
  * Class EndpointDatabaseTest
@@ -31,7 +32,7 @@ class EndpointDatabasesTest extends NotionApiTest
             )
         ]);
 
-        $result = \Notion::databases()->all()->asCollection();
+        $result = Notion::databases()->all()->asCollection();
 
         $this->assertIsIterable($result);
         $this->assertCount(2, $result);
@@ -50,7 +51,7 @@ class EndpointDatabasesTest extends NotionApiTest
             )
         ]);
 
-        $result = \Notion::databases()->all()->asCollection();
+        $result = Notion::databases()->all()->asCollection();
 
         // TODO check class here
         $this->assertIsIterable($result);
@@ -71,9 +72,9 @@ class EndpointDatabasesTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::databases()->all();
+        Notion::databases()->all();
     }
 
     /** @test */
@@ -89,13 +90,13 @@ class EndpointDatabasesTest extends NotionApiTest
             )
         ]);
 
-        $databaseResult = \Notion::databases()->find("668d797c-76fa-4934-9b05-ad288df2d136");
+        $databaseResult = Notion::databases()->find('668d797c-76fa-4934-9b05-ad288df2d136');
 
         $this->assertInstanceOf(Database::class, $databaseResult);
 
         // check properties
-        $this->assertSame("Grocery List", $databaseResult->getTitle());
-        $this->assertSame("database", $databaseResult->getObjectType());
+        $this->assertSame('Grocery List', $databaseResult->getTitle());
+        $this->assertSame('database', $databaseResult->getObjectType());
 
         $this->assertCount(1, $databaseResult->getRawTitle());
         $this->assertCount(12, $databaseResult->getRawProperties());
@@ -118,9 +119,9 @@ class EndpointDatabasesTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Not found");
+        $this->expectExceptionMessage('Not found');
 
-        \Notion::databases()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
+        Notion::databases()->find('b55c9c91-384d-452b-81db-d1ef79372b79');
     }
 
 }

@@ -12,17 +12,43 @@ use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 
+/**
+ * Class EntityCollection
+ * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ */
 class EntityCollection
 {
+    /**
+     * @var array
+     */
     protected array $responseData = [];
+
+    /**
+     * @var array
+     */
     protected array $rawResults = [];
+
+    /**
+     * @var Collection
+     */
     protected Collection $collection;
 
+    /**
+     * EntityCollection constructor.
+     * @param array|null $responseData
+     * @throws HandlingException
+     * @throws NotionException
+     */
     public function __construct(array $responseData = null)
     {
         $this->setResponseData($responseData);
     }
 
+    /**
+     * @param array $responseData
+     * @throws HandlingException
+     * @throws NotionException
+     */
     protected function setResponseData(array $responseData): void
     {
         // TODO
@@ -34,18 +60,21 @@ class EntityCollection
             && $responseData['object'] === 'error'
             && Arr::exists($responseData, 'status') && $responseData['status'] === 404
         ) {
-            throw NotionException::instance("Not found", compact("responseData"));
+            throw NotionException::instance('Not found', compact('responseData'));
         }
 
-        if (!Arr::exists($responseData, 'object')) throw HandlingException::instance("invalid json-array: no object given");
-        if (!Arr::exists($responseData, 'results')) throw HandlingException::instance("invalid json-array: no results given");
-        if ($responseData['object'] !== 'list') throw HandlingException::instance("invalid json-array: the given object is not a list");
+        if (!Arr::exists($responseData, 'object')) throw HandlingException::instance('invalid json-array: no object given');
+        if (!Arr::exists($responseData, 'results')) throw HandlingException::instance('invalid json-array: no results given');
+        if ($responseData['object'] !== 'list') throw HandlingException::instance('invalid json-array: the given object is not a list');
 
         $this->responseData = $responseData;
         $this->fillFromRaw();
         $this->collectChildren();
     }
 
+    /**
+     *
+     */
     protected function collectChildren(): void
     {
         $this->collection = new Collection();
@@ -57,27 +86,42 @@ class EntityCollection
         }
     }
 
+    /**
+     *
+     */
     protected function fillFromRaw()
     {
         $this->fillResult();
     }
 
+    /**
+     *
+     */
     protected function fillResult()
     {
         $this->rawResults = $this->responseData['results'];
     }
 
 
+    /**
+     * @return array
+     */
     public function getRawResponse(): array
     {
         return $this->responseData;
     }
 
+    /**
+     * @return Collection
+     */
     public function asCollection(): Collection
     {
         return $this->collection;
     }
 
+    /**
+     * @return string
+     */
     public function asJson(): string
     {
         return $this->collection->map(function (Entity $item) {

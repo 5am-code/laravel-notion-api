@@ -3,14 +3,18 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 
+/**
+ * Class Database
+ * @package FiveamCode\LaravelNotionApi\Entities
+ */
 class Database extends Entity
 {
-    protected string $title = "";
-    protected string $objectType = "";
+    protected string $title = '';
+    protected string $objectType = '';
     protected array $rawTitle = [];
     protected array $rawProperties = [];
     protected array $propertyKeys = [];
@@ -22,7 +26,7 @@ class Database extends Entity
     {
         parent::setResponseData($responseData);
         if ($responseData['object'] !== 'database')
-            throw HandlingException::instance("invalid json-array: the given object is not a database");
+            throw HandlingException::instance('invalid json-array: the given object is not a database');
         $this->fillFromRaw();
     }
 
@@ -74,7 +78,7 @@ class Database extends Entity
     public function getProperties()
     {
         //TODO: return collection of property-entities (id, type, title)
-        throw new \Exception("not implemented yet");
+        throw new HandlingException('Not implemented');
     }
 
     public function getRawTitle(): array

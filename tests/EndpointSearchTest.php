@@ -2,11 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
-use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use Notion;
 use Illuminate\Support\Facades\Http;
+use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 
 /**
  * Class EndpointSearchTest
@@ -33,9 +34,9 @@ class EndpointSearchTest extends NotionApiTest
         ]);
 
         $this->expectException(NotionException::class);
-        $this->expectExceptionMessage("Bad Request");
+        $this->expectExceptionMessage('Bad Request');
 
-        \Notion::search()->query();
+        Notion::search()->query();
     }
 
     /** @test */
@@ -51,7 +52,7 @@ class EndpointSearchTest extends NotionApiTest
             )
         ]);
 
-        $searchResult = \Notion::search()->query();
+        $searchResult = Notion::search()->query();
         $entityCollection = $searchResult->asCollection();
         $this->assertInstanceOf(EntityCollection::class, $searchResult);
         $this->assertIsIterable($entityCollection);
@@ -77,7 +78,7 @@ class EndpointSearchTest extends NotionApiTest
             )
         ]);
 
-        $searchResult = \Notion::search()->onlyPages()->query();
+        $searchResult = Notion::search()->onlyPages()->query();
         $entityCollection = $searchResult->asCollection();
         $this->assertInstanceOf(EntityCollection::class, $searchResult);
         $this->assertIsIterable($entityCollection);
@@ -88,7 +89,7 @@ class EndpointSearchTest extends NotionApiTest
         $this->assertInstanceOf(Page::class, $page);
     }
 
-    
+
     /** @test */
     public function it_returns_only_databases_of_the_workspace_as_collection_with_entity_objects()
     {
@@ -102,7 +103,7 @@ class EndpointSearchTest extends NotionApiTest
             )
         ]);
 
-        $searchResult = \Notion::search()->onlyDatabases()->query();
+        $searchResult = Notion::search()->onlyDatabases()->query();
         $entityCollection = $searchResult->asCollection();
         $this->assertInstanceOf(EntityCollection::class, $searchResult);
         $this->assertIsIterable($entityCollection);

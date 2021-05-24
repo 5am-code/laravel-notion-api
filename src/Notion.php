@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\PendingRequest;
@@ -13,15 +12,38 @@ use FiveamCode\LaravelNotionApi\Endpoints\Users;
 use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 
+/**
+ * Class Notion
+ * @package FiveamCode\LaravelNotionApi
+ */
 class Notion
 {
+    /**
+     * @var Endpoint
+     */
     private Endpoint $endpoint;
+
+    /**
+     * @var string
+     */
     private string $version;
+
+    /**
+     * @var string
+     */
     private string $token;
+
+    /**
+     * @var PendingRequest|null
+     */
     private ?PendingRequest $connection = null;
 
+    /**
+     * @var Collection
+     */
     private Collection $validVersions;
 
     /**
@@ -29,11 +51,11 @@ class Notion
      * @param string|null $version
      * @param string|null $token
      */
-    public function __construct(string $token, string $version = "v1")
+    public function __construct(string $token, string $version = 'v1')
     {
         $this->setToken($token);
 
-        $this->validVersions = collect(["v1"]);
+        $this->validVersions = collect(['v1']);
 
         $this->setVersion($version);
 
@@ -54,6 +76,7 @@ class Notion
      *
      * @param string $version
      * @return Notion
+     * @throws HandlingException
      */
     public function setVersion(string $version): Notion
     {
@@ -69,7 +92,7 @@ class Notion
      */
     public function v1(): Notion
     {
-        $this->setVersion("v1");
+        $this->setVersion('v1');
         return $this;
     }
 
@@ -89,6 +112,7 @@ class Notion
 
     /**
      * @return Databases
+     * @throws HandlingException
      */
     public function databases(): Databases
     {
@@ -96,7 +120,10 @@ class Notion
     }
 
     /**
+     * @param string $databaseId
      * @return Database
+     * @throws Exceptions\LaravelNotionAPIException
+     * @throws HandlingException
      */
     public function database(string $databaseId): Database
     {
@@ -105,6 +132,7 @@ class Notion
 
     /**
      * @return Pages
+     * @throws HandlingException
      */
     public function pages(): Pages
     {
@@ -112,7 +140,10 @@ class Notion
     }
 
     /**
+     * @param string $blockId
      * @return Block
+     * @throws Exceptions\LaravelNotionAPIException
+     * @throws HandlingException
      */
     public function block(string $blockId): Block
     {
@@ -121,6 +152,7 @@ class Notion
 
     /**
      * @return Users
+     * @throws HandlingException
      */
     public function users(): Users
     {
@@ -128,12 +160,14 @@ class Notion
     }
 
     /**
+     * @param string|null $searchText
      * @return Search
+     * @throws Exceptions\LaravelNotionAPIException
+     * @throws HandlingException
      */
-    public function search(?string $searchText = ""): Search
+    public function search(?string $searchText = ''): Search
     {
-        $search = new Search($this, $searchText);
-        return $search;
+        return new Search($this, $searchText);
     }
 
     /**
@@ -156,11 +190,12 @@ class Notion
      * Checks if given version for notion-api is valid
      *
      * @param string $version
+     * @throws HandlingException
      */
     public function checkValidVersion(string $version): void
     {
         if (!$this->validVersions->contains($version)) {
-            throw HandlingException::instance("invalid version for notion-api", ['invalidVersion' => $version]);
+            throw HandlingException::instance('invalid version for notion-api', ['invalidVersion' => $version]);
         }
     }
 }

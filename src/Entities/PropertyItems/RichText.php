@@ -2,29 +2,40 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\PropertyItems;
 
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use Illuminate\Support\Arr;
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 
+/**
+ * Class RichText
+ * @package FiveamCode\LaravelNotionApi\Entities\PropertyItems
+ */
 class RichText extends Entity
 {
-    protected string $plainText = "";
+    /**
+     * @var string
+     */
+    protected string $plainText = '';
 
-    public function __construct(array $responseData)
-    {
-        $this->setResponseData($responseData);
-    }
-
+    /**
+     * @param array $responseData
+     */
     protected function setResponseData(array $responseData): void
     {
         $this->responseData = $responseData;
         $this->fillFromRaw();
     }
 
+    /**
+     *
+     */
     protected function fillFromRaw(): void
     {
         $this->fillPlainText();
     }
 
+    /**
+     *
+     */
     protected function fillPlainText(): void
     {
         if (is_array($this->responseData)) {
@@ -36,6 +47,9 @@ class RichText extends Entity
         }
     }
 
+    /**
+     * @return string
+     */
     public function getPlainText(): string
     {
         return $this->plainText;

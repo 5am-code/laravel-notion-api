@@ -53,21 +53,22 @@ $notion->pages()->find($yourPageId);
 ```
 
 #### Query Database
+
 ```php
 // Queries a specific database and returns a collection of pages (= database entries)
 $sortings = new Collection();
 $filters = new Collection();
 
 $sortings
-  ->add(Sorting::propertySort("Ordered", "ascending"));
+  ->add(Sorting::propertySort('Ordered', 'ascending'));
 $sortings
-  ->add(Sorting::timestampSort("created_time", "ascending"));
+  ->add(Sorting::timestampSort('created_time', 'ascending'));
 
 $filters
-  ->add(Filter::textFilter("title", ["contains" => "new"]));
+  ->add(Filter::textFilter('title', ['contains' => 'new']));
 // or
 $filters
-  ->add(Filter::rawFilter("Tags", ["multi_select" => ["contains" => "great"]]));
+  ->add(Filter::rawFilter('Tags', ['multi_select' => ['contains' => 'great']]));
   
 $notion
   ->database($yourDatabaseId)

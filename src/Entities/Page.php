@@ -3,30 +3,73 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
+/**
+ * Class Page
+ * @package FiveamCode\LaravelNotionApi\Entities
+ */
 class Page extends Entity
 {
-    protected string $title = "";
-    protected string $objectType = "";
+    /**
+     * @var string
+     */
+    protected string $title = '';
+
+    /**
+     * @var string
+     */
+    protected string $objectType = '';
+
+    /**
+     * @var array
+     */
     protected array $rawProperties = [];
+
+    /**
+     * @var array
+     */
     protected array $propertyMap = [];
+
+    /**
+     * @var array
+     */
     protected array $propertyKeys = [];
+
+    /**
+     * @var Collection
+     */
     protected Collection $properties;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $createdTime;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $lastEditedTime;
 
 
+    /**
+     * @param array $responseData
+     * @throws HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'page') throw HandlingException::instance("invalid json-array: the given object is not a page");
+        if ($responseData['object'] !== 'page') throw HandlingException::instance('invalid json-array: the given object is not a page');
         $this->fillFromRaw();
     }
 
+    /**
+     *
+     */
     private function fillFromRaw(): void
     {
         $this->fillId();    
@@ -37,6 +80,9 @@ class Page extends Entity
         $this->fillLastEditedTime();
     }
 
+    /**
+     *
+     */
     private function fillObjectType(): void
     {
         if (Arr::exists($this->responseData, 'object')) {
@@ -44,6 +90,9 @@ class Page extends Entity
         }
     }
 
+    /**
+     * @throws HandlingException
+     */
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
@@ -58,10 +107,13 @@ class Page extends Entity
         }
     }
 
+    /**
+     *
+     */
     private function fillTitle(): void
     {
         $titleProperty = $this->properties->filter(function ($property) {
-            return $property->getType() == "title";
+            return $property->getType() == 'title';
         })->first();
 
         if ($titleProperty !== null) {
@@ -74,16 +126,26 @@ class Page extends Entity
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @return Collection
+     */
     public function getProperties(): Collection
     {
         return $this->properties;
     }
 
+    /**
+     * @param string $propertyKey
+     * @return Property|null
+     */
     public function getProperty(string $propertyKey): ?Property
     {
         if(!isset($this->propertyMap[$propertyKey])){
@@ -92,26 +154,41 @@ class Page extends Entity
         return $this->propertyMap[$propertyKey];
     }
 
+    /**
+     * @return string
+     */
     public function getObjectType(): string
     {
         return $this->objectType;
     }
 
+    /**
+     * @return array
+     */
     public function getRawProperties(): array
     {
         return $this->rawProperties;
     }
 
+    /**
+     * @return array
+     */
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getCreatedTime(): DateTime
     {
         return $this->createdTime;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getLastEditedTime(): DateTime
     {
         return $this->lastEditedTime;

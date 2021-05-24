@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
 
@@ -23,6 +24,8 @@ class Databases extends Endpoint implements EndpointInterface
      * notion-api-docs: https://developers.notion.com/reference/get-databases
      *
      * @return DatabaseCollection
+     * @throws HandlingException
+     * @throws NotionException
      */
     public function all(): DatabaseCollection
     {
@@ -38,6 +41,7 @@ class Databases extends Endpoint implements EndpointInterface
      * @param string $databaseId
      * @return Database
      * @throws HandlingException
+     * @throws NotionException
      */
     public function find(string $databaseId): Database
     {

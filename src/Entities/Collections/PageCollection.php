@@ -2,13 +2,18 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Entities\Page;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Page;
 
 
+/**
+ * Class PageCollection
+ * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ */
 class PageCollection extends EntityCollection
 {
-    protected function collectChildren() : void
+
+    protected function collectChildren(): void
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $pageChild) {

@@ -2,6 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Exceptions;
 
+use Exception;
+
 /**
  * Class LaravelNotionAPIException
  *
@@ -10,7 +12,7 @@ namespace FiveamCode\LaravelNotionApi\Exceptions;
  *
  * @package FiveamCode\LaravelNotionApi\Exceptions
  */
-abstract class LaravelNotionAPIException extends \Exception
+abstract class LaravelNotionAPIException extends Exception
 {
     /**
      * Provides - if available - useful information to understand this exception better.
@@ -26,7 +28,7 @@ abstract class LaravelNotionAPIException extends \Exception
      * @param array $payload
      * @return HandlingException
      */
-    public abstract static function instance(string $message, array $payload = []): LaravelNotionAPIException;
+    abstract public static function instance(string $message, array $payload = []): LaravelNotionAPIException;
 
 
     /**

@@ -7,34 +7,61 @@ use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 
+/**
+ * Class Search
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Search extends Endpoint
 {
+    /**
+     * @var string
+     */
     private string $searchText;
+
+    /**
+     * @var string|null
+     */
     private ?string $filter = null;
+
+    /**
+     * @var Sorting|null
+     */
     private ?Sorting $sort = null;
 
 
-    public function __construct(Notion $notion, string $searchText = "")
+    /**
+     * Search constructor.
+     * @param Notion $notion
+     * @param string $searchText
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException
+     */
+    public function __construct(Notion $notion, string $searchText = '')
     {
         $this->searchText = $searchText;
         parent::__construct($notion);
     }
 
+    /**
+     * @return EntityCollection
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
     public function query(): EntityCollection
     {
         $postData = [];
 
         if ($this->sort !== null)
-            $postData["sort"] = $this->sort->toArray();
+            $postData['sort'] = $this->sort->toArray();
 
         if ($this->filter !== null)
-            $postData["filter"] = ['property' => 'object', 'value' => $this->filter]; 
+            $postData['filter'] = ['property' => 'object', 'value' => $this->filter];
 
         if ($this->startCursor !== null)
-            $postData["start_cursor"] = $this->startCursor;
+            $postData['start_cursor'] = $this->startCursor;
 
         if ($this->pageSize !== null)
-            $postData["page_size"] = $this->pageSize;
+            $postData['page_size'] = $this->pageSize;
 
         if ($this->searchText !== null)
             $postData['query'] = $this->searchText;
@@ -49,25 +76,40 @@ class Search extends Endpoint
         return new EntityCollection($response);
     }
 
-    public function sortByLastEditedTime(string $direction = "ascending"): Search
+    /**
+     * @param string $direction
+     * @return $this
+     */
+    public function sortByLastEditedTime(string $direction = 'ascending'): Search
     {
-        $this->sort = Sorting::timestampSort("last_edited_time", $direction);
+        $this->sort = Sorting::timestampSort('last_edited_time', $direction);
         return $this;
     }
 
-    public function onlyDatabases() : Search
+    /**
+     * @return $this
+     */
+    public function onlyDatabases(): Search
     {
-        $this->filter = "database";
+        $this->filter = 'database';
         return $this;
     }
 
-    public function onlyPages() : Search
+    /**
+     * @return $this
+     */
+    public function onlyPages(): Search
     {
-        $this->filter = "page";
+        $this->filter = 'page';
         return $this;
     }
 
-    public function getTitles()
+    /**
+     * @return Collection
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
+    public function getTitles(): Collection
     {
         $titleCollection = new Collection();
         $results = $this->query();
@@ -79,7 +121,13 @@ class Search extends Endpoint
         return $titleCollection;
     }
 
-    public function getIds(){
+    /**
+     * @return Collection
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
+    public function getIds(): Collection
+    {
         $idCollection = new Collection();
         $results = $this->query();
 
@@ -89,13 +137,21 @@ class Search extends Endpoint
         return $idCollection;
     }
 
-    public function filterBy(string $filter)
+    /**
+     * @param string $filter
+     * @return $this
+     */
+    public function filterBy(string $filter): Search
     {
         $this->filter = $filter;
         return $this;
     }
 
-    public function sortBy(Sorting $sort)
+    /**
+     * @param Sorting $sort
+     * @return $this
+     */
+    public function sortBy(Sorting $sort): Search
     {
         $this->sort = $sort;
         return $this;

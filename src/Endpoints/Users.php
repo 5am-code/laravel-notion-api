@@ -3,10 +3,14 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\User;
-use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 
+/**
+ * Class Users
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Users extends Endpoint implements EndpointInterface
 {
 
@@ -16,6 +20,8 @@ class Users extends Endpoint implements EndpointInterface
      * notion-api-docs: https://developers.notion.com/reference/get-users
      *
      * @return UserCollection
+     * @throws HandlingException
+     * @throws NotionException
      */
     public function all(): UserCollection
     {
@@ -30,12 +36,14 @@ class Users extends Endpoint implements EndpointInterface
      * notion-api-docs: https://developers.notion.com/reference/get-user
      *
      * @param string $userId
-     * @return array
+     * @return User
+     * @throws HandlingException
+     * @throws NotionException
      */
     public function find(string $userId): User
     {
         $response = $this->get(
-            $this->url(Endpoint::USERS . "/" . $userId)
+            $this->url(Endpoint::USERS . '/' . $userId)
         );
 
         return new User($response->json());

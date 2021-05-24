@@ -2,20 +2,41 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
+use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 
+/**
+ * Class Database
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Database extends Endpoint
 {
+    /**
+     * @var string
+     */
     private string $databaseId;
 
+    /**
+     * @var Collection
+     */
     private Collection $filter;
+
+    /**
+     * @var Collection
+     */
     private Collection $sorts;
 
 
+    /**
+     * Database constructor.
+     * @param string $databaseId
+     * @param Notion $notion
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException
+     */
     public function __construct(string $databaseId, Notion $notion)
     {
         $this->databaseId = $databaseId;
@@ -26,21 +47,26 @@ class Database extends Endpoint
         parent::__construct($notion);
     }
 
+    /**
+     * @return PageCollection
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
     public function query(): PageCollection
     {
         $postData = [];
 
         if ($this->sorts->isNotEmpty())
-            $postData["sorts"] = Sorting::sortQuery($this->sorts);
+            $postData['sorts'] = Sorting::sortQuery($this->sorts);
 
         if ($this->filter->isNotEmpty())
-            $postData["filter"]["or"] = Filter::filterQuery($this->filter); // TODO Compound filters!
+            $postData['filter']['or'] = Filter::filterQuery($this->filter); // TODO Compound filters!
 
         if ($this->startCursor !== null)
-            $postData["start_cursor"] = $this->startCursor;
+            $postData['start_cursor'] = $this->startCursor;
 
         if ($this->pageSize !== null)
-            $postData["page_size"] = $this->pageSize;
+            $postData['page_size'] = $this->pageSize;
 
 
         $response = $this
@@ -53,13 +79,21 @@ class Database extends Endpoint
         return new PageCollection($response);
     }
 
-    public function filterBy(Collection $filter)
+    /**
+     * @param Collection $filter
+     * @return $this
+     */
+    public function filterBy(Collection $filter): Database
     {
         $this->filter = $filter;
         return $this;
     }
 
-    public function sortBy(Collection $sorts)
+    /**
+     * @param Collection $sorts
+     * @return $this
+     */
+    public function sortBy(Collection $sorts): Database
     {
         $this->sorts = $sorts;
         return $this;

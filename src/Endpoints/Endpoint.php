@@ -4,40 +4,54 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use Illuminate\Http\Client\Response;
 use FiveamCode\LaravelNotionApi\Notion;
-use GuzzleHttp\Promise\PromiseInterface;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException;
 
+/**
+ * Class Endpoint
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Endpoint
 {
-    const BASE_URL = 'https://api.notion.com/';
-    const DATABASES = 'databases';
-    const BLOCKS = 'blocks';
-    const PAGES = 'pages';
-    const USERS = 'users';
-    const SEARCH = 'search';
+    public const BASE_URL = 'https://api.notion.com/';
+    public const DATABASES = 'databases';
+    public const BLOCKS = 'blocks';
+    public const PAGES = 'pages';
+    public const USERS = 'users';
+    public const SEARCH = 'search';
 
+    /**
+     * @var Notion
+     */
     public Notion $notion;
 
+    /**
+     * @var StartCursor|null
+     */
     protected ?StartCursor $startCursor = null;
+
+    /**
+     * @var int
+     */
     protected int $pageSize = 100;
 
+    /**
+     * @var Response|null
+     */
     protected ?Response $response = null;
 
     /**
      * Endpoint constructor.
      * @param Notion $notion
      * @throws HandlingException
-     * @throws LaravelNotionAPIException
      */
     public function __construct(Notion $notion)
     {
         $this->notion = $notion;
 
         if ($this->notion->getConnection() === null) {
-            throw HandlingException::instance("Connection could not be established, please check your token.");
+            throw HandlingException::instance('Connection could not be established, please check your token.');
         }
     }
 
@@ -69,10 +83,11 @@ class Endpoint
 
     /**
      * @param string $url
-     * @throws HandlingException
+     * @return Response
      * @throws NotionException
+     * @throws HandlingException
      */
-    protected function get(string $url)
+    protected function get(string $url): Response
     {
         $response = $this->notion->getConnection()->get($url);
 
@@ -86,9 +101,11 @@ class Endpoint
     /**
      * @param string $url
      * @param array $body
-     * @return PromiseInterface|Response
+     * @return Response
+     * @throws HandlingException
+     * @throws NotionException
      */
-    protected function post(string $url, array $body)
+    protected function post(string $url, array $body): Response
     {
         $response = $this->notion->getConnection()->post($url, $body);
 
@@ -105,7 +122,7 @@ class Endpoint
      */
     protected function buildPaginationQuery(): string
     {
-        $paginationQuery = "";
+        $paginationQuery = '';
 
         if ($this->pageSize !== null)
             $paginationQuery = "page_size={$this->pageSize}&";
@@ -131,12 +148,11 @@ class Endpoint
      * @param StartCursor $startCursor
      * @return Endpoint
      * @throws HandlingException
-     * @throws LaravelNotionAPIException
      */
     public function offset(StartCursor $startCursor): Endpoint
     {
         // toDo
-        throw HandlingException::instance("Not implemented yet.");
+        throw HandlingException::instance('Not implemented yet.', compact($startCursor));
     }
 
 }
