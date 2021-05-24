@@ -15,32 +15,13 @@ class Users extends Endpoint implements EndpointInterface
      * url: https://api.notion.com/{version}/users
      * notion-api-docs: https://developers.notion.com/reference/get-users
      *
-     * @return Collection
+     * @return UserCollection
      */
-    public function all(): Collection
+    public function all(): UserCollection
     {
-        return $this->collect()->getResults();
-    }
-    
-    
-    /**
-     * List users (raw json-data)
-     * url: https://api.notion.com/{version}/users
-     * notion-api-docs: https://developers.notion.com/reference/get-users
-     *
-     * @return array
-     */
-    public function allRaw(): array
-    {
-        return $this->collect()->getRawResults();
-    }
+        $resultData = $this->getJson($this->url(Endpoint::USERS) . "?{$this->buildPaginationQuery()}");
 
-    private function collect(): UserCollection{
-        $result = $this->get(
-            $this->url(Endpoint::USERS . "?{$this->buildPaginationQuery()}")
-        );
-
-        return new UserCollection($result->json());
+        return new UserCollection($resultData);
     }
 
     /**
@@ -56,10 +37,6 @@ class Users extends Endpoint implements EndpointInterface
         $response = $this->get(
             $this->url(Endpoint::USERS . "/" . $userId)
         );
-
-        if (!$response->ok())
-            throw HandlingException::instance("User not found.", ["userId" => $userId]);
-
 
         return new User($response->json());
     }

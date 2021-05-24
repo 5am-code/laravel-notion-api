@@ -9,9 +9,6 @@ class Number extends Property
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
-        // if (!is_array($this->rawContent))
-        //     throw HandlingException::instance("The property-type is number, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.");
-
         $this->fillNumber();
     }
 

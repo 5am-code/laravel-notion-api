@@ -2,10 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 
 class Block extends Endpoint
 {
@@ -24,39 +24,17 @@ class Block extends Endpoint
      *
      * @return BlockCollection
      */
-    public function children(): Collection
-    {
-        return $this->collectChildren()->getResults();
-    }
-
-    /**
-     * Retrieve block children (as raw json-data)
-     * url: https://api.notion.com/{version}/blocks/{block_id}/children
-     * notion-api-docs: https://developers.notion.com/reference/get-block-children
-     *
-     * @return array
-     */
-    public function childrenRaw(): array
-    {
-        return $this->collectChildren()->getRawResults();
-    }
-
-    private function collectChildren(): BlockCollection
+    public function children(): BlockCollection
     {
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
         );
-        if (!$response->ok())
-            throw HandlingException::instance("Block not found.", ["blockId" => $this->blockId]);
 
-
-        $blockCollection = new BlockCollection($response->json());
-        return $blockCollection;
+        return new BlockCollection($response->json());
     }
 
     public function create(): array
     {
-        //toDo
-        throw new \Exception("not implemented yet");
+        throw new HandlingException("Not implemented");
     }
 }

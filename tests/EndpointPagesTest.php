@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
@@ -16,25 +17,13 @@ use Orchestra\Testbench\TestCase;
  *
  * @package FiveamCode\LaravelNotionApi\Tests
  */
-class EndpointPageTest extends TestCase
+class EndpointPagesTest extends NotionApiTest
 {
-
-    protected function getPackageProviders($app)
-    {
-        return ['FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider'];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Notion' => \FiveamCode\LaravelNotionApi\NotionFacade::class
-        ];
-    }
 
     /** @test */
     public function it_throws_a_notion_exception_bad_request()
     {
-        // failing /v1/databases
+        // failing /v1
         Http::fake([
             'https://api.notion.com/v1/pages*'
             => Http::response(
@@ -70,8 +59,10 @@ class EndpointPageTest extends TestCase
         // check properties
         $this->assertSame("Notion Is Awesome", $pageResult->getTitle());
         $this->assertSame("page", $pageResult->getObjectType());
+        $this->assertCount(7, $pageResult->getRawProperties());
+        $this->assertCount(7, $pageResult->getProperties());
+        $this->assertCount(7, $pageResult->getPropertyKeys());
 
-        $this->assertCount(6, $pageResult->getRawProperties());
 
         $this->assertInstanceOf(Carbon::class, $pageResult->getCreatedTime());
         $this->assertInstanceOf(Carbon::class, $pageResult->getLastEditedTime());
@@ -94,6 +85,25 @@ class EndpointPageTest extends TestCase
         $this->expectExceptionMessage("Not found");
 
         \Notion::pages()->find("b55c9c91-384d-452b-81db-d1ef79372b79");
+    }
+
+
+    /** @test */
+    public function it_throws_a_handling_exception_not_implemented_for_create() {
+
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("Not implemented");
+
+        \Notion::pages()->create();
+    }
+
+    /** @test */
+    public function it_throws_a_handling_exception_not_implemented_for_update_properties() {
+
+        $this->expectException(HandlingException::class);
+        $this->expectExceptionMessage("Not implemented");
+
+        \Notion::pages()->updateProperties();
     }
 
 }

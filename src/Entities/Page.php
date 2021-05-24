@@ -14,6 +14,7 @@ class Page extends Entity
     protected string $objectType = "";
     protected array $rawProperties = [];
     protected array $propertyMap = [];
+    protected array $propertyKeys = [];
     protected Collection $properties;
     protected DateTime $createdTime;
     protected DateTime $lastEditedTime;
@@ -53,6 +54,7 @@ class Page extends Entity
                 $this->properties->add($property);
                 $this->propertyMap[$propertyKey] = $property;
             }
+            $this->propertyKeys = array_keys($this->rawProperties);
         }
     }
 
@@ -82,10 +84,12 @@ class Page extends Entity
         return $this->properties;
     }
 
-    public function getProperty(string $propertyName): ?Property
+    public function getProperty(string $propertyKey): ?Property
     {
-        //TODO:Handle undefined propertyNames (exception/null/?)
-        return $this->propertyMap[$propertyName];
+        if(!isset($this->propertyMap[$propertyKey])){
+            return null;
+        }
+        return $this->propertyMap[$propertyKey];
     }
 
     public function getObjectType(): string
@@ -98,9 +102,9 @@ class Page extends Entity
         return $this->rawProperties;
     }
 
-    public function getPropertyNames(): array
+    public function getPropertyKeys(): array
     {
-        return array_keys($this->rawProperties);
+        return $this->propertyKeys;
     }
 
     public function getCreatedTime(): DateTime

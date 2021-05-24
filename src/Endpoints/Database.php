@@ -48,7 +48,6 @@ class Database extends Endpoint
                 $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
                 $postData
             )
-
             ->json();
 
         return new PageCollection($response);

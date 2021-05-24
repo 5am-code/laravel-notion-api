@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 
 
 class BlockCollection extends EntityCollection
