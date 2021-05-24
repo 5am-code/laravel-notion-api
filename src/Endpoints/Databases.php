@@ -3,11 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use Illuminate\Support\Collection;
 
 
 /**
@@ -20,37 +18,19 @@ use Illuminate\Support\Collection;
  */
 class Databases extends Endpoint implements EndpointInterface
 {
-
-
     /**
      * List databases
      * url: https://api.notion.com/{version}/databases
      * notion-api-docs: https://developers.notion.com/reference/get-databases
      *
      * @return DatabaseCollection
+     * @throws HandlingException
+     * @throws NotionException
      */
-    public function all(): Collection
-    {
-        return $this->collect()->getResults();
-    }
-
-    /**
-     * List databases (raw json-data)
-     * url: https://api.notion.com/{version}/databases
-     * notion-api-docs: https://developers.notion.com/reference/get-databases
-     *
-     * @return array
-     */
-    public function allRaw(): array
-    {
-        return $this->collect()->getRawResults();
-    }
-
-    private function collect(): DatabaseCollection
+    public function all(): DatabaseCollection
     {
         $resultData = $this->getJson($this->url(Endpoint::DATABASES) . "?{$this->buildPaginationQuery()}");
-        $databaseCollection = new DatabaseCollection($resultData);
-        return $databaseCollection;
+        return new DatabaseCollection($resultData);
     }
 
     /**
@@ -60,17 +40,14 @@ class Databases extends Endpoint implements EndpointInterface
      *
      * @param string $databaseId
      * @return Database
-     * @throws WrapperException
+     * @throws HandlingException
+     * @throws NotionException
      */
     public function find(string $databaseId): Database
     {
-        $response = $this->get(
-            $this->url(Endpoint::DATABASES . "/{$databaseId}")
-        );
+        $result = $this
+            ->getJson($this->url(Endpoint::DATABASES . "/{$databaseId}"));
 
-        if (!$response->ok())
-            throw WrapperException::instance("Database not found.", ["databaseId" => $databaseId]);
-
-        return new Database($response->json());
+        return new Database($result);
     }
 }

@@ -36,16 +36,16 @@ Head over to the [Documentation](https://5amco.de/docs) of this package.
 
 ### 🔥 Code Examples to jumpstart your Notion API Project
 
-#### Basic Setup
+#### Basic Setup (+ example)
 ```php
-use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Query\Sorting;
-use FiveamCode\LaravelNotionApi\Query\Filter;
+use FiveamCode\LaravelNotionApi\Notion; 
 
-// Setup basic API connection
-$notion = new Notion();
-$notion->v1();
+# Access through Facade (token has to be set in .env)
+\Notion::databases()->find($databaseId);
+
+# Custom instantiation (necessary if you want to access more than one NotionApi integration)
+$notion = new Notion($apiToken, $apiVersion); // version-default is 'v1'
+$notion->databases()->find($databaseId);
 ```
 
 #### Fetch Page Information
@@ -54,32 +54,39 @@ $notion->v1();
 $notion->pages()->find($yourPageId);
 ```
 
+#### Search
+```php
+// Returns a collection pages and databases of your workspace (included in your integration-token)
+\Notion::search($searchText)
+        ->query()
+        ->asCollection();
+```
+
 #### Query Database
+
 ```php
 // Queries a specific database and returns a collection of pages (= database entries)
 $sortings = new Collection();
 $filters = new Collection();
 
 $sortings
-  ->add(Sorting::propertySort("Ordered", "ascending"));
+  ->add(Sorting::propertySort('Ordered', 'ascending'));
 $sortings
-  ->add(Sorting::timestampSort("created_time", "ascending"));
+  ->add(Sorting::timestampSort('created_time', 'ascending'));
 
 $filters
-  ->add(Filter::textFilter("title", ["contains" => "new"]));
+  ->add(Filter::textFilter('title', ['contains' => 'new']));
 // or
 $filters
-  ->add(Filter::rawFilter("Tags", ["multi_select" => ["contains" => "great"]]));
+  ->add(Filter::rawFilter('Tags', ['multi_select' => ['contains' => 'great']]));
   
-$notion
-  ->database($yourDatabaseId)
-  ->filterBy($filters) // filters are optional
-  ->sortBy($sortings) // sorts are optional
-  ->limit(5) // limit is optional
-  ->query(); 
+\Notion::database($yourDatabaseId)
+      ->filterBy($filters) // filters are optional
+      ->sortBy($sortings) // sorts are optional
+      ->limit(5) // limit is optional
+      ->query()
+      ->asCollection();
 ```
-
-
 
 
 ### Testing
@@ -90,7 +97,11 @@ vendor/bin/phpunit tests
 
 ### Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](https://5amco.de/docs/0.3.0/changelog) for more information what has changed recently.
+
+## References / UsedBy
+
+- Julien Nahum created [notionforms.io](https://notionforms.io) with [laravel-notion-api](https://github.com/5am-code/laravel-notion-api), which allows you to easily create custom forms, based on your selected database within notion.
 
 ## Contributing
 

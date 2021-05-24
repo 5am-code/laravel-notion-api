@@ -3,52 +3,117 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
-use FiveamCode\LaravelNotionApi\Notion;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
+/**
+ * Class Page
+ * @package FiveamCode\LaravelNotionApi\Entities
+ */
 class Page extends Entity
 {
-    protected string $title = "";
+    /**
+     * @var string
+     */
+    protected string $title = '';
+
+    /**
+     * @var string
+     */
+    protected string $objectType = '';
+
+    /**
+     * @var array
+     */
     protected array $rawProperties = [];
-    protected Collection $propertyCollection;
+
+    /**
+     * @var array
+     */
+    protected array $propertyMap = [];
+
+    /**
+     * @var array
+     */
+    protected array $propertyKeys = [];
+
+    /**
+     * @var Collection
+     */
+    protected Collection $properties;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $createdTime;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $lastEditedTime;
 
 
+    /**
+     * @param array $responseData
+     * @throws HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
+     */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'page') throw WrapperException::instance("invalid json-array: the given object is not a page");
+        if ($responseData['object'] !== 'page') throw HandlingException::instance('invalid json-array: the given object is not a page');
         $this->fillFromRaw();
     }
 
+    /**
+     *
+     */
     private function fillFromRaw(): void
     {
-        $this->fillId();
+        $this->fillId();    
+        $this->fillObjectType();
         $this->fillProperties();
-        $this->fillTitle();
+        $this->fillTitle(); //!Warning: call after 'fillProperties', since title is included within properties
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
 
+    /**
+     *
+     */
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
+    }
+
+    /**
+     * @throws HandlingException
+     */
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
-            $this->propertyCollection = new Collection();
+            $this->properties = new Collection();
             foreach (array_keys($this->rawProperties) as $propertyKey) {
-                $this->propertyCollection->add(new Property($propertyKey, $this->rawProperties[$propertyKey]));
+                $property = Property::fromResponse($propertyKey, $this->rawProperties[$propertyKey]);
+                $this->properties->add($property);
+                $this->propertyMap[$propertyKey] = $property;
             }
+            $this->propertyKeys = array_keys($this->rawProperties);
         }
     }
 
+    /**
+     *
+     */
     private function fillTitle(): void
     {
-        $titleProperty = $this->propertyCollection->filter(function ($property) {
-            return $property->getType() == "title";
+        $titleProperty = $this->properties->filter(function ($property) {
+            return $property->getType() == 'title';
         })->first();
 
         if ($titleProperty !== null) {
@@ -61,41 +126,69 @@ class Page extends Entity
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-
+    /**
+     * @return Collection
+     */
     public function getProperties(): Collection
     {
-        return $this->propertyCollection;
+        return $this->properties;
     }
 
-    public function getProperty(string $propertyName): ?Property
+    /**
+     * @param string $propertyKey
+     * @return Property|null
+     */
+    public function getProperty(string $propertyKey): ?Property
     {
-        $property = $this->propertyCollection->filter(function ($property) use ($propertyName) {
-            return $property->getTitle() == $propertyName;
-        })->first();
-
-        return $property;
+        if(!isset($this->propertyMap[$propertyKey])){
+            return null;
+        }
+        return $this->propertyMap[$propertyKey];
     }
 
+    /**
+     * @return string
+     */
+    public function getObjectType(): string
+    {
+        return $this->objectType;
+    }
+
+    /**
+     * @return array
+     */
     public function getRawProperties(): array
     {
         return $this->rawProperties;
     }
 
-    public function getPropertyNames(): array
+    /**
+     * @return array
+     */
+    public function getPropertyKeys(): array
     {
-        return array_keys($this->rawProperties);
+        return $this->propertyKeys;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getCreatedTime(): DateTime
     {
         return $this->createdTime;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getLastEditedTime(): DateTime
     {
         return $this->lastEditedTime;

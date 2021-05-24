@@ -2,16 +2,36 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
+/**
+ * Class Filter
+ * @package FiveamCode\LaravelNotionApi\Query
+ */
 class Filter extends QueryHelper
 {
-    private ?string $filterType = null;
-    private ?array $filterConditions = null;
-    private ?array $filterDefinition = null;
+    /**
+     * @var string|null
+     */
+    private ?string $filterType;
+    /**
+     * @var array|null
+     */
+    private ?array $filterConditions;
+    /**
+     * @var array|null
+     */
+    private ?array $filterDefinition;
 
 
+    /**
+     * Filter constructor.
+     * @param string $property
+     * @param string|null $filterType
+     * @param array|null $filterConditions
+     * @param array|null $filterDefinition
+     */
     public function __construct(
         string $property,
         string $filterType = null,
@@ -38,7 +58,7 @@ class Filter extends QueryHelper
      */
     public static function textFilter(string $property, array $filterConditions): Filter
     {
-        return new Filter($property, "text", $filterConditions);
+        return new Filter($property, 'text', $filterConditions);
     }
 
     /**
@@ -53,6 +73,7 @@ class Filter extends QueryHelper
      * @param string $property
      * @param array $filterDefinition
      *
+     * @return Filter
      * @deprecated
      */
     public static function rawFilter(string $property, array $filterDefinition): Filter
@@ -60,26 +81,33 @@ class Filter extends QueryHelper
         return new Filter($property, null, null, $filterDefinition);
     }
 
+    /**
+     * @return array
+     * @throws HandlingException
+     */
     public function toArray(): array
     {
         if ($this->filterDefinition !== null && $this->filterType === null && $this->filterConditions === null) {
             return array_merge(
-                ["property" => $this->property],
+                ['property' => $this->property],
                 $this->filterDefinition
             );
-        }
-        elseif ($this->filterType !== null && $this->filterConditions !== null && $this->filterDefinition === null) {
+        } elseif ($this->filterType !== null && $this->filterConditions !== null && $this->filterDefinition === null) {
             return [
-                "property" => $this->property,
+                'property' => $this->property,
                 $this->filterType => $this->filterConditions
             ];
-        }
-        else
-            throw WrapperException::instance("Invalid filter definition.", ["invalidFilter" => $this]);
+        } else
+            throw HandlingException::instance('Invalid filter definition.', ['invalidFilter' => $this]);
 
     }
 
 
+    /**
+     * @param Collection $filter
+     * @return array
+     * @throws HandlingException
+     */
     public static function filterQuery(Collection $filter): array
     {
 

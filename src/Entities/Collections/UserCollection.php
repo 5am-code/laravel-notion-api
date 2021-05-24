@@ -2,16 +2,17 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Entities\User;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
-use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\User;
 
 
+/**
+ * Class UserCollection
+ * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ */
 class UserCollection extends EntityCollection
 {
-    protected function collectChildren()
+    protected function collectChildren(): void
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $userChild) {

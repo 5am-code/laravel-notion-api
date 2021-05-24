@@ -4,18 +4,20 @@ namespace FiveamCode\LaravelNotionApi;
 
 use Illuminate\Support\Facades\Facade;
 
+
 /**
- * @see \FiveamCode\LaravelNotionApi\Skeleton\SkeletonClass
+ * Class NotionFacade
+ * @package FiveamCode\LaravelNotionApi
  */
-class LaravelNotionApiFacade extends Facade
+class NotionFacade extends Facade
 {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'laravel-notion-api';
+        return Notion::class;
     }
 }

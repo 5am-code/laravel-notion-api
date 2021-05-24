@@ -2,14 +2,17 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
+/**
+ * Class QueryHelper
+ * @package FiveamCode\LaravelNotionApi\Query
+ */
 class QueryHelper
 {
     /**
      * Contains the property name the query helper works with.
-     * @var
+     * @var string|null
      */
     protected ?string $property = null;
 
@@ -38,10 +41,13 @@ class QueryHelper
     protected Collection $validFilterTypes;
 
 
+    /**
+     * QueryHelper constructor.
+     */
     public function __construct()
     {
-        $this->validTimestamps = collect(["created_time", "last_edited_time"]);
-        $this->validDirections = collect(["ascending", "descending"]);
+        $this->validTimestamps = collect(['created_time', 'last_edited_time']);
+        $this->validDirections = collect(['ascending', 'descending']);
 
 
     }

@@ -1,0 +1,72 @@
+<?php
+
+namespace FiveamCode\LaravelNotionApi\Entities\Properties;
+
+use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
+
+/**
+ * Class MultiSelect
+ * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ */
+class MultiSelect extends Property
+{
+    /**
+     * @throws HandlingException
+     */
+    protected function fillFromRaw(): void
+    {
+        parent::fillFromRaw();
+        if (!is_array($this->rawContent))
+            throw HandlingException::instance('The property-type is multi_select, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.');
+
+        $itemCollection = new Collection();
+
+        foreach ($this->rawContent as $item) {
+            $itemCollection->add(new SelectItem($item));
+        }
+
+        $this->content = $itemCollection;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getContent(): Collection
+    {
+        return $this->getItems();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getItems(): Collection
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNames(): array
+    {
+        $names = [];
+        foreach ($this->getItems() as $item) {
+            array_push($names, $item->getName());
+        }
+        return $names;
+    }
+
+    /**
+     * @return array
+     */
+    public function getColors(): array
+    {
+        $colors = [];
+        foreach ($this->getItems() as $item) {
+            array_push($colors, $item->getColor());
+        }
+        return $colors;
+    }
+}

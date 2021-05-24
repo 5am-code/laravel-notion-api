@@ -2,15 +2,29 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\WrapperException;
 use FiveamCode\LaravelNotionApi\Notion;
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 
+/**
+ * Class Block
+ * @package FiveamCode\LaravelNotionApi\Endpoints
+ */
 class Block extends Endpoint
 {
+    /**
+     * @var string
+     */
     private string $blockId;
 
+    /**
+     * Block constructor.
+     * @param Notion $notion
+     * @param string $blockId
+     * @throws HandlingException
+     * @throws \FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException
+     */
     public function __construct(Notion $notion, string $blockId)
     {
         parent::__construct($notion);
@@ -23,41 +37,24 @@ class Block extends Endpoint
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *
      * @return BlockCollection
+     * @throws HandlingException
+     * @throws NotionException
      */
-    public function children(): Collection
+    public function children(): BlockCollection
     {
-        return $this->collectChildren()->getResults();
+        $response = $this->get(
+            $this->url(Endpoint::BLOCKS . '/' . $this->blockId . '/children' . "?{$this->buildPaginationQuery()}")
+        );
+
+        return new BlockCollection($response->json());
     }
 
     /**
-     * Retrieve block children (as raw json-data)
-     * url: https://api.notion.com/{version}/blocks/{block_id}/children
-     * notion-api-docs: https://developers.notion.com/reference/get-block-children
-     *
      * @return array
+     * @throws HandlingException
      */
-    public function childrenRaw(): array
-    {
-        return $this->collectChildren()->getRawResults();
-    }
-
-    private function collectChildren(): BlockCollection
-    {
-        $response = $this->get(
-            $this->url(Endpoint::BLOCKS . "/" . $this->blockId . "/children" . "?{$this->buildPaginationQuery()}")
-        );
-
-        if (!$response->ok())
-            throw WrapperException::instance("Block not found.", ["blockId" => $this->blockId]);
-
-
-        $blockCollection = new BlockCollection($response->json());
-        return $blockCollection;
-    }
-
     public function create(): array
     {
-        //toDo
-        throw new \Exception("not implemented yet");
+        throw new HandlingException('Not implemented');
     }
 }
