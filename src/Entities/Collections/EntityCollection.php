@@ -30,7 +30,8 @@ class EntityCollection
         // so we have to check here on the given status code in the paylaod,
         // if the object was not found.
         if (
-            $responseData['object'] === 'error'
+            array_key_exists('object', $responseData)
+            && $responseData['object'] === 'error'
             && Arr::exists($responseData, 'status') && $responseData['status'] === 404
         ) {
             throw NotionException::instance("Not found", compact("responseData"));

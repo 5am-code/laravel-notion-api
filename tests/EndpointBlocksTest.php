@@ -10,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 /**
  * Class EndpointBlocksTest
  *
- * The fake API responses are based on our test environment (since the current Notion examples do not match with the actual calls).
+ * The fake API responses are based on Notions documentation.
  * @see https://developers.notion.com/reference/get-block-children
  *
  * @package FiveamCode\LaravelNotionApi\Tests

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Http;
  *
  * @package FiveamCode\LaravelNotionApi\Tests
  */
-class EndpointDatabaseTest extends NotionApiTest
+class EndpointDatabasesTest extends NotionApiTest
 {
 
     /** @test */
