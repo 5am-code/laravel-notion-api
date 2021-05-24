@@ -108,7 +108,7 @@ class PagePropertyTest extends NotionApiTest
         $this->assertInstanceOf(RichText::class, $text->getRichText());
         $this->assertInstanceOf(RichText::class, $text->getContent());
         $this->assertSame("this is a nice Text :-)", $text->getRichText()->getPlainText());
-        $this->assertCount(2, $text->getRichText()->getRaw());
+        $this->assertCount(2, $text->getRichText()->getRawResponse());
     }
 
 
