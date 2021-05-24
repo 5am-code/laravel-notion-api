@@ -105,6 +105,45 @@ class EndpointDatabaseTest extends NotionApiTest
     }
 
     /** @test */
+    public function it_queries_a_database_with_filter_and_sorting_and_has_empty_result()
+    {
+        // success /v1/databases/DATABASE_DOES_EXIST/query
+        Http::fake([
+            'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*'
+            => Http::response(
+                json_decode(file_get_contents("tests/stubs/endpoints/databases/response_query_no_result_200.json"), true),
+                200,
+                ['Headers']
+            )
+        ]);
+
+        // Let's search for something that doesn't exists
+        $filters = new Collection();
+
+        $filters
+            ->add(
+                Filter::rawFilter(
+                    "Known for",
+                    [
+                        "multi_select" =>
+                            ["contains" => "something that doesn't exists"]
+                    ]
+                )
+            );
+
+        $result = \Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+            ->filterBy($filters)
+            ->query();
+
+        $this->assertInstanceOf(PageCollection::class, $result);
+
+        $resultCollection = $result->asCollection();
+
+        $this->assertIsIterable($resultCollection);
+        $this->assertCount(0, $resultCollection);
+    }
+
+    /** @test */
     public function it_throws_a_notion_exception_bad_request()
     {
         // failing /v1/databases
