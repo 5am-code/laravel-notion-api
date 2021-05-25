@@ -51,7 +51,7 @@ $notion->databases()->find($databaseId);
 #### Fetch Page Information
 ```php
 // Returns a specific page
-$notion->pages()->find($yourPageId);
+\Notion::pages()->find($yourPageId);
 ```
 
 #### Search
