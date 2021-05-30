@@ -53,7 +53,7 @@ class NotionApiTest extends TestCase
     public function it_throws_a_handling_exception_invalid_version()
     {
         $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage('invalid version for notion-api');
+        $this->expectExceptionMessage('Invalid version for Notion-API endpoint');
 
         new Notion('secret_*', 'v-does-not-exist');
     }

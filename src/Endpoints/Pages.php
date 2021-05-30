@@ -39,7 +39,7 @@ class Pages extends Endpoint implements EndpointInterface
     public function create(): array
     {
         //toDo
-        throw new HandlingException('Not implemented');
+        throw new HandlingException( 'Not implemented');
     }
 
 
