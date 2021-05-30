@@ -50,6 +50,7 @@ class Notion
      * Notion constructor.
      * @param string|null $version
      * @param string|null $token
+     * @throws HandlingException
      */
     public function __construct(string $token, string $version = 'v1')
     {
@@ -58,16 +59,20 @@ class Notion
         $this->validVersions = collect(['v1']);
 
         $this->setVersion($version);
+        $this->connect();
 
     }
 
     /**
      *
      * @return Notion
+     * @throws HandlingException
      */
     private function connect(): Notion
     {
-        $this->connection = Http::withToken($this->token);
+        $this->connection = Http
+            ::withHeaders($this->buildRequestHeader())
+            ->withToken($this->token);
         return $this;
     }
 
@@ -89,6 +94,7 @@ class Notion
      * Wrapper function to set version to v1.
      *
      * @return $this
+     * @throws HandlingException
      */
     public function v1(): Notion
     {
@@ -101,11 +107,11 @@ class Notion
      *
      * @param string $token
      * @return Notion
+     * @deprecated for public usage; will be set to private in 0.4.0!
      */
     public function setToken(string $token): Notion
     {
         $this->token = $token;
-        $this->connect();
         return $this;
     }
 
@@ -195,7 +201,37 @@ class Notion
     public function checkValidVersion(string $version): void
     {
         if (!$this->validVersions->contains($version)) {
-            throw HandlingException::instance('invalid version for notion-api', ['invalidVersion' => $version]);
+            throw HandlingException::instance('Invalid version for Notion-API endpoint', ['invalidVersion' => $version]);
+        }
+    }
+
+    /**
+     * @return string[]
+     *
+     * @throws HandlingException
+     */
+    private function buildRequestHeader(): array
+    {
+        return [
+            'Notion-Version' => $this->mapVersionToHeaderVersion()
+        ];
+    }
+
+    /**
+     * Due to the inconsistency of the Notion API requiring a endpoint url
+     * with v* as well as a dated version in the request header, this method
+     * maps the given version (e.g. v1) to the version date Notion requires
+     * in the header (e.g. "2021-05-13").
+     * @return string
+     * @throws HandlingException
+     */
+    private function mapVersionToHeaderVersion(): string
+    {
+        switch ($this->version) {
+            case 'v1':
+                return '2021-05-13';
+            default:
+                throw new HandlingException('Invalid version.');
         }
     }
 }
