@@ -88,24 +88,24 @@ class EndpointPagesTest extends NotionApiTest
     }
 
 
-    /** @test */
-    public function it_throws_a_handling_exception_not_implemented_for_create()
-    {
+    // /** @test */
+    // public function it_throws_a_handling_exception_not_implemented_for_create()
+    // {
 
-        $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage('Not implemented');
+    //     $this->expectException(HandlingException::class);
+    //     $this->expectExceptionMessage('Not implemented');
 
-        Notion::pages()->create();
-    }
+    //     Notion::pages()->create();
+    // }
 
-    /** @test */
-    public function it_throws_a_handling_exception_not_implemented_for_update_properties()
-    {
+    // /** @test */
+    // public function it_throws_a_handling_exception_not_implemented_for_update_properties()
+    // {
 
-        $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage('Not implemented');
+    //     $this->expectException(HandlingException::class);
+    //     $this->expectExceptionMessage('Not implemented');
 
-        Notion::pages()->updateProperties();
-    }
+    //     Notion::pages()->updateProperties();
+    // }
 
 }

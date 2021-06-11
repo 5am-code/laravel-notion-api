@@ -34,14 +34,13 @@ class Property extends Entity
 
     /**
      * Property constructor.
-     * @param string $title
+     * @param string|null $title
      * @param array $responseData
      * @throws HandlingException
      */
-    public function __construct(string $title, array $responseData)
+    public function __construct(string $title = null)
     {
-        $this->title = $title;
-        $this->setResponseData($responseData);
+        if($title != null) $this->title = $title;
     }
 
 
@@ -95,6 +94,11 @@ class Property extends Entity
         return $this->title;
     }
 
+    public function setTitle($title): void
+    {
+        $this->title = $title;
+    }
+
     /**
      * @return string
      */
@@ -111,12 +115,21 @@ class Property extends Entity
         return $this->rawContent;
     }
 
+    public function setRawContent($rawContent) : void{
+        $this->rawContent = $rawContent;
+    }
+
     /**
      * @return mixed
      */
     public function getContent()
     {
         return $this->rawContent;
+    }
+
+    
+    public function setContent($content) : void{
+        $this->content = $content;
     }
 
     /**
@@ -127,21 +140,24 @@ class Property extends Entity
      */
     public static function fromResponse($propertyKey, $rawContent): Property
     {
+        $property = null;
         if ($rawContent['type'] == 'multi_select') {
-            return new MultiSelect($propertyKey, $rawContent);
+            $property = new MultiSelect($propertyKey);
         } else if ($rawContent['type'] == 'select') {
-            return new Select($propertyKey, $rawContent);
+            $property = new Select($propertyKey);
         } else if ($rawContent['type'] == 'text') {
-            return new Text($propertyKey, $rawContent);
+            $property = new Text($propertyKey);
         } else if ($rawContent['type'] == 'created_by') {
-            return new CreatedBy($propertyKey, $rawContent);
+            $property = new CreatedBy($propertyKey);
         } else if ($rawContent['type'] == 'title') {
-            return new Title($propertyKey, $rawContent);
+            $property = new Title($propertyKey);
         } else if ($rawContent['type'] == 'number') {
-            return new Number($propertyKey, $rawContent);
+            $property = new Number($propertyKey);
+        } else {
+            $property = new Property($propertyKey);
         }
 
-
-        return new Property($propertyKey, $rawContent);
+        $property->setResponseData($rawContent);
+        return $property;
     }
 }

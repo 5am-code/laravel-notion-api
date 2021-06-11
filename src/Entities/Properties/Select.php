@@ -11,6 +11,28 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
  */
 class Select extends Property
 {
+
+    /**
+     * @param $name
+     * @return Select
+     */
+    public static function instance(string $name): Select
+    {
+        $selectProperty = new Select();
+
+        $selectItem = new SelectItem();
+        $selectItem->setName($name);
+        $selectProperty->content = $selectItem;
+
+        $selectProperty->rawContent = [
+            "select" => [
+                "name" => $selectItem->getName()
+            ]
+        ];
+
+        return $selectProperty;
+    }
+
     /**
      * @throws HandlingException
      */

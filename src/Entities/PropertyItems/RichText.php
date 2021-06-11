@@ -16,6 +16,7 @@ class RichText extends Entity
      */
     protected string $plainText = '';
 
+    
     /**
      * @param array $responseData
      */
@@ -53,5 +54,10 @@ class RichText extends Entity
     public function getPlainText(): string
     {
         return $this->plainText;
+    }
+
+    public function setPlainText($text): void
+    {
+        $this->plainText = $text;
     }
 }

@@ -3,9 +3,14 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
@@ -54,6 +59,19 @@ class Page extends Entity
      */
     protected DateTime $lastEditedTime;
 
+
+    /**
+     * Page constructor.
+     * @param array|null $responseData
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    public function __construct(array $responseData = null)
+    {
+        $this->properties = new Collection();
+        parent::__construct($responseData);
+    }
+    
 
     /**
      * @param array $responseData
@@ -125,6 +143,61 @@ class Page extends Entity
             }
         }
     }
+
+    /**
+     * @param $propertyTitle
+     * @param $property
+     */
+    public function setProperty(string $propertyTitle, Property $property): void{
+        $property->setTitle($propertyTitle);
+        $this->properties->add($property);
+
+        if($property instanceof Title){
+            $this->title = $property->getPlainText();
+        }
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $number
+     */
+    public function setNumber(string $propertyTitle, float $number) : void{
+        $this->setProperty($propertyTitle, Number::instance($number));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $text
+     */
+    public function setTitle(string $propertyTitle, string $text) : void{
+        $this->setProperty($propertyTitle, Title::instance($text));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $text
+     */
+    public function setText(string $propertyTitle, string $text) : void{
+        $this->setProperty($propertyTitle, Text::instance($text));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $name
+     */
+    public function setSelect(string $propertyTitle, string $name) : void{
+        $this->setProperty($propertyTitle, Select::instance($name));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $names
+     */
+    public function setMultiSelect(string $propertyTitle, array $names) : void{
+        $this->setProperty($propertyTitle, MultiSelect::instance($names));
+    }
+
+    
 
     /**
      * @return string

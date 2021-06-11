@@ -17,6 +17,39 @@ class Title extends Property
     protected string $plainText = '';
 
     /**
+     * @param $text
+     * @return Title
+     */
+    public static function instance($text): Title
+    {
+        $titleProperty = new Title();
+
+        if (is_string($text)) {
+            $richText = new RichText();
+            $richText->setPlainText($text);
+            $titleProperty->plainText = $richText->getPlainText();
+            $titleProperty->content = $richText;
+        } else {
+            $titleProperty->plainText = $text->getPlainText();
+            $titleProperty->content = $text;
+        }
+
+        //!INFO: Currently only plain_text is transfered into rawContent
+        //TODO: Later the RichText has to return it's raw structure into 'content' 
+        $titleProperty->rawContent = [
+            "title" => [
+                [
+                    "text" => [
+                        "content" => $richText->getPlainText()
+                    ]
+                ]
+            ]
+        ];
+
+        return $titleProperty;
+    }
+
+    /**
      * @throws HandlingException
      */
     protected function fillFromRaw(): void

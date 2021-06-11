@@ -33,13 +33,29 @@ class Pages extends Endpoint implements EndpointInterface
     }
 
     /**
-     * @return array
-     * @throws HandlingException
+     * @return Page
      */
-    public function create(): array
+    public function createInDatabase(string $parentId, Page $page): Page
     {
-        //toDo
-        throw new HandlingException( 'Not implemented');
+        $postData = [];
+        $properties = [];
+
+        foreach ($page->getProperties() as $property) {
+            $properties[$property->getTitle()] = $property->getRawContent();
+        }
+
+        $postData["parent"] = ["database_id" => $parentId];
+        $postData["properties"] = $properties;
+
+
+        $response = $this
+            ->post(
+                $this->url(Endpoint::PAGES),
+                $postData
+            )
+            ->json();
+
+        return new Page($response);
     }
 
 
@@ -47,9 +63,25 @@ class Pages extends Endpoint implements EndpointInterface
      * @return array
      * @throws HandlingException
      */
-    public function updateProperties(): array
+    public function updateProperties(Page $page): Page
     {
-        //toDo
-        throw new HandlingException('Not implemented');
+        $postData = [];
+        $properties = [];
+
+        foreach ($page->getProperties() as $property) {
+            $properties[$property->getTitle()] = $property->getRawContent();
+        }
+
+        $postData["properties"] = $properties;
+
+
+        $response = $this
+            ->patch(
+                $this->url(Endpoint::PAGES . "/" . $page->getId()),
+                $postData
+            )
+            ->json();
+
+        return new Page($response);
     }
 }
