@@ -3,6 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Checkbox;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Date;
 use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use Illuminate\Support\Arr;
@@ -148,7 +150,8 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $property
      */
-    public function setProperty(string $propertyTitle, Property $property): void{
+    public function set(string $propertyTitle, Property $property): void
+    {
         $property->setTitle($propertyTitle);
         $this->properties->add($property);
 
@@ -161,40 +164,64 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $number
      */
-    public function setNumber(string $propertyTitle, float $number) : void{
-        $this->setProperty($propertyTitle, Number::instance($number));
+    public function setNumber(string $propertyTitle, float $number) : void
+    {
+        $this->set($propertyTitle, Number::instance($number));
     }
 
     /**
      * @param $propertyTitle
      * @param $text
      */
-    public function setTitle(string $propertyTitle, string $text) : void{
-        $this->setProperty($propertyTitle, Title::instance($text));
+    public function setTitle(string $propertyTitle, string $text) : void
+    {
+        $this->set($propertyTitle, Title::instance($text));
     }
 
     /**
      * @param $propertyTitle
      * @param $text
      */
-    public function setText(string $propertyTitle, string $text) : void{
-        $this->setProperty($propertyTitle, Text::instance($text));
+    public function setText(string $propertyTitle, string $text) : void
+    {
+        $this->set($propertyTitle, Text::instance($text));
     }
 
     /**
      * @param $propertyTitle
      * @param $name
      */
-    public function setSelect(string $propertyTitle, string $name) : void{
-        $this->setProperty($propertyTitle, Select::instance($name));
+    public function setSelect(string $propertyTitle, string $name) : void
+    {
+        $this->set($propertyTitle, Select::instance($name));
     }
 
     /**
      * @param $propertyTitle
      * @param $names
      */
-    public function setMultiSelect(string $propertyTitle, array $names) : void{
-        $this->setProperty($propertyTitle, MultiSelect::instance($names));
+    public function setMultiSelect(string $propertyTitle, array $names) : void
+    {
+        $this->set($propertyTitle, MultiSelect::instance($names));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $checked
+     */
+    public function setCheckbox(string $propertyTitle, bool $checked) : void
+    {
+        $this->set($propertyTitle, Checkbox::instance($checked));
+    }
+
+    
+    /**
+     * @param $propertyTitle
+     * @param $start
+     * @param $end
+     */
+    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null) : void{
+        $this->set($propertyTitle, Date::instance($start, $end));
     }
 
     
