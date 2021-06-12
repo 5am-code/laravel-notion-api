@@ -7,9 +7,11 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Checkbox;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Date;
 use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
+use FiveamCode\LaravelNotionApi\Entities\Properties\People;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
@@ -73,7 +75,7 @@ class Page extends Entity
         $this->properties = new Collection();
         parent::__construct($responseData);
     }
-    
+
 
     /**
      * @param array $responseData
@@ -92,7 +94,7 @@ class Page extends Entity
      */
     private function fillFromRaw(): void
     {
-        $this->fillId();    
+        $this->fillId();
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); //!Warning: call after 'fillProperties', since title is included within properties
@@ -155,7 +157,7 @@ class Page extends Entity
         $property->setTitle($propertyTitle);
         $this->properties->add($property);
 
-        if($property instanceof Title){
+        if ($property instanceof Title) {
             $this->title = $property->getPlainText();
         }
     }
@@ -164,7 +166,7 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $number
      */
-    public function setNumber(string $propertyTitle, float $number) : void
+    public function setNumber(string $propertyTitle, float $number): void
     {
         $this->set($propertyTitle, Number::instance($number));
     }
@@ -173,7 +175,7 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $text
      */
-    public function setTitle(string $propertyTitle, string $text) : void
+    public function setTitle(string $propertyTitle, string $text): void
     {
         $this->set($propertyTitle, Title::instance($text));
     }
@@ -182,7 +184,7 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $text
      */
-    public function setText(string $propertyTitle, string $text) : void
+    public function setText(string $propertyTitle, string $text): void
     {
         $this->set($propertyTitle, Text::instance($text));
     }
@@ -191,7 +193,7 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $name
      */
-    public function setSelect(string $propertyTitle, string $name) : void
+    public function setSelect(string $propertyTitle, string $name): void
     {
         $this->set($propertyTitle, Select::instance($name));
     }
@@ -200,7 +202,7 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $names
      */
-    public function setMultiSelect(string $propertyTitle, array $names) : void
+    public function setMultiSelect(string $propertyTitle, array $names): void
     {
         $this->set($propertyTitle, MultiSelect::instance($names));
     }
@@ -209,22 +211,41 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $checked
      */
-    public function setCheckbox(string $propertyTitle, bool $checked) : void
+    public function setCheckbox(string $propertyTitle, bool $checked): void
     {
         $this->set($propertyTitle, Checkbox::instance($checked));
     }
 
-    
+
     /**
      * @param $propertyTitle
      * @param $start
      * @param $end
      */
-    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null) : void{
+    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null): void
+    {
         $this->set($propertyTitle, Date::instance($start, $end));
     }
 
-    
+    /**
+     * @param $propertyTitle
+     * @param $relationIds
+     */
+    public function setRelation(string $propertyTitle, array $relationIds): void
+    {
+        $this->set($propertyTitle, Relation::instance($relationIds));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $userIds
+     */
+    public function setPeople(string $propertyTitle, array $userIds): void
+    {
+        $this->set($propertyTitle, People::instance($userIds));
+    }
+
+
 
     /**
      * @return string
@@ -248,7 +269,7 @@ class Page extends Entity
      */
     public function getProperty(string $propertyKey): ?Property
     {
-        if(!isset($this->propertyMap[$propertyKey])){
+        if (!isset($this->propertyMap[$propertyKey])) {
             return null;
         }
         return $this->propertyMap[$propertyKey];

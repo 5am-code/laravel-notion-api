@@ -23,12 +23,12 @@ class Property extends Entity
     protected string $type;
 
     /**
-     * @var
+     * @var array
      */
     protected $rawContent;
 
     /**
-     * @var
+     * @var mixed
      */
     protected $content;
 
@@ -40,7 +40,7 @@ class Property extends Entity
      */
     public function __construct(string $title = null)
     {
-        if($title != null) $this->title = $title;
+        if ($title != null) $this->title = $title;
     }
 
 
@@ -108,15 +108,20 @@ class Property extends Entity
     }
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function asText(): string
+    {
+        if($this->content == null) return "";
+        return json_encode($this->content);
+    }
+
+    /**
+     * @return array
      */
     public function getRawContent()
     {
         return $this->rawContent;
-    }
-
-    public function setRawContent($rawContent) : void{
-        $this->rawContent = $rawContent;
     }
 
     /**
@@ -125,11 +130,6 @@ class Property extends Entity
     public function getContent()
     {
         return $this->rawContent;
-    }
-
-    
-    public function setContent($content) : void{
-        $this->content = $content;
     }
 
     /**
@@ -153,6 +153,18 @@ class Property extends Entity
             $property = new Title($propertyKey);
         } else if ($rawContent['type'] == 'number') {
             $property = new Number($propertyKey);
+        } else if ($rawContent['type'] == 'people') {
+            $property = new People($propertyKey);
+        } else if ($rawContent['type'] == 'checkbox') {
+            $property = new Checkbox($propertyKey);
+        } else if ($rawContent['type'] == 'date') {
+            $property = new Date($propertyKey);
+        } else if ($rawContent['type'] == 'email') {
+            $property = new Email($propertyKey);
+        } else if ($rawContent['type'] == 'phone_number') {
+            $property = new PhoneNumber($propertyKey);
+        } else if ($rawContent['type'] == 'url') {
+            $property = new Url($propertyKey);
         } else {
             $property = new Property($propertyKey);
         }

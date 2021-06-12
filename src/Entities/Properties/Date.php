@@ -14,8 +14,9 @@ class Date extends Property
 {
 
     /**
-     * @param $name
-     * @return Select
+     * @param $start
+     * @param $end
+     * @return Date
      */
     public static function instance(?DateTime $start, ?DateTime $end = null): Date
     {
@@ -50,7 +51,25 @@ class Date extends Property
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
-        $this->content = $this->rawContent;
+        $this->fillDate();
+    }
+
+    protected function fillDate(): void
+    {
+        $richDate = new RichDate();
+
+        if (isset($this->rawContent["start"])) {
+            $startAsIsoString = $this->rawContent["start"];
+            $richDate->setStart(new DateTime($startAsIsoString));
+        }
+
+        
+        if (isset($this->rawContent["end"])) {
+            $endAsIsoString = $this->rawContent["end"];
+            $richDate->setEnd(new DateTime($endAsIsoString));
+        }
+
+        $this->content = $richDate;
     }
 
     /**
@@ -70,26 +89,18 @@ class Date extends Property
     }
 
     /**
-     * @return Date
+     * @return DateTime
      */
-    public function getFrom(): Date
+    public function getStart(): DateTime
     {
-        return $this->getContent()->getFrom();
+        return $this->getContent()->getStart();
     }
 
     /**
-     * @return Date
+     * @return DateTime
      */
-    public function getTo(): Date
+    public function getEnd(): DateTime
     {
-        return $this->getContent()->getTo();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isChecked(): bool
-    {
-        return $this->content;
+        return $this->getContent()->getEnd();
     }
 }

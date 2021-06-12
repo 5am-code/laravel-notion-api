@@ -12,8 +12,8 @@ class Checkbox extends Property
 {
 
     /**
-     * @param $name
-     * @return Select
+     * @param $checked
+     * @return Checkbox
      */
     public static function instance(bool $checked): Checkbox
     {
@@ -50,5 +50,12 @@ class Checkbox extends Property
     public function isChecked(): bool
     {
         return $this->content;
+    }
+
+    /**
+     * @return string
+     */
+    public function asText(): string{
+        return ($this->getContent()) ? "true" : "false";
     }
 }
