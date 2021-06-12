@@ -165,6 +165,18 @@ class Property extends Entity
             $property = new PhoneNumber($propertyKey);
         } else if ($rawContent['type'] == 'url') {
             $property = new Url($propertyKey);
+        }else if ($rawContent['type'] == 'last_edited_by') {
+            $property = new LastEditedBy($propertyKey);
+        }else if ($rawContent['type'] == 'created_time') {
+            $property = new CreatedTime($propertyKey);
+        }else if ($rawContent['type'] == 'last_edited_time') {
+            $property = new LastEditedTime($propertyKey);
+        }else if ($rawContent['type'] == 'files') {
+            $property = new Files($propertyKey);
+        }else if ($rawContent['type'] == 'formula') {
+            $property = new Formula($propertyKey);
+        }else if ($rawContent['type'] == 'rollup') {
+            $property = new Rollup($propertyKey);
         } else {
             $property = new Property($propertyKey);
         }

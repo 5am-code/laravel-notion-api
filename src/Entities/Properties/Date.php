@@ -73,7 +73,7 @@ class Date extends Property
     }
 
     /**
-     * @return bool
+     * @return RichDate
      */
     public function getContent(): RichDate
     {
