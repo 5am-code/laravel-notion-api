@@ -101,7 +101,6 @@ class Pages extends Endpoint implements EndpointInterface
 
         $postData["properties"] = $properties;
 
-
         $response = $this
             ->patch(
                 $this->url(Endpoint::PAGES . "/" . $page->getId()),

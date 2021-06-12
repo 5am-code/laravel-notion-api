@@ -5,9 +5,11 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Checkbox;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Date;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Email;
 use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use FiveamCode\LaravelNotionApi\Entities\Properties\People;
+use FiveamCode\LaravelNotionApi\Entities\Properties\PhoneNumber;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
@@ -15,6 +17,7 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
@@ -196,6 +199,33 @@ class Page extends Entity
     public function setSelect(string $propertyTitle, string $name): void
     {
         $this->set($propertyTitle, Select::instance($name));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $url
+     */
+    public function setUrl(string $propertyTitle, string $url): void
+    {
+        $this->set($propertyTitle, Url::instance($url));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $phoneNumber
+     */
+    public function setPhoneNumber(string $propertyTitle, string $phoneNumber): void
+    {
+        $this->set($propertyTitle, PhoneNumber::instance($phoneNumber));
+    }
+
+    /**
+     * @param $propertyTitle
+     * @param $email
+     */
+    public function setEmail(string $propertyTitle, string $email): void
+    {
+        $this->set($propertyTitle, Email::instance($email));
     }
 
     /**
