@@ -58,6 +58,33 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
+        /**
+     * @return Page
+     */
+    public function createInPage(string $parentId, Page $page): Page
+    {
+        $postData = [];
+        $properties = [];
+
+        foreach ($page->getProperties() as $property) {
+            $properties[$property->getTitle()] = $property->getRawContent();
+        }
+
+        $postData["parent"] = ["page_id" => $parentId];
+        $postData["properties"] = $properties;
+
+
+        $response = $this
+            ->post(
+                $this->url(Endpoint::PAGES),
+                $postData
+            )
+            ->json();
+
+        return new Page($response);
+    }
+
+
 
     /**
      * @return array
