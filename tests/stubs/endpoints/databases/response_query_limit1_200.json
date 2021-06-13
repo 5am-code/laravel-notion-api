@@ -14,8 +14,8 @@
       "properties": {
         "Birth year": {
           "id": "_f<<",
-          "type": "text",
-          "text": [
+          "type": "rich_text",
+          "rich_text": [
             {
               "type": "text",
               "text": {
@@ -82,6 +82,6 @@
       }
     }
   ],
-  "next_cursor": null,
-  "has_more": false
+  "next_cursor": "ab2a7a85-08a1-4dfc-be89-0e30aeffc0f6",
+  "has_more": true
 }

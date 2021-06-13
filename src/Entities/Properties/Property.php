@@ -183,8 +183,9 @@ class Property extends Entity
                 $class = str_replace('_', '', ucwords($type, '_'));
                 return "FiveamCode\\LaravelNotionApi\\Entities\\Properties\\" . $class;
             case 'text':
+            case 'rich_text':
                 # TODO: Depending on the Notion API version.
-                return RichText::class;
+                return Text::class;
             default:
                 return Property::class;
         }
