@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
@@ -94,7 +95,10 @@ class Property extends Entity
         return $this->title;
     }
 
-    public function setTitle($title): void
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -133,55 +137,57 @@ class Property extends Entity
     }
 
     /**
-     * @param $propertyKey
+     * @param string $propertyKey
      * @param $rawContent
      * @return Property
      * @throws HandlingException
      */
-    public static function fromResponse($propertyKey, $rawContent): Property
+    public static function fromResponse(string $propertyKey, $rawContent): Property
     {
-        $property = null;
-        if ($rawContent['type'] == 'multi_select') {
-            $property = new MultiSelect($propertyKey);
-        } else if ($rawContent['type'] == 'select') {
-            $property = new Select($propertyKey);
-        } else if ($rawContent['type'] == 'text') {
-            $property = new Text($propertyKey);
-        } else if ($rawContent['type'] == 'created_by') {
-            $property = new CreatedBy($propertyKey);
-        } else if ($rawContent['type'] == 'title') {
-            $property = new Title($propertyKey);
-        } else if ($rawContent['type'] == 'number') {
-            $property = new Number($propertyKey);
-        } else if ($rawContent['type'] == 'people') {
-            $property = new People($propertyKey);
-        } else if ($rawContent['type'] == 'checkbox') {
-            $property = new Checkbox($propertyKey);
-        } else if ($rawContent['type'] == 'date') {
-            $property = new Date($propertyKey);
-        } else if ($rawContent['type'] == 'email') {
-            $property = new Email($propertyKey);
-        } else if ($rawContent['type'] == 'phone_number') {
-            $property = new PhoneNumber($propertyKey);
-        } else if ($rawContent['type'] == 'url') {
-            $property = new Url($propertyKey);
-        } else if ($rawContent['type'] == 'last_edited_by') {
-            $property = new LastEditedBy($propertyKey);
-        } else if ($rawContent['type'] == 'created_time') {
-            $property = new CreatedTime($propertyKey);
-        } else if ($rawContent['type'] == 'last_edited_time') {
-            $property = new LastEditedTime($propertyKey);
-        } else if ($rawContent['type'] == 'files') {
-            $property = new Files($propertyKey);
-        } else if ($rawContent['type'] == 'formula') {
-            $property = new Formula($propertyKey);
-        } else if ($rawContent['type'] == 'rollup') {
-            $property = new Rollup($propertyKey);
-        } else {
-            $property = new Property($propertyKey);
-        }
+        $propertyClass = self::mapTypeToClass($rawContent['type']);
+        $property = new $propertyClass($propertyKey);
 
         $property->setResponseData($rawContent);
+
         return $property;
+    }
+
+
+    /**
+     * Maps the type of a property to the corresponding package class by converting the type name.
+     *
+     * @param string $type
+     * @return string
+     */
+    private static function mapTypeToClass(string $type): string
+    {
+
+        switch ($type) {
+            case 'multi_select':
+            case 'select':
+            case 'created_by':
+            case 'title':
+            case 'number':
+            case 'people':
+            case 'checkbox':
+            case 'date':
+            case 'email':
+            case 'phone_number':
+            case 'url':
+            case 'last_edited_by':
+            case 'created_time':
+            case 'last_edited_time':
+            case 'files':
+            case 'formula':
+            case 'rollup':
+                $class = str_replace('_', '', ucwords($type, '_'));
+                return "FiveamCode\\LaravelNotionApi\\Entities\\Properties\\" . $class;
+            case 'text':
+                # TODO: Depending on the Notion API version.
+                return RichText::class;
+            default:
+                return Property::class;
+        }
+
     }
 }
