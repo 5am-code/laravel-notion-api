@@ -15,7 +15,7 @@ class RichDate extends Entity
     /**
      * @var string
      */
-    protected ?DateTime $start = null;
+    protected DateTime $start;
     protected ?DateTime $end = null;
 
 
