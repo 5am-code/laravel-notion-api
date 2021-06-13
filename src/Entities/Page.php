@@ -283,7 +283,7 @@ class Page extends Entity
      * @param $end
      * @return Page
      */
-    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null): Page
+    public function setDate(string $propertyTitle, DateTime $start, ?DateTime $end = null): Page
     {
         $this->set($propertyTitle, Date::value($start, $end));
 
