@@ -154,8 +154,9 @@ class Page extends Entity
     /**
      * @param $propertyTitle
      * @param $property
+     * @return Page
      */
-    public function set(string $propertyTitle, Property $property): void
+    public function set(string $propertyTitle, Property $property): Page
     {
         $property->setTitle($propertyTitle);
         $this->properties->add($property);
@@ -163,87 +164,116 @@ class Page extends Entity
         if ($property instanceof Title) {
             $this->title = $property->getPlainText();
         }
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $number
+     * @return Page
      */
-    public function setNumber(string $propertyTitle, float $number): void
+    public function setNumber(string $propertyTitle, float $number): Page
     {
         $this->set($propertyTitle, Number::value($number));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $text
+     * @return Page
      */
-    public function setTitle(string $propertyTitle, string $text): void
+    public function setTitle(string $propertyTitle, string $text): Page
     {
         $this->set($propertyTitle, Title::value($text));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $text
+     * @return Page
      */
-    public function setText(string $propertyTitle, string $text): void
+    public function setText(string $propertyTitle, string $text): Page
     {
         $this->set($propertyTitle, Text::value($text));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $name
+     * @return Page
      */
-    public function setSelect(string $propertyTitle, string $name): void
+    public function setSelect(string $propertyTitle, string $name): Page
     {
         $this->set($propertyTitle, Select::value($name));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $url
+     * @return Page
      */
-    public function setUrl(string $propertyTitle, string $url): void
+    public function setUrl(string $propertyTitle, string $url): Page
     {
         $this->set($propertyTitle, Url::value($url));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $phoneNumber
+     * @return Page
      */
-    public function setPhoneNumber(string $propertyTitle, string $phoneNumber): void
+    public function setPhoneNumber(string $propertyTitle, string $phoneNumber): Page
     {
         $this->set($propertyTitle, PhoneNumber::value($phoneNumber));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $email
+     * @return Page
      */
-    public function setEmail(string $propertyTitle, string $email): void
+    public function setEmail(string $propertyTitle, string $email): Page
     {
         $this->set($propertyTitle, Email::value($email));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $names
+     * @return Page
      */
-    public function setMultiSelect(string $propertyTitle, array $names): void
+    public function setMultiSelect(string $propertyTitle, array $names): Page
     {
         $this->set($propertyTitle, MultiSelect::value($names));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $checked
+     * @return Page
      */
-    public function setCheckbox(string $propertyTitle, bool $checked): void
+    public function setCheckbox(string $propertyTitle, bool $checked): Page
     {
         $this->set($propertyTitle, Checkbox::value($checked));
+
+        return $this;
     }
 
 
@@ -251,28 +281,37 @@ class Page extends Entity
      * @param $propertyTitle
      * @param $start
      * @param $end
+     * @return Page
      */
-    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null): void
+    public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null): Page
     {
         $this->set($propertyTitle, Date::value($start, $end));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $relationIds
+     * @return Page
      */
-    public function setRelation(string $propertyTitle, array $relationIds): void
+    public function setRelation(string $propertyTitle, array $relationIds): Page
     {
         $this->set($propertyTitle, Relation::value($relationIds));
+
+        return $this;
     }
 
     /**
      * @param $propertyTitle
      * @param $userIds
+     * @return Page
      */
-    public function setPeople(string $propertyTitle, array $userIds): void
+    public function setPeople(string $propertyTitle, array $userIds): Page
     {
         $this->set($propertyTitle, People::value($userIds));
+
+        return $this;
     }
 
 
