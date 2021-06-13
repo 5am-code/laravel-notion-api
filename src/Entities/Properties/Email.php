@@ -12,7 +12,7 @@ class Email extends Property
      * @param $email
      * @return Email
      */
-    public static function instance(string $email): Email
+    public static function value(string $email): Email
     {
         $emailProperty = new Email();
         $emailProperty->content = $email;

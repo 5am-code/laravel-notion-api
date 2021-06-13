@@ -12,7 +12,7 @@ class Url extends Property
      * @param $url
      * @return Url
      */
-    public static function instance(string $url): Url
+    public static function value(string $url): Url
     {
         $urlProperty = new Url();
         $urlProperty->content = $url;

@@ -12,7 +12,7 @@ class PhoneNumber extends Property
      * @param $phoneNumber
      * @return PhoneNumber
      */
-    public static function instance(string $phoneNumber): PhoneNumber
+    public static function value(string $phoneNumber): PhoneNumber
     {
         $urlProperty = new PhoneNumber();
         $urlProperty->content = $phoneNumber;

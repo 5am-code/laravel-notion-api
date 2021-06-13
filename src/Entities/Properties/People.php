@@ -16,7 +16,7 @@ class People extends Property
      * @param $userIds
      * @return People
      */
-    public static function instance(array $userIds): People
+    public static function value(array $userIds): People
     {
         $peopleProperty = new People();
         $peopleProperty->content = new Collection();

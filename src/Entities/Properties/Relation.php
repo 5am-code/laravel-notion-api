@@ -14,7 +14,7 @@ class Relation extends Property
      * @param $relationIds
      * @return Relation
      */
-    public static function instance(array $relationIds): Relation
+    public static function value(array $relationIds): Relation
     {
         $relationProperty = new Relation();
         $relationProperty->content = new Collection();

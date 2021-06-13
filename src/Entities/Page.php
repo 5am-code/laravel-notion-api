@@ -100,7 +100,7 @@ class Page extends Entity
         $this->fillId();
         $this->fillObjectType();
         $this->fillProperties();
-        $this->fillTitle(); //!Warning: call after 'fillProperties', since title is included within properties
+        $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
@@ -171,7 +171,7 @@ class Page extends Entity
      */
     public function setNumber(string $propertyTitle, float $number): void
     {
-        $this->set($propertyTitle, Number::instance($number));
+        $this->set($propertyTitle, Number::value($number));
     }
 
     /**
@@ -180,7 +180,7 @@ class Page extends Entity
      */
     public function setTitle(string $propertyTitle, string $text): void
     {
-        $this->set($propertyTitle, Title::instance($text));
+        $this->set($propertyTitle, Title::value($text));
     }
 
     /**
@@ -189,7 +189,7 @@ class Page extends Entity
      */
     public function setText(string $propertyTitle, string $text): void
     {
-        $this->set($propertyTitle, Text::instance($text));
+        $this->set($propertyTitle, Text::value($text));
     }
 
     /**
@@ -198,7 +198,7 @@ class Page extends Entity
      */
     public function setSelect(string $propertyTitle, string $name): void
     {
-        $this->set($propertyTitle, Select::instance($name));
+        $this->set($propertyTitle, Select::value($name));
     }
 
     /**
@@ -207,7 +207,7 @@ class Page extends Entity
      */
     public function setUrl(string $propertyTitle, string $url): void
     {
-        $this->set($propertyTitle, Url::instance($url));
+        $this->set($propertyTitle, Url::value($url));
     }
 
     /**
@@ -216,7 +216,7 @@ class Page extends Entity
      */
     public function setPhoneNumber(string $propertyTitle, string $phoneNumber): void
     {
-        $this->set($propertyTitle, PhoneNumber::instance($phoneNumber));
+        $this->set($propertyTitle, PhoneNumber::value($phoneNumber));
     }
 
     /**
@@ -225,7 +225,7 @@ class Page extends Entity
      */
     public function setEmail(string $propertyTitle, string $email): void
     {
-        $this->set($propertyTitle, Email::instance($email));
+        $this->set($propertyTitle, Email::value($email));
     }
 
     /**
@@ -234,7 +234,7 @@ class Page extends Entity
      */
     public function setMultiSelect(string $propertyTitle, array $names): void
     {
-        $this->set($propertyTitle, MultiSelect::instance($names));
+        $this->set($propertyTitle, MultiSelect::value($names));
     }
 
     /**
@@ -243,7 +243,7 @@ class Page extends Entity
      */
     public function setCheckbox(string $propertyTitle, bool $checked): void
     {
-        $this->set($propertyTitle, Checkbox::instance($checked));
+        $this->set($propertyTitle, Checkbox::value($checked));
     }
 
 
@@ -254,7 +254,7 @@ class Page extends Entity
      */
     public function setDate(string $propertyTitle, ?DateTime $start, ?DateTime $end = null): void
     {
-        $this->set($propertyTitle, Date::instance($start, $end));
+        $this->set($propertyTitle, Date::value($start, $end));
     }
 
     /**
@@ -263,7 +263,7 @@ class Page extends Entity
      */
     public function setRelation(string $propertyTitle, array $relationIds): void
     {
-        $this->set($propertyTitle, Relation::instance($relationIds));
+        $this->set($propertyTitle, Relation::value($relationIds));
     }
 
     /**
@@ -272,9 +272,8 @@ class Page extends Entity
      */
     public function setPeople(string $propertyTitle, array $userIds): void
     {
-        $this->set($propertyTitle, People::instance($userIds));
+        $this->set($propertyTitle, People::value($userIds));
     }
-
 
 
     /**

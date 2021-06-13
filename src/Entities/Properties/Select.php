@@ -16,7 +16,7 @@ class Select extends Property
      * @param $name
      * @return Select
      */
-    public static function instance(string $name): Select
+    public static function value(string $name): Select
     {
         $selectProperty = new Select();
 

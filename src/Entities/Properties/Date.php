@@ -18,7 +18,7 @@ class Date extends Property
      * @param $end
      * @return Date
      */
-    public static function instance(?DateTime $start, ?DateTime $end = null): Date
+    public static function value(?DateTime $start, ?DateTime $end = null): Date
     {
         $richDate = new RichDate();
         $richDate->setStart($start);

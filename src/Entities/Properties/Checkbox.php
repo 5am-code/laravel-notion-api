@@ -15,7 +15,7 @@ class Checkbox extends Property
      * @param $checked
      * @return Checkbox
      */
-    public static function instance(bool $checked): Checkbox
+    public static function value(bool $checked): Checkbox
     {
         $checkboxProperty = new Checkbox();
         $checkboxProperty->content = $checked;

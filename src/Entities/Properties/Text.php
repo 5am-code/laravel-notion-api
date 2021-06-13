@@ -20,7 +20,7 @@ class Text extends Property
      * @param $text
      * @return Text
      */
-    public static function instance($text): Text
+    public static function value($text): Text
     {
         $textProperty = new Text();
 

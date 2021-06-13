@@ -20,7 +20,7 @@ class Title extends Property
      * @param $text
      * @return Title
      */
-    public static function instance($text): Title
+    public static function value($text): Title
     {
         $titleProperty = new Title();
 

@@ -16,7 +16,7 @@ class MultiSelect extends Property
      * @param $names
      * @return MultiSelect
      */
-    public static function instance(array $names): MultiSelect
+    public static function value(array $names): MultiSelect
     {
         $multiSelectProperty = new MultiSelect();
         $multiSelectRawContent = [];
