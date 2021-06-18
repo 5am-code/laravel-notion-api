@@ -90,7 +90,7 @@ class Pages extends Endpoint implements EndpointInterface
      * @return array
      * @throws HandlingException
      */
-    public function updateProperties(Page $page): Page
+    public function update(Page $page): Page
     {
         $postData = [];
         $properties = [];
