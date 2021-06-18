@@ -156,10 +156,11 @@ class Page extends Entity
      * @param $property
      * @return Page
      */
-    public function set(string $propertyTitle, Property $property): Page
+    public function set(string $propertyKey, Property $property): Page
     {
-        $property->setTitle($propertyTitle);
+        $property->setTitle($propertyKey);
         $this->properties->add($property);
+        $this->propertyMap[$propertyKey] = $property;
 
         if ($property instanceof Title) {
             $this->title = $property->getPlainText();
