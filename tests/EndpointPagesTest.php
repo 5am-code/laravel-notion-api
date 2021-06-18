@@ -2,6 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\Entities\Properties\Checkbox;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Date;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use Notion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -85,6 +88,69 @@ class EndpointPagesTest extends NotionApiTest
         $this->expectExceptionMessage('Not found');
 
         Notion::pages()->find('b55c9c91-384d-452b-81db-d1ef79372b79');
+    }
+
+    /** @test */
+    public function it_assembles_properties_for_a_new_page() {
+
+        $pageId = "0349b883a1c64539b435289ea62b6eab";
+        $pageTitle = "I was updated from Tinkerwell";
+
+        $checkboxKey = "CheckboxProperty";
+        $checkboxValue = true;
+        $dateRangeKey = "DateRangeProperty";
+        $dateRangeStartValue = Carbon::now()->toDateTime();
+        $dateRangeEndValue = Carbon::tomorrow()->toDateTime();
+        $dateKey = "DateProperty";
+        $dateValue = Carbon::yesterday()->toDateTime();
+
+        $page = new Page();
+        $page->setId($pageId);
+        $page->setTitle("Name", $pageTitle);
+        $page->setCheckbox($checkboxKey, $checkboxValue);
+        $page->setDate($dateRangeKey, $dateRangeStartValue, $dateRangeEndValue);
+        $page->setDate($dateKey, $dateValue);
+
+        $properties = $page->getProperties();
+
+        $this->assertEquals($page->getId(), $pageId);
+        $this->assertEquals($page->getTitle(), $pageTitle);
+
+        # checkbox
+        $this->assertTrue(
+            $this->assertContainsInstanceOf(Checkbox::class, $properties)
+        );
+        $checkboxProp = $page->getProperty($checkboxKey);
+        $this->assertEquals($checkboxKey, $checkboxProp->getTitle());
+        $checkboxContent = $checkboxProp->getRawContent();
+        $this->assertArrayHasKey("checkbox", $checkboxContent);
+        $this->assertEquals($checkboxContent["checkbox"], $checkboxValue);
+        $this->assertEquals($checkboxProp->getContent(), $checkboxValue);
+        $this->assertEquals($checkboxProp->asText(), $checkboxValue? "true" : "false");
+
+        # date range
+        $this->assertTrue(
+            $this->assertContainsInstanceOf(Date::class, $properties)
+        );
+        $dateRangeProp = $page->getProperty($dateRangeKey);
+        $this->assertEquals($dateRangeKey, $dateRangeProp->getTitle());
+        $this->assertInstanceOf(RichDate::class, $dateRangeProp->getContent());
+        $dateRangeContent = $dateRangeProp->getContent();
+        $this->assertTrue($dateRangeProp->isRange());
+        $this->assertEquals($dateRangeStartValue, $dateRangeProp->getStart());
+        $this->assertEquals($dateRangeEndValue, $dateRangeProp->getEnd());
+
+        # date
+        $dateProp = $page->getProperty($dateKey);
+        $this->assertEquals($dateKey, $dateProp->getTitle());
+        $this->assertInstanceOf(RichDate::class, $dateProp->getContent());
+        $dateContent = $dateProp->getContent();
+        $this->assertFalse($dateProp->isRange());
+        $this->assertEquals($dateValue, $dateProp->getStart());
+
+
+
+
     }
 
 
