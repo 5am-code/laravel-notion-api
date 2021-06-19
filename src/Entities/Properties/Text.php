@@ -17,6 +17,40 @@ class Text extends Property
     protected string $plainText = '';
 
     /**
+     * @param $text
+     * @return Text
+     */
+    public static function value($text): Text
+    {
+        $textProperty = new Text();
+
+        if (is_string($text)) {
+            $richText = new RichText();
+            $richText->setPlainText($text);
+            $textProperty->plainText = $richText->getPlainText();
+            $textProperty->content = $richText;
+        } else {
+            $textProperty->plainText = $text->getPlainText();
+            $textProperty->content = $text;
+        }
+
+        //!INFO: Currently only plain_text is transfered into rawContent
+        //TODO: Later the RichText has to return it's raw structure into 'content' 
+        $textProperty->rawContent = [
+            "rich_text" => [
+                [
+                    "type" => "text",
+                    "text" => [
+                        "content" => $richText->getPlainText()
+                    ]
+                ]
+            ]
+        ];
+
+        return $textProperty;
+    }
+
+    /**
      * @throws HandlingException
      */
     protected function fillFromRaw(): void

@@ -33,7 +33,7 @@ class Entity implements JsonSerializable
      */
     public function __construct(array $responseData = null)
     {
-        $this->setResponseData($responseData);
+        if($responseData != null) $this->setResponseData($responseData);
     }
 
     /**
@@ -96,6 +96,13 @@ class Entity implements JsonSerializable
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * 
+     */
+    public function setId($id): void{
+        $this->id = $id;
     }
 
     /**

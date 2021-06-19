@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Orchestra\Testbench\TestCase;
+use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
@@ -35,6 +36,15 @@ class NotionApiTest extends TestCase
         return [
             'Notion' => NotionFacade::class
         ];
+    }
+
+    protected function assertContainsInstanceOf(string $class, Collection|array $haystack): bool {
+
+        foreach($haystack as $item) {
+            if(get_class($item) === $class) return true;
+        }
+
+        return false;
     }
 
     /** @test */

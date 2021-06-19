@@ -21,6 +21,7 @@ class SelectItem extends Entity
      */
     protected string $name;
 
+
     /**
      * @param array $responseData
      * @throws HandlingException
@@ -76,5 +77,23 @@ class SelectItem extends Entity
     public function getName(): string
     {
         return $this->name;
+    }
+
+
+
+    /**
+     * @param $color
+     */
+    public function setColor($color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @param $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 }

@@ -13,6 +13,33 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
 class MultiSelect extends Property
 {
     /**
+     * @param $names
+     * @return MultiSelect
+     */
+    public static function value(array $names): MultiSelect
+    {
+        $multiSelectProperty = new MultiSelect();
+        $multiSelectRawContent = [];
+        $selectItemCollection = new Collection();
+
+        foreach($names as $name){
+            $selectItem = new SelectItem();
+            $selectItem->setName($name);
+            $selectItemCollection->add($selectItem);
+            array_push($multiSelectRawContent, [
+                "name" => $selectItem->getName()
+            ]);
+        }
+
+        $multiSelectProperty->content = $selectItemCollection;
+        $multiSelectProperty->rawContent = [
+            "multi_select" => $multiSelectRawContent
+        ];
+
+        return $multiSelectProperty;
+    }
+
+    /**
      * @throws HandlingException
      */
     protected function fillFromRaw(): void
