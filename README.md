@@ -95,21 +95,21 @@ $filters
 vendor/bin/phpunit tests
 ```
 
-### Changelog
+## Support
 
-Please see [CHANGELOG](https://5amco.de/docs/0.3.0/changelog) for more information what has changed recently.
-
-## References / UsedBy
-
-- Julien Nahum created [notionforms.io](https://notionforms.io) with [laravel-notion-api](https://github.com/5am-code/laravel-notion-api), which allows you to easily create custom forms, based on your selected database within notion.
+If you use this package in one of your projects or just want to support our development, consider becoming a [Patreon](https://www.patreon.com/bePatron?u=56662485)!
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
 If you discover any security related issues, please email hello@dianaweb.dev instead of using the issue tracker.
+
+## Used By
+
+- Julien Nahum created [notionforms.io](https://notionforms.io) with [laravel-notion-api](https://github.com/5am-code/laravel-notion-api), which allows you to easily create custom forms, based on your selected database within notion.
 
 ## Credits
 
@@ -119,7 +119,3 @@ If you discover any security related issues, please email hello@dianaweb.dev ins
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
