@@ -116,6 +116,24 @@ class Endpoint
         return $response;
     }
 
+    /**
+     * @param string $url
+     * @param array $body
+     * @return Response
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    protected function patch(string $url, array $body): Response
+    {
+        $response = $this->notion->getConnection()->patch($url, $body);
+
+        if ($response->failed())
+            throw NotionException::fromResponse($response);
+
+        $this->response = $response;
+        return $response;
+    }
+
 
     /**
      * @return string

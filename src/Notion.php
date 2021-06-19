@@ -107,9 +107,8 @@ class Notion
      *
      * @param string $token
      * @return Notion
-     * @deprecated for public usage; will be set to private in 0.4.0!
      */
-    public function setToken(string $token): Notion
+    private function setToken(string $token): Notion
     {
         $this->token = $token;
         return $this;

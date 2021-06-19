@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
@@ -23,25 +24,24 @@ class Property extends Entity
     protected string $type;
 
     /**
-     * @var
+     * @var array
      */
     protected $rawContent;
 
     /**
-     * @var
+     * @var mixed
      */
     protected $content;
 
     /**
      * Property constructor.
-     * @param string $title
+     * @param string|null $title
      * @param array $responseData
      * @throws HandlingException
      */
-    public function __construct(string $title, array $responseData)
+    public function __construct(string $title = null)
     {
-        $this->title = $title;
-        $this->setResponseData($responseData);
+        if ($title !== null) $this->title = $title;
     }
 
 
@@ -96,6 +96,14 @@ class Property extends Entity
     }
 
     /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
      * @return string
      */
     public function getType(): string
@@ -104,7 +112,16 @@ class Property extends Entity
     }
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function asText(): string
+    {
+        if ($this->content == null) return "";
+        return json_encode($this->content);
+    }
+
+    /**
+     * @return array
      */
     public function getRawContent()
     {
@@ -120,28 +137,58 @@ class Property extends Entity
     }
 
     /**
-     * @param $propertyKey
+     * @param string $propertyKey
      * @param $rawContent
      * @return Property
      * @throws HandlingException
      */
-    public static function fromResponse($propertyKey, $rawContent): Property
+    public static function fromResponse(string $propertyKey, $rawContent): Property
     {
-        if ($rawContent['type'] == 'multi_select') {
-            return new MultiSelect($propertyKey, $rawContent);
-        } else if ($rawContent['type'] == 'select') {
-            return new Select($propertyKey, $rawContent);
-        } else if ($rawContent['type'] == 'text') {
-            return new Text($propertyKey, $rawContent);
-        } else if ($rawContent['type'] == 'created_by') {
-            return new CreatedBy($propertyKey, $rawContent);
-        } else if ($rawContent['type'] == 'title') {
-            return new Title($propertyKey, $rawContent);
-        } else if ($rawContent['type'] == 'number') {
-            return new Number($propertyKey, $rawContent);
+        $propertyClass = self::mapTypeToClass($rawContent['type']);
+        $property = new $propertyClass($propertyKey);
+
+        $property->setResponseData($rawContent);
+
+        return $property;
+    }
+
+
+    /**
+     * Maps the type of a property to the corresponding package class by converting the type name.
+     *
+     * @param string $type
+     * @return string
+     */
+    private static function mapTypeToClass(string $type): string
+    {
+
+        switch ($type) {
+            case 'multi_select':
+            case 'select':
+            case 'created_by':
+            case 'title':
+            case 'number':
+            case 'people':
+            case 'checkbox':
+            case 'date':
+            case 'email':
+            case 'phone_number':
+            case 'url':
+            case 'last_edited_by':
+            case 'created_time':
+            case 'last_edited_time':
+            case 'files':
+            case 'formula':
+            case 'rollup':
+                $class = str_replace('_', '', ucwords($type, '_'));
+                return "FiveamCode\\LaravelNotionApi\\Entities\\Properties\\" . $class;
+            case 'text':
+            case 'rich_text':
+                # TODO: Depending on the Notion API version.
+                return Text::class;
+            default:
+                return Property::class;
         }
 
-
-        return new Property($propertyKey, $rawContent);
     }
 }

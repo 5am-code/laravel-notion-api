@@ -13,6 +13,21 @@ class Number extends Property
      */
     protected float $number = 0;
 
+
+    public static function value(float $number): Number
+    {
+        $numberProperty = new Number();
+        $numberProperty->number = $number;
+        $numberProperty->content = $number;
+
+        $numberProperty->rawContent = [
+            "number" => $number
+        ];
+
+        return $numberProperty;
+    }
+
+
     /**
      *
      */
