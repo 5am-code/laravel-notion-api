@@ -110,6 +110,9 @@ If you discover any security related issues, please email hello@dianaweb.dev ins
 ## Used By
 
 - Julien Nahum created [notionforms.io](https://notionforms.io) with [laravel-notion-api](https://github.com/5am-code/laravel-notion-api), which allows you to easily create custom forms, based on your selected database within notion.
+- [GitHub Notion Sync](https://githubnotionsync.com/), a service by [Beyond Code](https://beyondco.de) to sync the issues of multiple GitHub repositories into a Notion database
+
+Using this package in your project? Open a PR to add it in this section!
 
 ## Credits
 
