@@ -2,12 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Notion;
 
 /**
  * Class Pages
@@ -61,7 +58,7 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-    /**
+        /**
      * @return Page
      */
     public function createInPage(string $parentId, Page $page): Page
@@ -87,17 +84,7 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-    /**
-     * Return all pages possible.
-     *
-     * @return EntityCollection
-     * @throws HandlingException
-     * @throws NotionException
-     */
-    public function all(): EntityCollection
-    {
-        return $this->notion->search()->onlyPages()->query();
-    }
+
 
     /**
      * @return array
