@@ -34,6 +34,11 @@ class Page extends Entity
     /**
      * @var string
      */
+    protected string $url = '';
+
+    /**
+     * @var string
+     */
     protected string $objectType = '';
 
     /**
@@ -101,6 +106,7 @@ class Page extends Entity
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
+        $this->fillUrl();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
@@ -148,6 +154,16 @@ class Page extends Entity
                     $this->title = $rawTitleProperty[0]['plain_text'];
                 }
             }
+        }
+    }
+
+    /**
+     * 
+     */
+    private function fillUrl(): void
+    {
+        if (Arr::exists($this->responseData, 'url')) {
+            $this->url = $this->responseData['url'];
         }
     }
 
@@ -322,6 +338,14 @@ class Page extends Entity
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     /**
