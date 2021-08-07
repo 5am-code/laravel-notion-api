@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
@@ -10,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class People
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class People extends Property
+class People extends Property implements Modifiable
 {
     /**
      * @param $userIds

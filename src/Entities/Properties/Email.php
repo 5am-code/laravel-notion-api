@@ -2,11 +2,13 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
+
 /**
  * Class Email
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Email extends Property
+class Email extends Property implements Modifiable
 {
     /**
      * @param $email

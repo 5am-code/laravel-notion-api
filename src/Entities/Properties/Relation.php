@@ -2,13 +2,14 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use Illuminate\Support\Collection;
 
 /**
  * Class Relation
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Relation extends Property
+class Relation extends Property implements Modifiable
 {
     /**
      * @param $relationIds
