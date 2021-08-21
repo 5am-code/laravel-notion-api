@@ -50,7 +50,7 @@ class BlockCollection extends EntityCollection
             return $collection;
         } else {
             return $collection->filter(function ($block) {
-                return $block->getType() != 'unsupported';
+                return $block->getType() !== 'unsupported';
             });
         }
     }
