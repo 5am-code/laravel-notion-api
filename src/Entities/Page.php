@@ -106,7 +106,7 @@ class Page extends Entity
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
-        $this->fillUrl();
+        $this->fillPageUrl();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
@@ -160,7 +160,7 @@ class Page extends Entity
     /**
      * 
      */
-    private function fillUrl(): void
+    private function fillPageUrl(): void
     {
         if (Arr::exists($this->responseData, 'url')) {
             $this->url = $this->responseData['url'];
