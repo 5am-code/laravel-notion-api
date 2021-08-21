@@ -124,7 +124,7 @@ class EntityCollection
      */
     public function asJson(): string
     {
-        return $this->collection->map(function (Entity $item) {
+        return $this->asCollection()->map(function (Entity $item) {
             return $item->toArray();
         });
     }
