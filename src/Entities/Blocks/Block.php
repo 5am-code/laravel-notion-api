@@ -192,11 +192,11 @@ class Block extends Entity
                 $class = str_replace('_', '', ucwords($type, '_'));
                 return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\" . $class;
             case 'heading_1':
-                return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\HeadingOne";
+                return HeadingOne::class;
             case 'heading_2':
-                return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\HeadingTwo";
+                return HeadingTwo::class;
             case 'heading_3':
-                return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\HeadingThree";
+                return HeadingThree::class;
             default:
                 return Block::class;
         }
