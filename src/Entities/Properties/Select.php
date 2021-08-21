@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
 
@@ -9,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
  * Class Select
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Select extends Property
+class Select extends Property implements Modifiable
 {
 
     /**

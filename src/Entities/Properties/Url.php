@@ -2,11 +2,13 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
+
 /**
  * Class Url
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Url extends Property
+class Url extends Property implements Modifiable
 {
     /**
      * @param $url

@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 
@@ -9,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
  * Class Text
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Text extends Property
+class Text extends Property implements Modifiable
 {
     /**
      * @var string

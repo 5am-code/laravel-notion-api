@@ -2,11 +2,13 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
+
 /**
  * Class PhoneNumber
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class PhoneNumber extends Property
+class PhoneNumber extends Property implements Modifiable
 {
     /**
      * @param $phoneNumber
