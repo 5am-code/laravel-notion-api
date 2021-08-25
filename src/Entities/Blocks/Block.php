@@ -29,6 +29,17 @@ class Block extends Entity
     protected array $rawContent;
 
     /**
+     * @var mixed
+     */
+    protected $content;
+
+
+    /**
+     * @var string
+     */
+    protected string $text = "[warning: unsupported in notion api]";
+
+    /**
      * @var DateTime
      */
     protected DateTime $createdTime;
@@ -54,7 +65,7 @@ class Block extends Entity
     /**
      *
      */
-    private function fillFromRaw(): void
+    protected function fillFromRaw(): void
     {
         $this->fillId();
         $this->fillType();
@@ -132,5 +143,62 @@ class Block extends Entity
     public function getLastEditedTime(): DateTime
     {
         return $this->lastEditedTime;
+    }
+
+    /**
+     * 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return string
+     */
+    public function asText() : string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param $rawContent
+     * @return Block
+     * @throws HandlingException
+     */
+    public static function fromResponse($rawContent): Block
+    {
+        $blockClass = self::mapTypeToClass($rawContent['type']);
+        $block = new $blockClass($rawContent);
+        return $block;
+    }
+
+    /**
+     * Maps the type of a block to the corresponding package class by converting the type name.
+     *
+     * @param string $type
+     * @return string
+     */
+    private static function mapTypeToClass(string $type): string
+    {
+
+        switch ($type) {
+            case 'bulleted_list_item':
+            case 'numbered_list_item':
+            case 'child_page':
+            case 'paragraph':
+            case 'to_do':
+            case 'toggle':
+                $class = str_replace('_', '', ucwords($type, '_'));
+                return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\" . $class;
+            case 'heading_1':
+                return HeadingOne::class;
+            case 'heading_2':
+                return HeadingTwo::class;
+            case 'heading_3':
+                return HeadingThree::class;
+            default:
+                return Block::class;
+        }
     }
 }

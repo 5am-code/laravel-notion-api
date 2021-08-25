@@ -2,13 +2,14 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class Checkbox
  * @package FiveamCode\LaravelNotionApi\Entities\Properties
  */
-class Checkbox extends Property
+class Checkbox extends Property implements Modifiable
 {
 
     /**
