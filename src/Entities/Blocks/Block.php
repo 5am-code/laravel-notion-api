@@ -156,12 +156,13 @@ class Block extends Entity
     /**
      * @return string
      */
-    public function asText() : string
+    public function asText(): string
     {
         return $this->text;
     }
 
-    public function setContent($content){
+    public function setContent($content)
+    {
         $this->content = $content;
     }
 
@@ -193,8 +194,12 @@ class Block extends Entity
             case 'child_page':
             case 'paragraph':
             case 'to_do':
-            case 'embed':
             case 'toggle':
+            case 'embed':
+            case 'image':
+            case 'video':
+            case 'file':
+            case 'pdf':
                 $class = str_replace('_', '', ucwords($type, '_'));
                 return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\" . $class;
             case 'heading_1':

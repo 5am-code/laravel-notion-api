@@ -10,20 +10,15 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class Paragraph
+ * Class TextBlock
  * @package FiveamCode\LaravelNotionApi\Entities\Blocks
  */
-class Embed extends Block implements Modifiable
+class BaseFileBlock extends Block implements Modifiable
 {
-    private RichText $caption;
-    private string $url = "";
-
-    public static function create(string $url, string $caption = ""): Embed
+    protected static function createFileBlock(BaseFileBlock $fileBlock, string $url, string $caption = ""): BaseFileBlock
     {
-        $embed = new Embed();
-
-        $embed->rawContent = [
-            'url' => $url,
+        $fileBlock->rawContent = [
+            'type' => 'external',
             'caption' => [
                 [
                     'type' => 'text',
@@ -31,19 +26,21 @@ class Embed extends Block implements Modifiable
                         'content' => $caption
                     ]
                 ]
+            ],
+            'external' => [
+                'url' => $url,
             ]
         ];
 
-        $embed->fillContent();
+        $fileBlock->fillContent();
 
-        return $embed;
+        return $fileBlock;
     }
 
-    function __construct(array $responseData = null)
-    {
-        $this->type = "embed";
-        parent::__construct($responseData);
-    }
+    private string $hostingType = "";
+    private string $url = "";
+    private RichText $caption;
+
 
     /**
      * 
@@ -59,7 +56,8 @@ class Embed extends Block implements Modifiable
      */
     protected function fillContent(): void
     {
-        $this->url = $this->rawContent['url'];
+        $this->hostingType = $this->rawContent['type'];
+        $this->url = $this->rawContent[$this->hostingType]['url'];
         $this->caption = new RichText($this->rawContent['caption']);
         $this->content = $this->url;
     }
@@ -67,6 +65,11 @@ class Embed extends Block implements Modifiable
     public function getUrl()
     {
         return $this->url;
+    }
+
+    public function getHostingType()
+    {
+        return $this->hostingType;
     }
 
     public function getCaption()
