@@ -35,6 +35,8 @@ class TextBlock extends Block implements Modifiable
             "text" => $text
         ];
 
+        $textBlock->fillContent();
+
         return $textBlock;
     }
 
