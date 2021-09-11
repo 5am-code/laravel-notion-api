@@ -161,6 +161,10 @@ class Block extends Entity
         return $this->text;
     }
 
+    public function setContent($content){
+        $this->content = $content;
+    }
+
     /**
      * @param $rawContent
      * @return Block
@@ -172,6 +176,7 @@ class Block extends Entity
         $block = new $blockClass($rawContent);
         return $block;
     }
+
 
     /**
      * Maps the type of a block to the corresponding package class by converting the type name.
