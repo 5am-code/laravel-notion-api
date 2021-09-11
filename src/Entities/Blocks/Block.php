@@ -69,7 +69,7 @@ class Block extends Entity
     {
         $this->fillId();
         $this->fillType();
-        $this->fillContent();
+        $this->fillRawContent();
         $this->fillHasChildren();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
@@ -88,7 +88,7 @@ class Block extends Entity
     /**
      *
      */
-    private function fillContent(): void
+    private function fillRawContent(): void
     {
         if (Arr::exists($this->responseData, $this->getType())) {
             $this->rawContent = $this->responseData[$this->getType()];
@@ -193,6 +193,7 @@ class Block extends Entity
             case 'child_page':
             case 'paragraph':
             case 'to_do':
+            case 'embed':
             case 'toggle':
                 $class = str_replace('_', '', ucwords($type, '_'));
                 return "FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\" . $class;

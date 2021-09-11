@@ -5,16 +5,20 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 use DateTime;
 use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class ChildPage
+ * Class Paragraph
  * @package FiveamCode\LaravelNotionApi\Entities\Blocks
  */
-class ChildPage extends Block
+class Embed extends Block
 {
+    private RichText $caption;
+    private string $url = "";
+
     function __construct(array $responseData = null){
-        $this->type = "child_page";
+        $this->type = "embed";
         parent::__construct($responseData);
     }
 
@@ -30,17 +34,18 @@ class ChildPage extends Block
     /**
      * 
      */
-    protected function fillContent() : void
+    protected function fillContent(): void
     {
-        $this->content = $this->rawContent['title'];
-        $this->text = $this->getContent();
+        $this->url = $this->rawContent['url'];
+        $this->caption = new RichText($this->rawContent['caption']);
+        $this->content = $this->url;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
+    public function getUrl(){
+        return $this->url;
+    }
+
+    public function getCaption(){
+        return $this->caption;
     }
 }
