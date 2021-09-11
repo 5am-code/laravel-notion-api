@@ -13,6 +13,11 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class ChildPage extends Block
 {
+    function __construct(array $responseData = null){
+        $this->type = "child_page";
+        parent::__construct($responseData);
+    }
+
     /**
      * 
      */
