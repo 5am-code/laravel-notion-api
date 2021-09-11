@@ -33,6 +33,8 @@ class Embed extends Block
             ]
         ];
 
+        $embed->fillContent();
+
         return $embed;
     }
 
