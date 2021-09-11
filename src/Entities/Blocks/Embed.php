@@ -17,7 +17,27 @@ class Embed extends Block
     private RichText $caption;
     private string $url = "";
 
-    function __construct(array $responseData = null){
+    public static function create(string $url, string $caption): Embed
+    {
+        $embed = new Embed();
+
+        $embed->rawContent = [
+            'url' => $url,
+            'caption' => [
+                [
+                    'type' => 'text',
+                    'text' => [
+                        'content' => $caption
+                    ]
+                ]
+            ]
+        ];
+
+        return $embed;
+    }
+
+    function __construct(array $responseData = null)
+    {
         $this->type = "embed";
         parent::__construct($responseData);
     }
@@ -41,11 +61,13 @@ class Embed extends Block
         $this->content = $this->url;
     }
 
-    public function getUrl(){
+    public function getUrl()
+    {
         return $this->url;
     }
 
-    public function getCaption(){
+    public function getCaption()
+    {
         return $this->caption;
     }
 }

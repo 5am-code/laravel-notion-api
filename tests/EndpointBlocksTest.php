@@ -6,6 +6,7 @@ use Notion;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\BulletedListItem;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Embed;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingOne;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingThree;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\HeadingTwo;
@@ -99,7 +100,7 @@ class EndpointBlocksTest extends NotionApiTest
         $blockChildrenCollection = $blockChildren->asCollection();
         $this->assertContainsOnly(Block::class, $blockChildrenCollection);
         $this->assertIsIterable($blockChildrenCollection);
-        $this->assertCount(8, $blockChildrenCollection);
+        $this->assertCount(9, $blockChildrenCollection);
 
         # check paragraph
         $blockChild = $blockChildrenCollection[0];
@@ -156,6 +157,14 @@ class EndpointBlocksTest extends NotionApiTest
         $this->assertEquals('toggle', $blockChild->getType());
         $this->assertFalse($blockChild->hasChildren());
         $this->assertEquals('toggle_block', $blockChild->getContent()->getPlainText());
+
+        # check embed
+        $blockChild = $blockChildrenCollection[8];
+        $this->assertInstanceOf(Embed::class, $blockChild);
+        $this->assertEquals('embed', $blockChild->getType());
+        $this->assertFalse($blockChild->hasChildren());
+        $this->assertEquals('Testcaption', $blockChild->getCaption()->getPlainText());
+        $this->assertEquals('https://notion.so', $blockChild->getUrl());
     }
 
     /** @test */
@@ -202,6 +211,7 @@ class EndpointBlocksTest extends NotionApiTest
         $numberedListItem = NumberedListItem::create("New TextBlock");
         $toDo = ToDo::create("New TextBlock");
         $toggle = Toggle::create(["New TextBlock"]);
+        $embed = Embed::create("https://5amco.de", "Testcaption");
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($paragraph);
         $this->assertInstanceOf(Block::class, $parentBlock);
@@ -227,8 +237,11 @@ class EndpointBlocksTest extends NotionApiTest
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($toggle);
         $this->assertInstanceOf(Block::class, $parentBlock);
 
+        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($embed);
+        $this->assertInstanceOf(Block::class, $parentBlock);
 
-        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle]);
+
+        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle, $embed]);
         $this->assertInstanceOf(Block::class, $parentBlock);
     }
 }
