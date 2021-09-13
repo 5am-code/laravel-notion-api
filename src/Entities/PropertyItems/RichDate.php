@@ -93,7 +93,6 @@ class RichDate extends Entity
 
 
     /**
-     
      */
     public function setEnd($end): void
     {

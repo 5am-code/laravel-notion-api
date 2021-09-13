@@ -30,7 +30,7 @@ class TextBlock extends Block implements Modifiable
                 ]
             ]);
         }
-        
+
         $textBlock->rawContent = [
             "text" => $text
         ];
@@ -41,7 +41,7 @@ class TextBlock extends Block implements Modifiable
     }
 
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -50,7 +50,7 @@ class TextBlock extends Block implements Modifiable
     }
 
     /**
-     * 
+     *
      */
     protected function fillContent(): void
     {

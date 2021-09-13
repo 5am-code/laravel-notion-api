@@ -43,7 +43,7 @@ class BaseFileBlock extends Block implements Modifiable
 
 
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -52,7 +52,7 @@ class BaseFileBlock extends Block implements Modifiable
     }
 
     /**
-     * 
+     *
      */
     protected function fillContent(): void
     {

@@ -23,7 +23,7 @@ class MultiSelect extends Property implements Modifiable
         $multiSelectRawContent = [];
         $selectItemCollection = new Collection();
 
-        foreach($names as $name){
+        foreach ($names as $name) {
             $selectItem = new SelectItem();
             $selectItem->setName($name);
             $selectItemCollection->add($selectItem);

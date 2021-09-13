@@ -33,7 +33,7 @@ class Entity implements JsonSerializable
      */
     public function __construct(array $responseData = null)
     {
-        if($responseData != null) $this->setResponseData($responseData);
+        if ($responseData != null) $this->setResponseData($responseData);
     }
 
     /**
@@ -50,7 +50,7 @@ class Entity implements JsonSerializable
         // Currently, the API returns not-found objects with status code 200 -
         // so we have to check here on the given status code in the paylaod,
         // if the object was not found.
-        if(
+        if (
             $responseData['object'] === 'error'
             && Arr::exists($responseData, 'status') && $responseData['status'] === 404
         ) {
@@ -99,9 +99,10 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * 
+     *
      */
-    public function setId($id): void{
+    public function setId($id): void
+    {
         $this->id = $id;
     }
 
@@ -124,7 +125,8 @@ class Entity implements JsonSerializable
     /**
      * @return array
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return get_object_vars($this);
     }
 }

@@ -46,7 +46,7 @@ class Embed extends Block implements Modifiable
     }
 
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -55,7 +55,7 @@ class Embed extends Block implements Modifiable
     }
 
     /**
-     * 
+     *
      */
     protected function fillContent(): void
     {

@@ -47,7 +47,8 @@ class SelectItem extends Entity
     /**
      *
      */
-    protected function fillName():void{
+    protected function fillName(): void
+    {
         if (Arr::exists($this->responseData, 'name')) {
             $this->name = $this->responseData['name'];
         }
@@ -56,7 +57,8 @@ class SelectItem extends Entity
     /**
      *
      */
-    protected function fillColor():void{
+    protected function fillColor(): void
+    {
         if (Arr::exists($this->responseData, 'color')) {
             $this->color = $this->responseData['color'];
         }
@@ -78,7 +80,6 @@ class SelectItem extends Entity
     {
         return $this->name;
     }
-
 
 
     /**

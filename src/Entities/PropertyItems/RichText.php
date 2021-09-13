@@ -16,7 +16,7 @@ class RichText extends Entity
      */
     protected string $plainText = '';
 
-    
+
     /**
      * @param array $responseData
      */

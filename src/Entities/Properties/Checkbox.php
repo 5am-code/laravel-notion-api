@@ -56,7 +56,8 @@ class Checkbox extends Property implements Modifiable
     /**
      * @return string
      */
-    public function asText(): string{
+    public function asText(): string
+    {
         return ($this->getContent()) ? "true" : "false";
     }
 }

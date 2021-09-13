@@ -158,7 +158,7 @@ class Page extends Entity
     }
 
     /**
-     * 
+     *
      */
     private function fillPageUrl(): void
     {

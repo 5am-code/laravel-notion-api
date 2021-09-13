@@ -146,7 +146,7 @@ class Block extends Entity
     }
 
     /**
-     * 
+     *
      */
     public function getContent()
     {

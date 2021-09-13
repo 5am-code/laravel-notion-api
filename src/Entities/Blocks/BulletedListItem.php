@@ -15,12 +15,13 @@ class BulletedListItem extends TextBlock
 {
     public static function create(array|string $textContent): BulletedListItem
     {
-        $bulletedListItem = new BulletedListItem();    
+        $bulletedListItem = new BulletedListItem();
         TextBlock::createTextBlock($bulletedListItem, $textContent);
         return $bulletedListItem;
     }
 
-    function __construct(array $responseData = null){
+    function __construct(array $responseData = null)
+    {
         $this->type = "bulleted_list_item";
         parent::__construct($responseData);
     }

@@ -21,7 +21,7 @@ class Relation extends Property implements Modifiable
         $relationProperty->content = new Collection();
         $relationProperty->rawContent = ['relation' => []];
 
-        foreach($relationIds as $relationId){
+        foreach ($relationIds as $relationId) {
             array_push($relationProperty->rawContent['relation'], ['id' => $relationId]);
             $relationProperty->content->add($relationId);
         }
@@ -45,7 +45,7 @@ class Relation extends Property implements Modifiable
     protected function fillRelation(): void
     {
         $this->content = new Collection();
-        foreach($this->rawContent as $relationId){
+        foreach ($this->rawContent as $relationId) {
             $this->content->add($relationId);
         }
     }
