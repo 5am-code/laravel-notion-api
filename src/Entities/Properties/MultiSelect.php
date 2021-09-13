@@ -3,9 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
 
 /**
  * Class MultiSelect

@@ -10,8 +10,6 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use FiveamCode\LaravelNotionApi\Entities\Properties\People;
 use FiveamCode\LaravelNotionApi\Entities\Properties\PhoneNumber;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
@@ -19,6 +17,8 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * Class Page

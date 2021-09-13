@@ -2,11 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Class Database

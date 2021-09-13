@@ -3,10 +3,10 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use Carbon\Carbon;
-use JsonSerializable;
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use Illuminate\Support\Arr;
+use JsonSerializable;
 
 /**
  * Class Entity

@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\PropertyItems;
 
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
+use Illuminate\Support\Arr;
 
 /**
  * Class RichText

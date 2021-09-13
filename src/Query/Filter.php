@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
 
 /**
  * Class Filter

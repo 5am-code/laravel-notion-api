@@ -2,9 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\PropertyItems;
 
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 /**
  * Class SelectItem

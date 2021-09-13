@@ -3,8 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 
 /**

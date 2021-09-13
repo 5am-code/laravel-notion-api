@@ -3,9 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class Date

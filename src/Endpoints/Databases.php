@@ -2,10 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
+use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 
 
 /**

@@ -2,11 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BaseBlockEntity;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Notion;
 
 /**
  * Class Block

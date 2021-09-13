@@ -2,10 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
-use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 /**
  * Class Property
