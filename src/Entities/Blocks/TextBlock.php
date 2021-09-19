@@ -19,12 +19,12 @@ class TextBlock extends Block implements Modifiable
 
         $text = [];
         foreach ($textContent as $textItem) {
-            array_push($text, [
+            $text[] = [
                 "type" => "text",
                 "text" => [
                     "content" => $textItem
                 ]
-            ]);
+            ];
         }
 
         $textBlock->rawContent = [
