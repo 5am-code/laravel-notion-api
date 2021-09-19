@@ -23,8 +23,8 @@ class People extends Property implements Modifiable
         $peopleProperty->content = new Collection();
         $peopleProperty->rawContent = ['people' => []];
 
-        foreach($userIds as $userId){
-            array_push($peopleProperty->rawContent['people'], ['object' => 'user', 'id' => $userId]); 
+        foreach ($userIds as $userId) {
+            array_push($peopleProperty->rawContent['people'], ['object' => 'user', 'id' => $userId]);
             $peopleProperty->content->add(new User(['object' => 'user', 'id' => $userId]));
         }
 

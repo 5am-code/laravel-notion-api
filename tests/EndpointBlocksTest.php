@@ -253,8 +253,9 @@ class EndpointBlocksTest extends NotionApiTest
         $toggle = Toggle::create(["New TextBlock"]);
         $embed = Embed::create("https://5amco.de", "Testcaption");
         $image = Image::create("https://images.unsplash.com/photo-1593642533144-3d62aa4783ec?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb", "Testcaption");
-        $video = Image::create("https://www.w3schools.com/html/mov_bbb.mp4", "TestCaption");
-        $pdf = Image::create("https://notion.so/testpdf.pdf", "TestCaption");
+        $file = File::create("https://images.unsplash.com/photo-1593642533144-3d62aa4783ec?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb", "Testcaption");
+        $video = Video::create("https://www.w3schools.com/html/mov_bbb.mp4", "TestCaption");
+        $pdf = Pdf::create("https://notion.so/testpdf.pdf", "TestCaption");
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($paragraph);
         $this->assertInstanceOf(Block::class, $parentBlock);
@@ -284,6 +285,9 @@ class EndpointBlocksTest extends NotionApiTest
         $this->assertInstanceOf(Block::class, $parentBlock);
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($image);
+        $this->assertInstanceOf(Block::class, $parentBlock);
+
+        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($file);
         $this->assertInstanceOf(Block::class, $parentBlock);
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($video);

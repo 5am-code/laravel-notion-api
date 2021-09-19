@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 /**
  * Class User

@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Query;
 
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
 
 /**
  * Class Filter
@@ -35,8 +35,8 @@ class Filter extends QueryHelper
     public function __construct(
         string $property,
         string $filterType = null,
-        array $filterConditions = null,
-        array $filterDefinition = null
+        array  $filterConditions = null,
+        array  $filterDefinition = null
     )
     {
         parent::__construct();
