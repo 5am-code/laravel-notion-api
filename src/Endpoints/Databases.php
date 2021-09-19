@@ -26,6 +26,7 @@ class Databases extends Endpoint implements EndpointInterface
      * @return DatabaseCollection
      * @throws HandlingException
      * @throws NotionException
+     * @deprecated
      */
     public function all(): DatabaseCollection
     {
