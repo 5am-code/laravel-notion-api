@@ -15,7 +15,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class BaseFileBlock extends Block implements Modifiable
 {
-    protected static function createFileBlock(BaseFileBlock $fileBlock, string $url, string $caption = ""): BaseFileBlock
+    protected static final function createFileBlock(BaseFileBlock $fileBlock, string $url, string $caption = ""): BaseFileBlock
     {
         $fileBlock->rawContent = [
             'type' => 'external',

@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BaseBlockEntity;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BlockEntity;
 
 /**
  * Class Block
@@ -58,7 +58,7 @@ class Block extends Endpoint
      * @return FiveamCode\LaravelNotionApi\Entities\Blocks\Block
      * @throws HandlingException
      */
-    public function append(array|BaseBlockEntity $appendices): BaseBlockEntity
+    public function append(array|BlockEntity $appendices): BlockEntity
     {
         if (!is_array($appendices)) {
             $appendices = [$appendices];
@@ -66,11 +66,11 @@ class Block extends Endpoint
         $children = [];
 
         foreach ($appendices as $block) {
-            array_push($children, [
+            $children[] = [
                 "object" => "block",
                 "type" => $block->getType(),
                 $block->getType() => $block->getRawContent()
-            ]);
+            ];
         }
 
         $body = [
@@ -82,6 +82,6 @@ class Block extends Endpoint
             $body
         );
 
-        return new BaseBlockEntity($response->json());
+        return new BlockEntity($response->json());
     }
 }
