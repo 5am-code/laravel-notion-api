@@ -36,6 +36,27 @@ class Page extends Entity
      */
     protected string $url = '';
 
+
+    /**
+     * @var string
+     */
+    private string $icon = '';
+
+    /**
+     * @var string
+     */
+    private string $iconType = '';
+
+    /**
+     * @var string
+     */
+    private string $cover = '';
+
+    /**
+     * @var string
+     */
+    private string $coverType = '';
+
     /**
      * @var string
      */
@@ -107,6 +128,8 @@ class Page extends Entity
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillPageUrl();
+        $this->fillIcon();
+        $this->fillCover();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
@@ -153,6 +176,41 @@ class Page extends Entity
                 if (Arr::exists($rawTitleProperty[0], 'plain_text')) {
                     $this->title = $rawTitleProperty[0]['plain_text'];
                 }
+            }
+        }
+    }
+
+     /**
+     *
+     */
+    private function fillIcon(): void
+    {
+        if (Arr::exists($this->responseData, 'icon') && $this->responseData['icon'] != null) {
+            $this->iconType = $this->responseData['icon']['type'];
+            if(Arr::exists($this->responseData['icon'], 'emoji')){
+                $this->icon = $this->responseData['icon']['emoji'];
+            }
+            else if(Arr::exists($this->responseData['icon'], 'file')){
+                $this->icon = $this->responseData['icon']['file']['url'];
+            }
+            else if(Arr::exists($this->responseData['icon'], 'external')){
+                $this->icon = $this->responseData['icon']['external']['url'];
+            }
+        }
+    }
+
+     /**
+     *
+     */
+    private function fillCover(): void
+    {
+        if (Arr::exists($this->responseData, 'cover') && $this->responseData['cover'] != null) {
+            $this->coverType = $this->responseData['cover']['type'];
+            if(Arr::exists($this->responseData['cover'], 'file')){
+                $this->cover = $this->responseData['cover']['file']['url'];
+            }
+            else if(Arr::exists($this->responseData['cover'], 'external')){
+                $this->cover = $this->responseData['cover']['external']['url'];
             }
         }
     }
@@ -338,6 +396,38 @@ class Page extends Entity
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon(): string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconType(): string
+    {
+        return $this->iconType;
+    }
+
+        /**
+     * @return string
+     */
+    public function getCover(): string
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoverType(): string
+    {
+        return $this->coverType;
     }
 
     /**

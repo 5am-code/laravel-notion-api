@@ -81,6 +81,7 @@
       "date": {}
     },
     "Meals": {
+      "id": "Z\\Eh",
       "type": "relation",
       "relation": {
         "database": "668d797c-76fa-4934-9b05-ad288df2d136",
@@ -99,9 +100,10 @@
       }
     },
     "Store availability": {
+      "id": "Z\\Eh",
       "type": "multi_select",
       "multi_select": {
-        "options": [
+        "options": 
           [
             {
               "id": "d209b920-212c-4040-9d4a-bdf349dd8b2a",
@@ -124,7 +126,6 @@
               "color": "yellow"
             }
           ]
-        ]
       }
     },
     "+1": {

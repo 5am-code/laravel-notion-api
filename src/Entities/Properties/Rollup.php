@@ -22,21 +22,24 @@ class Rollup extends Property
     {
         parent::fillFromRaw();
 
-        $this->rollupType = $this->rawContent['type'];
+        if(array_key_exists('type', $this->rawContent))
+        {
+            $this->rollupType = $this->rawContent['type'];
 
-        switch ($this->rollupType) {
-            case 'number':
-                $this->setRollupContentNumber();
-                break;
-            case 'array':
-                $this->setRollupContentArray();
-                break;
-            case 'date':
-                $this->setRollupContentDate();
-                break;
-            default:
-                throw new HandlingException("Unexpected rollupType {$this->rollupType}");
+            switch ($this->rollupType) {
+                case 'number':
+                    $this->setRollupContentNumber();
+                    break;
+                case 'array':
+                    $this->setRollupContentArray();
+                    break;
+                case 'date':
+                    $this->setRollupContentDate();
+                    break;
+                default:
+                    throw new HandlingException("Unexpected rollupType {$this->rollupType}");
         }
+    }
     }
 
     /**
