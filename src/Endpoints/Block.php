@@ -33,6 +33,25 @@ class Block extends Endpoint
     }
 
     /**
+     * Retrieve a block
+     * url: https://api.notion.com/{version}/blocks/{block_id}
+     * notion-api-docs: https://developers.notion.com/reference/retrieve-a-block
+     *
+     * @param string $blockId
+     * @return BlockEntity
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    public function retrieve(): BlockEntity {
+
+        $response = $this->get(
+            $this->url(Endpoint::BLOCKS . '/' . $this->blockId)
+        );
+
+        return BlockEntity::fromResponse($response->json());
+    }
+
+    /**
      * Retrieve block children
      * url: https://api.notion.com/{version}/blocks/{block_id}/children [get]
      * notion-api-docs: https://developers.notion.com/reference/get-block-children

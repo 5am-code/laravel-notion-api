@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use Notion;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
@@ -59,7 +60,7 @@ class EndpointBlocksTest extends NotionApiTest
         Http::fake([
             'https://api.notion.com/v1/blocks/b55c9c91-384d-452b-81db-d1ef79372b76/children*'
             => Http::response(
-                json_decode(file_get_contents('tests/stubs/endpoints/blocks/response_specific_200.json'), true),
+                json_decode(file_get_contents('tests/stubs/endpoints/blocks/response_specific_block_children_200.json'), true),
                 200,
                 ['Headers']
             )
@@ -299,4 +300,24 @@ class EndpointBlocksTest extends NotionApiTest
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle, $embed, $image, $video, $pdf]);
         $this->assertInstanceOf(Block::class, $parentBlock);
     }
+
+    /** @test */
+    public function it_retrieves_a_single_block()
+    {
+        // successful /v1/blocks/BLOCK_DOES_EXIST
+        Http::fake([
+            'https://api.notion.com/v1/blocks/a6f8ebe8d5df4ffab543bcd54d1c3bad'
+            => Http::response(
+                json_decode(file_get_contents('tests/stubs/endpoints/blocks/response_specific_block_200.json'), true),
+                200,
+                ['Headers']
+            )
+        ]);
+
+        $block = \Notion::block("a6f8ebe8d5df4ffab543bcd54d1c3bad")->retrieve();
+
+        $this->assertInstanceOf(Block::class, $block);
+        $this->assertInstanceOf(Paragraph::class, $block);
+    }
+
 }
