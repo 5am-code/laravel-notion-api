@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
 use Exception;
-use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**

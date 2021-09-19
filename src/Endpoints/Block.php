@@ -2,11 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BlockEntity;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Notion;
+
 /**
  * Class Block
  * @package FiveamCode\LaravelNotionApi\Endpoints
@@ -52,7 +53,7 @@ class Block extends Endpoint
 
     /**
      * Retrieve block children
-     * url: https://api.notion.com/{version}/blocks/{block_id}/children
+     * url: https://api.notion.com/{version}/blocks/{block_id}/children [get]
      * notion-api-docs: https://developers.notion.com/reference/get-block-children
      *
      * @return BlockCollection
@@ -69,11 +70,37 @@ class Block extends Endpoint
     }
 
     /**
-     * @return array
+     * Append one Block or an array of Blocks
+     * url: https://api.notion.com/{version}/blocks/{block_id}/children [patch]
+     * notion-api-docs: https://developers.notion.com/reference/patch-block-children
+     *
+     * @return FiveamCode\LaravelNotionApi\Entities\Blocks\Block
      * @throws HandlingException
      */
-    public function create(): array
+    public function append(array|BlockEntity $appendices): BlockEntity
     {
-        throw new HandlingException('Not implemented');
+        if (!is_array($appendices)) {
+            $appendices = [$appendices];
+        }
+        $children = [];
+
+        foreach ($appendices as $block) {
+            $children[] = [
+                "object" => "block",
+                "type" => $block->getType(),
+                $block->getType() => $block->getRawContent()
+            ];
+        }
+
+        $body = [
+            "children" => $children
+        ];
+
+        $response = $this->patch(
+            $this->url(Endpoint::BLOCKS . '/' . $this->blockId . '/children' . ""),
+            $body
+        );
+
+        return new BlockEntity($response->json());
     }
 }

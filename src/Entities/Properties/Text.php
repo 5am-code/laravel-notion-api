@@ -3,8 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class Text
