@@ -1,7 +1,9 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Query;
+namespace FiveamCode\LaravelNotionApi\Query\Filter;
 
+use FiveamCode\LaravelNotionApi\Query\Filter\Operators;
+use FiveamCode\LaravelNotionApi\Query\QueryHelper;
 use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
@@ -35,8 +37,8 @@ class Filter extends QueryHelper
     public function __construct(
         string $property,
         string $filterType = null,
-        array $filterConditions = null,
-        array $filterDefinition = null
+        array  $filterConditions = null,
+        array  $filterDefinition = null
     )
     {
         parent::__construct();
@@ -53,12 +55,20 @@ class Filter extends QueryHelper
      * @see https://developers.notion.com/reference/post-database-query#text-filter-condition
      *
      * @param string $property
-     * @param array $filterConditions
+     * @param string $comparisonOperator
+     * @param $value
      * @return Filter
      */
-    public static function textFilter(string $property, array $filterConditions): Filter
+    public static function textFilter(string $property, string $comparisonOperator, string $value): Filter
     {
-        return new Filter($property, 'text', $filterConditions);
+        self::isValidComparisonOperatorFor('text', $comparisonOperator);
+        return new Filter($property, 'text', [$comparisonOperator => $value]);
+    }
+
+    public static function numberFilter(string $property, string $comparisonOperator, float|int|double $number): Filter
+    {
+        self::isValidComparisonOperatorFor('number', $comparisonOperator);
+        return new Filter($property, 'number', [$comparisonOperator => $number]);
     }
 
     /**
@@ -119,6 +129,15 @@ class Filter extends QueryHelper
 
         return $queryFilter->toArray();
 
+    }
+
+
+    private static function isValidComparisonOperatorFor($filterType, $operator)
+    {
+        $validOperators = Operators::getValidComparisonOperators($filterType);
+
+        if (!in_array($operator, $validOperators))
+            throw HandlingException::instance("Invalid comparison operator.", compact("operator"));
     }
 
 
