@@ -266,31 +266,49 @@ class Database extends Entity
         return $this->coverType;
     }
 
+    /**
+     * @return Collection
+     */
     public function getProperties(): Collection
     {
         return $this->properties;
     }
 
+    /**
+     * @return array
+     */
     public function getRawTitle(): array
     {
         return $this->rawTitle;
     }
 
+    /**
+     * @return array
+     */
     public function getRawProperties(): array
     {
         return $this->rawProperties;
     }
 
+    /**
+     * @return array
+     */
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getCreatedTime(): DateTime
     {
         return $this->createdTime;
     }
 
+    /**
+     * @return array
+     */
     public function getLastEditedTime(): DateTime
     {
         return $this->lastEditedTime;
