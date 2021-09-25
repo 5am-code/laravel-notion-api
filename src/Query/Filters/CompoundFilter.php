@@ -1,8 +1,9 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Query;
+namespace FiveamCode\LaravelNotionApi\Query\Filters;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Query\QueryHelper;
 
 /**
  * Class CompoundFilter

@@ -1,8 +1,9 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Query;
+namespace FiveamCode\LaravelNotionApi\Query\Filters;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Query\QueryHelper;
 use Illuminate\Support\Collection;
 
 /**
@@ -48,17 +49,36 @@ class Filter extends QueryHelper
     }
 
     /**
-     * Returns a text filter instance.
+     * Creates a number filter instance after checking validity.
      *
      * @see https://developers.notion.com/reference/post-database-query#text-filter-condition
      *
      * @param string $property
-     * @param array $filterConditions
+     * @param string $comparisonOperator
+     * @param $value
      * @return Filter
      */
-    public static function textFilter(string $property, array $filterConditions): Filter
+    public static function textFilter(string $property, string $comparisonOperator, string $value): Filter
     {
-        return new Filter($property, 'text', $filterConditions);
+        self::isValidComparisonOperatorFor('text', $comparisonOperator);
+        return new Filter($property, 'text', [$comparisonOperator => $value]);
+    }
+
+    /**
+     * Creates a number filter instance after checking validity.
+     *
+     * @see https://developers.notion.com/reference/post-database-query#number-filter-condition
+     *
+     * @param string $property
+     * @param string $comparisonOperator
+     * @param float|int $number
+     * @return Filter
+     * @throws HandlingException
+     */
+    public static function numberFilter(string $property, string $comparisonOperator, float|int $number): Filter
+    {
+        self::isValidComparisonOperatorFor('number', $comparisonOperator);
+        return new Filter($property, 'number', [$comparisonOperator => $number]);
     }
 
     /**
@@ -102,6 +122,17 @@ class Filter extends QueryHelper
 
     }
 
+    /**
+     * Semantic wrapper for toArray()
+     *
+     * @return array
+     * @throws HandlingException
+     */
+    public function toQuery(): array
+    {
+        return $this->toArray();
+    }
+
 
     /**
      * @param Collection $filter
@@ -114,11 +145,27 @@ class Filter extends QueryHelper
         $queryFilter = new Collection();
 
         $filter->each(function (Filter $filter) use ($queryFilter) {
-            $queryFilter->add($filter->toArray());
+            $queryFilter->add($filter->toQuery());
         });
 
         return $queryFilter->toArray();
 
+    }
+
+
+    /**
+     * Checks if the given comparison operator is valid for the given filter type.
+     *
+     * @param $filterType
+     * @param $operator
+     * @throws HandlingException
+     */
+    private static function isValidComparisonOperatorFor($filterType, $operator)
+    {
+        $validOperators = Operators::getValidComparisonOperators($filterType);
+
+        if (!in_array($operator, $validOperators))
+            throw HandlingException::instance("Invalid comparison operator.", compact("operator"));
     }
 
 
