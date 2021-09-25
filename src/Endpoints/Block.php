@@ -42,7 +42,8 @@ class Block extends Endpoint
      * @throws HandlingException
      * @throws NotionException
      */
-    public function retrieve(): BlockEntity {
+    public function retrieve(): BlockEntity
+    {
 
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . '/' . $this->blockId)
