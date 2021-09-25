@@ -59,7 +59,7 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-    /**
+        /**
      * @return Page
      */
     public function createInPage(string $parentId, Page $page): Page
@@ -85,17 +85,7 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-    /**
-     * Return all pages possible.
-     *
-     * @return EntityCollection
-     * @throws HandlingException
-     * @throws NotionException
-     */
-    public function all(): EntityCollection
-    {
-        return $this->notion->search()->onlyPages()->query();
-    }
+
 
     /**
      * @return array
