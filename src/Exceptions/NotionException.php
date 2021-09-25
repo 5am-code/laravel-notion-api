@@ -33,8 +33,22 @@ class NotionException extends LaravelNotionAPIException
      */
     public static function fromResponse(Response $response): NotionException
     {
+        $responseBody = json_decode($response->getBody()->getContents(), true);
+
+        $errorCode = $errorMessage = "";
+        if (array_key_exists("code", $responseBody)) {
+            $errorCode = "({$responseBody["code"]})";
+        }
+
+        if (array_key_exists("code", $responseBody)) {
+            $errorMessage = "({$responseBody["message"]})";
+        }
+
+        $message = "{$response->getReasonPhrase()}: {$errorCode} {$errorMessage}";
+
         return new NotionException(
-            $response->getReasonPhrase(), 0,
+            $message,
+            0,
             $response->toException()
         );
     }

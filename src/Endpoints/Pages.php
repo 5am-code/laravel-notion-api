@@ -2,9 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 
 /**
  * Class Pages

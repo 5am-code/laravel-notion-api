@@ -6,18 +6,19 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  * Class Paragraph
  * @package FiveamCode\LaravelNotionApi\Entities\Blocks
  */
-class Paragraph extends TextBlock
+class Video extends BaseFileBlock
 {
-    public static function create(array|string $textContent): Paragraph
+    public static function create(string $url, string $caption = ""): Video
     {
-        $paragraph = new Paragraph();
-        TextBlock::createTextBlock($paragraph, $textContent);
-        return $paragraph;
+        $video = new Video();
+        BaseFileBlock::createFileBlock($video, $url, $caption);
+        return $video;
     }
 
     function __construct(array $responseData = null)
     {
-        $this->type = "paragraph";
+        $this->type = "video";
         parent::__construct($responseData);
     }
+
 }

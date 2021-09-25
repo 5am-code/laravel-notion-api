@@ -2,20 +2,42 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
-use DateTime;
-use Illuminate\Support\Arr;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
+use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class TextBlock
  * @package FiveamCode\LaravelNotionApi\Entities\Blocks
  */
-class TextBlock extends Block
+class TextBlock extends Block implements Modifiable
 {
+    protected static function createTextBlock(TextBlock $textBlock, array|string $textContent): TextBlock
+    {
+        if (is_string($textContent)) {
+            $textContent = [$textContent];
+        }
+
+        $text = [];
+        foreach ($textContent as $textItem) {
+            $text[] = [
+                "type" => "text",
+                "text" => [
+                    "content" => $textItem
+                ]
+            ];
+        }
+
+        $textBlock->rawContent = [
+            "text" => $text
+        ];
+
+        $textBlock->fillContent();
+
+        return $textBlock;
+    }
+
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -24,7 +46,7 @@ class TextBlock extends Block
     }
 
     /**
-     * 
+     *
      */
     protected function fillContent(): void
     {

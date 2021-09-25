@@ -2,10 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
-use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
+use Illuminate\Support\Collection;
 
 /**
  * Class Search

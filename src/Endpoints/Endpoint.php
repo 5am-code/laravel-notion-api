@@ -2,11 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use Illuminate\Http\Client\Response;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Http\Client\Response;
 
 /**
  * Class Endpoint

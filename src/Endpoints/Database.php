@@ -2,11 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\Filter;
-use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
+use FiveamCode\LaravelNotionApi\Notion;
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Sorting;
+use Illuminate\Support\Collection;
 
 /**
  * Class Database
@@ -67,7 +67,6 @@ class Database extends Endpoint
 
         if ($this->pageSize !== null)
             $postData['page_size'] = $this->pageSize;
-
 
         $response = $this
             ->post(

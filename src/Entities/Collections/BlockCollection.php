@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -16,9 +16,9 @@ class BlockCollection extends EntityCollection
 
     /**
      * will include unsupported blocks within your collection
-     * unsupported blocks are currently not supported by the Notion API 
+     * unsupported blocks are currently not supported by the Notion API
      * they will be ignored (not included) in your collection by default
-     * 
+     *
      * @return BlockCollection
      */
     public function withUnsupported(): BlockCollection
@@ -40,7 +40,7 @@ class BlockCollection extends EntityCollection
 
     /**
      * returns according blocks as collection
-     * 
+     *
      * @return Collection
      */
     public function asCollection(): Collection
@@ -58,7 +58,7 @@ class BlockCollection extends EntityCollection
     /**
      * returns according blocks as collection and will only represent the textual content of the blocks
      * (this is useful if you only want to work with the blocks content and not with the whole block object)
-     * 
+     *
      * @return Collection
      */
     public function asTextCollection(): Collection

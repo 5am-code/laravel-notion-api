@@ -3,8 +3,8 @@
 namespace FiveamCode\LaravelNotionApi\Entities\PropertyItems;
 
 use DateTime;
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
+use Illuminate\Support\Arr;
 
 /**
  * Class RichDate
@@ -93,7 +93,6 @@ class RichDate extends Entity
 
 
     /**
-     
      */
     public function setEnd($end): void
     {
