@@ -2,11 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
-use DateTime;
-use Illuminate\Support\Arr;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class TextBlock
@@ -15,7 +11,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 class TextBlock extends Block
 {
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -24,7 +20,7 @@ class TextBlock extends Block
     }
 
     /**
-     * 
+     *
      */
     protected function fillContent(): void
     {

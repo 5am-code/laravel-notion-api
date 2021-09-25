@@ -2,10 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Query\Filters;
 
-use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Query\QueryHelper;
 use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class Filter

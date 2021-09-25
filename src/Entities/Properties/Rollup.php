@@ -6,7 +6,6 @@ use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * Class Rollup

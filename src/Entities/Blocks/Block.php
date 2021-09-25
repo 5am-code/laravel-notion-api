@@ -3,9 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
 use DateTime;
-use Illuminate\Support\Arr;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 /**
  * Class Block
@@ -146,7 +146,7 @@ class Block extends Entity
     }
 
     /**
-     * 
+     *
      */
     public function getContent()
     {
@@ -156,7 +156,7 @@ class Block extends Entity
     /**
      * @return string
      */
-    public function asText() : string
+    public function asText(): string
     {
         return $this->text;
     }

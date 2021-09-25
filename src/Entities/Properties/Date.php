@@ -3,9 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
  * Class Date
@@ -32,7 +32,7 @@ class Date extends Property implements Modifiable
             $dateProperty->rawContent = [
                 "date" => [
                     "start" => $start->format("c"),
-                    "end" =>  $end->format("c")
+                    "end" => $end->format("c")
                 ]
             ];
         } else {
@@ -64,7 +64,7 @@ class Date extends Property implements Modifiable
             $richDate->setStart(new DateTime($startAsIsoString));
         }
 
-        
+
         if (isset($this->rawContent["end"])) {
             $endAsIsoString = $this->rawContent["end"];
             $richDate->setEnd(new DateTime($endAsIsoString));

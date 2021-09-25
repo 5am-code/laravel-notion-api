@@ -2,11 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
-use DateTime;
-use Illuminate\Support\Arr;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-
 /**
  * Class ChildPage
  * @package FiveamCode\LaravelNotionApi\Entities\Blocks
@@ -14,7 +9,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 class ChildPage extends Block
 {
     /**
-     * 
+     *
      */
     protected function fillFromRaw(): void
     {
@@ -23,9 +18,9 @@ class ChildPage extends Block
     }
 
     /**
-     * 
+     *
      */
-    protected function fillContent() : void
+    protected function fillContent(): void
     {
         $this->content = $this->rawContent['title'];
         $this->text = $this->getContent();

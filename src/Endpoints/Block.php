@@ -2,11 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BlockEntity;
+use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Notion;
+
 /**
  * Class Block
  * @package FiveamCode\LaravelNotionApi\Endpoints
@@ -41,7 +42,8 @@ class Block extends Endpoint
      * @throws HandlingException
      * @throws NotionException
      */
-    public function retrieve(): BlockEntity {
+    public function retrieve(): BlockEntity
+    {
 
         $response = $this->get(
             $this->url(Endpoint::BLOCKS . '/' . $this->blockId)

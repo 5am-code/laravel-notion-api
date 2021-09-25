@@ -59,12 +59,4 @@ class FilterTest extends NotionApiTest
         $filter->toArray();
     }
 
-    /** @test */
-    public function it_throws_an_exception_for_an_invalid_filter_type() {
-        $filter = new Filter("Test", "non_existing_filter_type");
-
-//        $this->expectException(HandlingException::class);
-//        $this->expectExceptionMessage("Invalid filter definition.");
-        $filter->toArray();
-    }
 }

@@ -3,9 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
 
 /**
  * Class MultiSelect
@@ -23,7 +23,7 @@ class MultiSelect extends Property implements Modifiable
         $multiSelectRawContent = [];
         $selectItemCollection = new Collection();
 
-        foreach($names as $name){
+        foreach ($names as $name) {
             $selectItem = new SelectItem();
             $selectItem->setName($name);
             $selectItemCollection->add($selectItem);

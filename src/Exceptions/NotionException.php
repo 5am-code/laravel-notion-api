@@ -3,7 +3,6 @@
 namespace FiveamCode\LaravelNotionApi\Exceptions;
 
 use Illuminate\Http\Client\Response;
-use Throwable;
 
 /**
  * Class NotionException
