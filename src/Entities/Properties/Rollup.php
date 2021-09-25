@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 /**
@@ -22,21 +23,24 @@ class Rollup extends Property
     {
         parent::fillFromRaw();
 
-        $this->rollupType = $this->rawContent['type'];
+        if(Arr::exists($this->rawContent, 'type'))
+        {
+            $this->rollupType = $this->rawContent['type'];
 
-        switch ($this->rollupType) {
-            case 'number':
-                $this->setRollupContentNumber();
-                break;
-            case 'array':
-                $this->setRollupContentArray();
-                break;
-            case 'date':
-                $this->setRollupContentDate();
-                break;
-            default:
-                throw new HandlingException("Unexpected rollupType {$this->rollupType}");
+            switch ($this->rollupType) {
+                case 'number':
+                    $this->setRollupContentNumber();
+                    break;
+                case 'array':
+                    $this->setRollupContentArray();
+                    break;
+                case 'date':
+                    $this->setRollupContentDate();
+                    break;
+                default:
+                    throw new HandlingException("Unexpected rollupType {$this->rollupType}");
         }
+    }
     }
 
     /**

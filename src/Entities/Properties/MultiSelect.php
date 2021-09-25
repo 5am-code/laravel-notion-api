@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 /**
@@ -13,6 +14,11 @@ use Illuminate\Support\Collection;
  */
 class MultiSelect extends Property implements Modifiable
 {
+    /**
+     * @var Collection 
+     */
+    private Collection $options;
+
     /**
      * @param $names
      * @return MultiSelect
@@ -51,8 +57,16 @@ class MultiSelect extends Property implements Modifiable
 
         $itemCollection = new Collection();
 
-        foreach ($this->rawContent as $item) {
-            $itemCollection->add(new SelectItem($item));
+        if(Arr::exists($this->rawContent, 'options')){
+            $this->options = new Collection();
+            foreach ($this->rawContent['options'] as $key => $item) {
+                $this->options->add(new SelectItem($item));
+            }
+        }
+        else{
+            foreach ($this->rawContent as $key => $item) {
+                $itemCollection->add(new SelectItem($item));
+            }
         }
 
         $this->content = $itemCollection;
@@ -72,6 +86,14 @@ class MultiSelect extends Property implements Modifiable
     public function getItems(): Collection
     {
         return $this->content;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
     }
 
     /**

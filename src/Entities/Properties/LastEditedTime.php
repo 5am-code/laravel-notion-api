@@ -18,12 +18,11 @@ class LastEditedTime extends Property
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
-        if ($this->rawContent == null) {
-            throw HandlingException::instance('The property-type is last_edited_time, however the raw data-structure is null. Please check the raw response-data.');
-        }
 
         try {
-            $this->content = new DateTime($this->rawContent);
+            if ($this->rawContent !== null) {
+                $this->content = new DateTime($this->rawContent);
+            }
         } catch (Exception $e) {
             throw HandlingException::instance('The content of last_edited_time is not a valid ISO 8601 date time string.');
         }

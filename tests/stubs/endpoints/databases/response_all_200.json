@@ -7,10 +7,12 @@
       "title": "Grocery list",
       "properties": {
         "Name": {
+          "id": "testid",
           "type": "title",
           "title": {}
         },
         "Description": {
+          "id": "testid",
           "type": "text",
           "text": {}
         }
@@ -22,10 +24,12 @@
       "title": "Pantry",
       "properties": {
         "Name": {
+          "id": "testid",
           "type": "title",
           "title": {}
         },
         "Description": {
+          "id": "testid",
           "type": "rich_text",
           "rich_text": {}
         }

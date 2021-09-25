@@ -3,8 +3,10 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -13,15 +15,81 @@ use Illuminate\Support\Arr;
  */
 class Database extends Entity
 {
+    /**
+     * @var string
+     */
     protected string $title = '';
+
+    /**
+     * @var string
+     */
+    private string $icon = '';
+
+    /**
+     * @var string
+     */
+    private string $iconType = '';
+
+    /**
+     * @var string
+     */
+    private string $cover = '';
+
+    /**
+     * @var string
+     */
+    private string $coverType = '';
+
+    /**
+     * @var string
+     */
+    private string $url;
+
+    /**
+     * @var string
+     */
     protected string $objectType = '';
+
+    /**
+     * @var array
+     */
     protected array $rawTitle = [];
+
+    /**
+     * @var array
+     */
     protected array $rawProperties = [];
+
+    /**
+     * @var array
+     */
     protected array $propertyKeys = [];
+
+    /**
+     * @var array
+     */
+    protected array $propertyMap = [];
+
+    /**
+     * @var Collection
+     */
+    protected Collection $properties;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $createdTime;
+
+    /**
+     * @var DateTime
+     */
     protected DateTime $lastEditedTime;
 
 
+
+    /**
+     * 
+     */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
@@ -30,17 +98,25 @@ class Database extends Entity
         $this->fillFromRaw();
     }
 
-
+    /**
+     *
+     */
     private function fillFromRaw()
     {
         $this->fillId();
+        $this->fillIcon();
+        $this->fillCover();
         $this->fillTitle();
         $this->fillObjectType();
         $this->fillProperties();
+        $this->fillDatabaseUrl();
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
     }
 
+    /**
+     *
+     */
     private function fillTitle(): void
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
@@ -49,6 +125,54 @@ class Database extends Entity
         }
     }
 
+    /**
+     *
+     */
+    private function fillDatabaseUrl(): void
+    {
+        if (Arr::exists($this->responseData, 'url')) {
+            $this->url = $this->responseData['url'];
+        }
+    }
+
+      /**
+     *
+     */
+    private function fillIcon(): void
+    {
+        if (Arr::exists($this->responseData, 'icon') && $this->responseData['icon'] != null) {
+            $this->iconType = $this->responseData['icon']['type'];
+            if(Arr::exists($this->responseData['icon'], 'emoji')){
+                $this->icon = $this->responseData['icon']['emoji'];
+            }
+            else if(Arr::exists($this->responseData['icon'], 'file')){
+                $this->icon = $this->responseData['icon']['file']['url'];
+            }
+            else if(Arr::exists($this->responseData['icon'], 'external')){
+                $this->icon = $this->responseData['icon']['external']['url'];
+            }
+        }
+    }
+
+     /**
+     *
+     */
+    private function fillCover(): void
+    {
+        if (Arr::exists($this->responseData, 'cover') && $this->responseData['cover'] != null) {
+            $this->coverType = $this->responseData['cover']['type'];
+            if(Arr::exists($this->responseData['cover'], 'file')){
+                $this->cover = $this->responseData['cover']['file']['url'];
+            }
+            else if(Arr::exists($this->responseData['cover'], 'external')){
+                $this->cover = $this->responseData['cover']['external']['url'];
+            }
+        }
+    }
+
+    /**
+     *
+     */
     private function fillObjectType(): void
     {
         if (Arr::exists($this->responseData, 'object')) {
@@ -56,51 +180,135 @@ class Database extends Entity
         }
     }
 
+    /**
+     *
+     */
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
             $this->rawProperties = $this->responseData['properties'];
             $this->propertyKeys = array_keys($this->rawProperties);
+            $this->properties = new Collection();
+
+            foreach ($this->rawProperties as $propertyKey => $propertyContent) {
+                $propertyObj = Property::fromResponse($propertyKey, $propertyContent);
+                $this->properties->add($propertyObj);
+                $this->propertyMap[$propertyKey] = $propertyObj;
+            }
         }
     }
 
+    /**
+     * @param string $propertyKey
+     * @return Property|null
+     */
+    public function getProperty(string $propertyKey): ?Property
+    {
+        if (!isset($this->propertyMap[$propertyKey])) {
+            return null;
+        }
+        return $this->propertyMap[$propertyKey];
+    }
+
+    /**
+     * @return string
+     */
     public function getObjectType(): string
     {
         return $this->objectType;
     }
 
-
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getProperties()
+    /**
+     * @return string
+     */
+    public function getUrl(): string
     {
-        //TODO: return collection of property-entities (id, type, title)
-        throw new HandlingException('Not implemented');
+        return $this->url;
     }
 
+    /**
+     * @return string
+     */
+    public function getIcon(): string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconType(): string
+    {
+        return $this->iconType;
+    }
+
+        /**
+     * @return string
+     */
+    public function getCover(): string
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoverType(): string
+    {
+        return $this->coverType;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getProperties(): Collection
+    {
+        return $this->properties;
+    }
+
+    /**
+     * @return array
+     */
     public function getRawTitle(): array
     {
         return $this->rawTitle;
     }
 
+    /**
+     * @return array
+     */
     public function getRawProperties(): array
     {
         return $this->rawProperties;
     }
 
+    /**
+     * @return array
+     */
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getCreatedTime(): DateTime
     {
         return $this->createdTime;
     }
 
+    /**
+     * @return array
+     */
     public function getLastEditedTime(): DateTime
     {
         return $this->lastEditedTime;

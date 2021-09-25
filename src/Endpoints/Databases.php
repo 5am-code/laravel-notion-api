@@ -26,6 +26,7 @@ class Databases extends Endpoint implements EndpointInterface
      * @return DatabaseCollection
      * @throws HandlingException
      * @throws NotionException
+     * @deprecated
      */
     public function all(): DatabaseCollection
     {
@@ -36,7 +37,7 @@ class Databases extends Endpoint implements EndpointInterface
     /**
      * Retrieve a database
      * url: https://api.notion.com/{version}/databases/{database_id}
-     * notion-api-docs: https://developers.notion.com/reference/get-database
+     * notion-api-docs: https://developers.notion.com/reference/retrieve-a-database 
      *
      * @param string $databaseId
      * @return Database
