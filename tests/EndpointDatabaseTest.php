@@ -2,10 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use Notion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use FiveamCode\LaravelNotionApi\Query\Filter;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Endpoints\Database;

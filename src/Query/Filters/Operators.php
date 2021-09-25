@@ -1,6 +1,6 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Query\Filter;
+namespace FiveamCode\LaravelNotionApi\Query\Filters;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
