@@ -9,7 +9,7 @@ class Operators
     # ToDo: Make this a enum with PHP 8.1
     const EQUALS = 'equals';
     const DOES_NOT_EQUAL = 'does_not_equal';
-    const CONTAINS = 'contain';
+    const CONTAINS = 'contains';
     const DOES_NOT_CONTAIN = 'does_not_contain';
     const STARTS_WITH = 'starts_with';
     const ENDS_WITH = 'ends_with';
