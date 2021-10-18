@@ -21,4 +21,8 @@ class StartCursor
     {
         $this->cursor = $cursor;
     }
+
+    public function __toString() {
+        return $this->cursor;
+    }
 }
