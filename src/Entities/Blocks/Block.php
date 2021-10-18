@@ -114,6 +114,14 @@ class Block extends Entity
     }
 
     /**
+     * @return string
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
      * @return array
      */
     public function getRawContent(): array
@@ -164,6 +172,10 @@ class Block extends Entity
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    public function setRawContent($rawContent){
+        $this->rawContent = $rawContent;
     }
 
     /**

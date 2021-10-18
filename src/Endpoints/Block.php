@@ -97,8 +97,34 @@ class Block extends Endpoint
             "children" => $children
         ];
 
+
         $response = $this->patch(
             $this->url(Endpoint::BLOCKS . '/' . $this->blockId . '/children' . ""),
+            $body
+        );
+
+        return new BlockEntity($response->json());
+    }
+
+
+    /**
+     * Update one specific Block 
+     * url: https://api.notion.com/{version}/blocks/{block_id} [patch]
+     * notion-api-docs: https://developers.notion.com/reference/update-a-block
+     *
+     * @return FiveamCode\LaravelNotionApi\Entities\Blocks\Block
+     * @throws HandlingException
+     */
+    public function update(BlockEntity $block): BlockEntity
+    {
+        $body = [
+            "object" => "block",
+            "type" => $block->getType(),
+            $block->getType() => $block->getRawContent()
+        ];
+
+        $response = $this->patch(
+            $this->url(Endpoint::BLOCKS . '/' . $this->blockId . ""),
             $body
         );
 
