@@ -36,6 +36,21 @@ class TextBlock extends Block implements Modifiable
         return $textBlock;
     }
 
+    public function setContent($content): TextBlock
+    {
+        $this->getContent()->setPlainText($content);
+
+        $text[] = [
+            "type" => "text",
+            "text" => [
+                "content" => $content
+            ]
+        ];
+
+        $this->rawContent['text'] = $text;
+        return $this;
+    }
+
     /**
      *
      */
