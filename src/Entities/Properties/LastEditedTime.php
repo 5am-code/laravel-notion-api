@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use DateTime;
 use Exception;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Throwable;
 
 /**
  * Class LastEditedTime
@@ -20,10 +21,10 @@ class LastEditedTime extends Property
         parent::fillFromRaw();
 
         try {
-            if ($this->rawContent !== null) {
+            if (is_string($this->rawContent) && $this->rawContent !== null) {
                 $this->content = new DateTime($this->rawContent);
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             throw HandlingException::instance('The content of last_edited_time is not a valid ISO 8601 date time string.');
         }
     }
