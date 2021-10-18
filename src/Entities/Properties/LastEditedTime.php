@@ -20,7 +20,7 @@ class LastEditedTime extends Property
         parent::fillFromRaw();
 
         try {
-            if ($this->rawContent !== null) {
+            if (is_string($this->rawContent) && $this->rawContent !== null) {
                 $this->content = new DateTime($this->rawContent);
             }
         } catch (Exception $e) {
