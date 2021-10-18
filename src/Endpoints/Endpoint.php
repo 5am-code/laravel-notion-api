@@ -169,8 +169,8 @@ class Endpoint
      */
     public function offset(StartCursor $startCursor): Endpoint
     {
-        // toDo
-        throw HandlingException::instance('Not implemented yet.', compact($startCursor));
+        $this->startCursor = $startCursor;
+        return $this;
     }
 
 }
