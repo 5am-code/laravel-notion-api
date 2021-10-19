@@ -17,6 +17,12 @@ class Title extends Property implements Modifiable
      */
     protected string $plainText = '';
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "title";
+    }
+
     /**
      * @param $text
      * @return Title

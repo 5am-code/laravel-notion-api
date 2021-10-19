@@ -96,11 +96,17 @@ class Pages extends Endpoint implements EndpointInterface
         $postData = [];
         $properties = [];
 
+
         foreach ($page->getProperties() as $property) {
-            $properties[$property->getTitle()] = $property->getRawContent();
+            $properties[$property->getTitle()] = [
+                'id' => $property->getId() ?? $page->getProperty($property->getTitle())?->getId() ?? "",
+                'type' => $property->getType(),
+                $property->getType() => $property->getRawContent(),
+            ];
         }
 
         $postData["properties"] = $properties;
+
 
         $response = $this
             ->patch(

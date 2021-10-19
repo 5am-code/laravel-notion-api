@@ -15,6 +15,11 @@ class Number extends Property implements Modifiable
      */
     protected float $number = 0;
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "number";
+    }
 
     public static function value(float $number): Number
     {
@@ -22,9 +27,7 @@ class Number extends Property implements Modifiable
         $numberProperty->number = $number;
         $numberProperty->content = $number;
 
-        $numberProperty->rawContent = [
-            "number" => $number
-        ];
+        $numberProperty->rawContent = $number;
 
         return $numberProperty;
     }

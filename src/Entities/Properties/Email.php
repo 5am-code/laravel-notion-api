@@ -10,6 +10,11 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
  */
 class Email extends Property implements Modifiable
 {
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "email";
+    }
+
     /**
      * @param $email
      * @return Email
@@ -19,9 +24,7 @@ class Email extends Property implements Modifiable
         $emailProperty = new Email();
         $emailProperty->content = $email;
 
-        $emailProperty->rawContent = [
-            "email" => $email
-        ];
+        $emailProperty->rawContent = $email;
 
         return $emailProperty;
     }

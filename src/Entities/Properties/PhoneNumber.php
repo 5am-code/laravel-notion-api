@@ -10,6 +10,12 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
  */
 class PhoneNumber extends Property implements Modifiable
 {
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "phone_number";
+    }
+
     /**
      * @param $phoneNumber
      * @return PhoneNumber
@@ -19,9 +25,7 @@ class PhoneNumber extends Property implements Modifiable
         $urlProperty = new PhoneNumber();
         $urlProperty->content = $phoneNumber;
 
-        $urlProperty->rawContent = [
-            "phone_number" => $phoneNumber
-        ];
+        $urlProperty->rawContent = $phoneNumber;
 
         return $urlProperty;
     }

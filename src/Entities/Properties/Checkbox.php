@@ -11,6 +11,10 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class Checkbox extends Property implements Modifiable
 {
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "checkbox";
+    }
 
     /**
      * @param $checked
@@ -21,9 +25,7 @@ class Checkbox extends Property implements Modifiable
         $checkboxProperty = new Checkbox();
         $checkboxProperty->content = $checked;
 
-        $checkboxProperty->rawContent = [
-            "checkbox" => $checkboxProperty->isChecked()
-        ];
+        $checkboxProperty->rawContent = $checkboxProperty->isChecked();
 
         return $checkboxProperty;
     }

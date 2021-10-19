@@ -12,6 +12,12 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class CreatedTime extends Property
 {
+
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "created_time";
+    }
+
     /**
      * @throws HandlingException
      */

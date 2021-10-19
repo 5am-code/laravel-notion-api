@@ -14,6 +14,12 @@ class Formula extends Property
 {
     protected string $formulaType;
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "formula";
+    }
+
     /**
      *
      */

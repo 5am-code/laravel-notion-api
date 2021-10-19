@@ -18,6 +18,12 @@ class Select extends Property implements Modifiable
      */
     private Collection $options;
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "select";
+    }
+
     /**
      * @param $name
      * @return Select
@@ -31,9 +37,7 @@ class Select extends Property implements Modifiable
         $selectProperty->content = $selectItem;
 
         $selectProperty->rawContent = [
-            "select" => [
-                "name" => $selectItem->getName()
-            ]
+            "name" => $selectItem->getName()
         ];
 
         return $selectProperty;

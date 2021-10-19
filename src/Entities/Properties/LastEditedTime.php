@@ -13,6 +13,12 @@ use Throwable;
  */
 class LastEditedTime extends Property
 {
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "last_edited_time";
+    }
+
     /**
      * @throws HandlingException
      */

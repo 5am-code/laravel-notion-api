@@ -11,6 +11,12 @@ use Illuminate\Support\Collection;
  */
 class Relation extends Property implements Modifiable
 {
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "relation";
+    }
+
     /**
      * @param $relationIds
      * @return Relation

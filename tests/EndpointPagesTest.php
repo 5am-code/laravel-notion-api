@@ -169,8 +169,8 @@ class EndpointPagesTest extends NotionApiTest
         $checkboxProp = $page->getProperty($checkboxKey);
         $this->assertEquals($checkboxKey, $checkboxProp->getTitle());
         $checkboxContent = $checkboxProp->getRawContent();
-        $this->assertArrayHasKey("checkbox", $checkboxContent);
-        $this->assertEquals($checkboxContent["checkbox"], $checkboxValue);
+        $this->assertIsBool($checkboxContent);
+        $this->assertEquals($checkboxContent, $checkboxValue);
         $this->assertEquals($checkboxProp->getContent(), $checkboxValue);
         $this->assertEquals($checkboxProp->asText(), $checkboxValue ? "true" : "false");
 
@@ -188,12 +188,12 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertStringContainsString($dateRangeStartValue->format("Y-m-d H:i:s"), $dateRangeProp->asText());
         $this->assertStringContainsString($dateRangeEndValue->format("Y-m-d H:i:s"), $dateRangeProp->asText());
         $dateRangeContent = $dateRangeProp->getRawContent();
-        $this->assertArrayHasKey("date", $dateRangeContent);
-        $this->assertCount(2, $dateRangeContent["date"]);
-        $this->assertArrayHasKey("start", $dateRangeContent["date"]);
-        $this->assertEquals($dateRangeStartValue->format("c"), $dateRangeContent["date"]["start"]);
-        $this->assertArrayHasKey("end", $dateRangeContent["date"]);
-        $this->assertEquals($dateRangeEndValue->format("c"), $dateRangeContent["date"]["end"]);
+        $this->assertIsArray($dateRangeContent);
+        $this->assertCount(2, $dateRangeContent);
+        $this->assertArrayHasKey("start", $dateRangeContent);
+        $this->assertEquals($dateRangeStartValue->format("c"), $dateRangeContent["start"]);
+        $this->assertArrayHasKey("end", $dateRangeContent);
+        $this->assertEquals($dateRangeEndValue->format("c"), $dateRangeContent["end"]);
 
         # date
         $dateProp = $page->getProperty($dateKey);
@@ -201,10 +201,10 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertFalse($dateProp->isRange());
         $this->assertEquals($dateValue, $dateProp->getStart());
         $dateContent = $dateProp->getRawContent();
-        $this->assertArrayHasKey("date", $dateContent);
-        $this->assertCount(1, $dateContent["date"]);
-        $this->assertArrayHasKey("start", $dateContent["date"]);
-        $this->assertEquals($dateValue->format("c"), $dateContent["date"]["start"]);
+        $this->assertIsArray($dateContent);
+        $this->assertCount(1, $dateContent);
+        $this->assertArrayHasKey("start", $dateContent);
+        $this->assertEquals($dateValue->format("c"), $dateContent["start"]);
 
         # email
         $this->assertTrue($this->assertContainsInstanceOf(Email::class, $properties));
@@ -213,8 +213,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertEquals($emailValue, $mailProp->getContent());
         $this->assertEquals($emailValue, $mailProp->getEmail());
         $mailContent = $mailProp->getRawContent();
-        $this->assertArrayHasKey("email", $mailContent);
-        $this->assertEquals($mailContent["email"], $emailValue);
+        $this->assertIsString($mailContent);
+        $this->assertEquals($mailContent, $emailValue);
 
         # multi-select
         $this->assertTrue($this->assertContainsInstanceOf(MultiSelect::class, $properties));
@@ -224,14 +224,14 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertEquals("Laravel", $multiSelectProp->getContent()->first()->getName());
 
         $multiSelectContent = $multiSelectProp->getRawContent();
-        $this->assertArrayHasKey("multi_select", $multiSelectContent);
-        $this->assertCount(2, $multiSelectContent["multi_select"]);
-        $this->assertIsIterable($multiSelectContent["multi_select"][0]);
-        $this->assertArrayHasKey("name", $multiSelectContent["multi_select"][0]);
-        $this->assertEquals("Laravel", $multiSelectContent["multi_select"][0]["name"]);
-        $this->assertIsIterable($multiSelectContent["multi_select"][1]);
-        $this->assertArrayHasKey("name", $multiSelectContent["multi_select"][1]);
-        $this->assertEquals("Notion", $multiSelectContent["multi_select"][1]["name"]);
+        $this->assertIsArray($multiSelectContent);
+        $this->assertCount(2, $multiSelectContent);
+        $this->assertIsIterable($multiSelectContent[0]);
+        $this->assertArrayHasKey("name", $multiSelectContent[0]);
+        $this->assertEquals("Laravel", $multiSelectContent[0]["name"]);
+        $this->assertIsIterable($multiSelectContent[1]);
+        $this->assertArrayHasKey("name", $multiSelectContent[1]);
+        $this->assertEquals("Notion", $multiSelectContent[1]["name"]);
 
         # number
         $this->assertTrue($this->assertContainsInstanceOf(Number::class, $properties));
@@ -239,8 +239,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertEquals($numberValue, $numberProp->getContent());
         $this->assertEquals($numberValue, $numberProp->getNumber());
         $numberContent = $numberProp->getRawContent();
-        $this->assertArrayHasKey("number", $numberContent);
-        $this->assertEquals($numberContent["number"], $numberValue);
+        $this->assertIsNumeric($numberContent);
+        $this->assertEquals($numberContent, $numberValue);
 
         # people
         $this->assertTrue($this->assertContainsInstanceOf(People::class, $properties));
@@ -250,15 +250,15 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertContainsOnlyInstancesOf(User::class, $peopleProp->getPeople());
         $this->assertEquals($peopleValue[0], $peopleProp->getPeople()->first()->getId());
         $peopleContent = $peopleProp->getRawContent();
-        $this->assertArrayHasKey("people", $peopleContent);
-        $this->assertArrayHasKey("object", $peopleContent["people"][0]);
-        $this->assertArrayHasKey("id", $peopleContent["people"][0]);
-        $this->assertEquals($peopleContent["people"][0]["object"], "user");
-        $this->assertEquals($peopleContent["people"][0]["id"], $peopleValue[0]);
-        $this->assertArrayHasKey("object", $peopleContent["people"][1]);
-        $this->assertArrayHasKey("id", $peopleContent["people"][1]);
-        $this->assertEquals("user", $peopleContent["people"][1]["object"]);
-        $this->assertEquals($peopleValue[1], $peopleContent["people"][1]["id"]);
+        $this->assertIsArray($peopleContent);
+        $this->assertArrayHasKey("object", $peopleContent[0]);
+        $this->assertArrayHasKey("id", $peopleContent[0]);
+        $this->assertEquals($peopleContent[0]["object"], "user");
+        $this->assertEquals($peopleContent[0]["id"], $peopleValue[0]);
+        $this->assertArrayHasKey("object", $peopleContent[1]);
+        $this->assertArrayHasKey("id", $peopleContent[1]);
+        $this->assertEquals("user", $peopleContent[1]["object"]);
+        $this->assertEquals($peopleValue[1], $peopleContent[1]["id"]);
 
         # phone number
         $this->assertTrue($this->assertContainsInstanceOf(PhoneNumber::class, $properties));
@@ -266,8 +266,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertEquals($phoneValue, $phoneProp->getPhoneNumber());
         $this->assertEquals($phoneProp->getContent(), $phoneProp->getPhoneNumber());
         $phoneContent = $phoneProp->getRawContent();
-        $this->assertArrayHasKey("phone_number", $phoneContent);
-        $this->assertEquals($phoneContent["phone_number"], $phoneValue);
+        $this->assertIsString($phoneContent);
+        $this->assertEquals($phoneContent, $phoneValue);
 
         # relation
         $this->assertTrue($this->assertContainsInstanceOf(Relation::class, $properties));
@@ -285,9 +285,9 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertInstanceOf(SelectItem::class, $selectProp->getContent());
         $this->assertEquals($selectValue, $selectProp->getContent()->getName());
         $selectContent = $selectProp->getRawContent();
-        $this->assertArrayHasKey("select", $selectContent);
-        $this->assertArrayHasKey("name", $selectContent["select"]);
-        $this->assertEquals($selectValue, $selectContent["select"]["name"]);
+        $this->assertIsArray($selectContent);
+        $this->assertArrayHasKey("name", $selectContent);
+        $this->assertEquals($selectValue, $selectContent["name"]);
 
         # text
         $this->assertTrue($this->assertContainsInstanceOf(Text::class, $properties));
@@ -309,8 +309,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertEquals($urlValue, $urlProp->getUrl());
         $this->assertEquals($urlProp->getContent(), $urlProp->getUrl());
         $urlContent = $urlProp->getRawContent();
-        $this->assertArrayHasKey("url", $urlContent);
-        $this->assertEquals($urlValue, $urlContent["url"]);
+        $this->assertIsString($urlContent);
+        $this->assertEquals($urlValue, $urlContent);
     }
 
 }

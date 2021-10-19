@@ -16,6 +16,12 @@ class Rollup extends Property
 {
     protected string $rollupType;
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "rollup";
+    }
+
     /**
      * @throws HandlingException
      */

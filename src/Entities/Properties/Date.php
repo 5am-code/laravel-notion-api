@@ -13,6 +13,10 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class Date extends Property implements Modifiable
 {
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "date";
+    }
 
     /**
      * @param $start
@@ -30,16 +34,12 @@ class Date extends Property implements Modifiable
 
         if ($richDate->isRange()) {
             $dateProperty->rawContent = [
-                "date" => [
-                    "start" => $start->format("c"),
-                    "end" => $end->format("c")
-                ]
+                "start" => $start->format("c"),
+                "end" => $end->format("c")
             ];
         } else {
             $dateProperty->rawContent = [
-                "date" => [
-                    "start" => $start->format("c")
-                ]
+                "start" => $start->format("c")
             ];
         }
 

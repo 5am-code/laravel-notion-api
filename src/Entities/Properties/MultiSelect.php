@@ -14,6 +14,12 @@ use Illuminate\Support\Collection;
  */
 class MultiSelect extends Property implements Modifiable
 {
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "multi_select";
+    }
+
     /**
      * @var Collection 
      */
@@ -39,9 +45,7 @@ class MultiSelect extends Property implements Modifiable
         }
 
         $multiSelectProperty->content = $selectItemCollection;
-        $multiSelectProperty->rawContent = [
-            "multi_select" => $multiSelectRawContent
-        ];
+        $multiSelectProperty->rawContent = $multiSelectRawContent;
 
         return $multiSelectProperty;
     }

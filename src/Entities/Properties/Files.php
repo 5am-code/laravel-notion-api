@@ -10,6 +10,10 @@ use Illuminate\Support\Collection;
  */
 class Files extends Property
 {
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "files";
+    }
 
     /**
      *

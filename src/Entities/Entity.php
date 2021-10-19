@@ -17,7 +17,7 @@ class Entity implements JsonSerializable
     /**
      * @var string
      */
-    private string $id;
+    private ?string $id = null;
 
     /**
      * @var array
@@ -93,7 +93,7 @@ class Entity implements JsonSerializable
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }

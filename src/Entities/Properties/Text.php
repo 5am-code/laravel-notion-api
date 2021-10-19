@@ -17,6 +17,12 @@ class Text extends Property implements Modifiable
      */
     protected string $plainText = '';
 
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "text";
+    }
+
     /**
      * @param $text
      * @return Text

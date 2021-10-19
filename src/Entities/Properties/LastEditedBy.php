@@ -11,6 +11,12 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class LastEditedBy extends Property
 {
+    
+    public function __construct(string $title = null){
+        parent::__construct($title);
+        $this->type = "last_edited_by";
+    }
+
     /**
      * @throws HandlingException
      */
