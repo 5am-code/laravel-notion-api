@@ -63,7 +63,7 @@ class Database extends Endpoint
             $postData['filter']['or'] = Filter::filterQuery($this->filter); // TODO Compound filters!
 
         if ($this->startCursor !== null)
-            $postData['start_cursor'] = $this->startCursor;
+            $postData['start_cursor'] = (string) $this->startCursor;
 
         if ($this->pageSize !== null)
             $postData['page_size'] = $this->pageSize;
