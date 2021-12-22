@@ -3,8 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
 /**
- * Class HeadingThree
- * @package FiveamCode\LaravelNotionApi\Entities\Blocks
+ * Class HeadingThree.
  */
 class HeadingThree extends TextBlock
 {
@@ -14,12 +13,13 @@ class HeadingThree extends TextBlock
 
         $headingThree = new HeadingThree();
         HeadingThree::createTextBlock($headingThree, $textContent);
+
         return $headingThree;
     }
 
-    function __construct(array $responseData = null)
+    public function __construct(array $responseData = null)
     {
-        $this->type = "heading_3";
+        $this->type = 'heading_3';
         parent::__construct($responseData);
     }
 }

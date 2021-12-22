@@ -6,12 +6,10 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Collection;
 
 /**
- * Class Sorting
- * @package FiveamCode\LaravelNotionApi\Query
+ * Class Sorting.
  */
 class Sorting extends QueryHelper
 {
-
     /**
      * @var string|null
      */
@@ -24,25 +22,28 @@ class Sorting extends QueryHelper
 
     /**
      * Sorting constructor.
-     * @param string $direction
-     * @param string|null $property
-     * @param string|null $timestamp
+     *
+     * @param  string  $direction
+     * @param  string|null  $property
+     * @param  string|null  $timestamp
+     *
      * @throws HandlingException
      */
     public function __construct(string $direction, string $property = null, string $timestamp = null)
     {
         parent::__construct();
 
-        if ($timestamp !== null && !$this->validTimestamps->contains($timestamp))
+        if ($timestamp !== null && ! $this->validTimestamps->contains($timestamp)) {
             throw HandlingException::instance(
                 'Invalid sorting timestamp provided.', ['invalidTimestamp' => $timestamp]
             );
+        }
 
-
-        if (!$this->validDirections->contains($direction))
+        if (! $this->validDirections->contains($direction)) {
             throw HandlingException::instance(
                 'Invalid sorting direction provided.', ['invalidDirection' => $direction]
             );
+        }
 
         $this->property = $property;
         $this->timestamp = $timestamp;
@@ -50,9 +51,10 @@ class Sorting extends QueryHelper
     }
 
     /**
-     * @param string $timestampToSort
-     * @param string $direction
+     * @param  string  $timestampToSort
+     * @param  string  $direction
      * @return Sorting
+     *
      * @throws HandlingException
      */
     public static function timestampSort(string $timestampToSort, string $direction): Sorting
@@ -61,9 +63,10 @@ class Sorting extends QueryHelper
     }
 
     /**
-     * @param string $property
-     * @param string $direction
+     * @param  string  $property
+     * @param  string  $direction
      * @return Sorting
+     *
      * @throws HandlingException
      */
     public static function propertySort(string $property, string $direction): Sorting
@@ -79,23 +82,22 @@ class Sorting extends QueryHelper
         if ($this->timestamp !== null) {
             return [
                 'timestamp' => $this->timestamp,
-                'direction' => $this->direction
+                'direction' => $this->direction,
             ];
         }
 
         return [
             'property' => $this->property,
-            'direction' => $this->direction
+            'direction' => $this->direction,
         ];
     }
 
     /**
-     * @param Collection $sortings
+     * @param  Collection  $sortings
      * @return array
      */
     public static function sortQuery(Collection $sortings): array
     {
-
         $querySortings = new Collection();
 
         $sortings->each(function (Sorting $sorting) use ($querySortings) {
@@ -103,8 +105,5 @@ class Sorting extends QueryHelper
         });
 
         return $querySortings->toArray();
-
     }
-
-
 }

@@ -21,8 +21,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 /**
- * Class Page
- * @package FiveamCode\LaravelNotionApi\Entities
+ * Class Page.
  */
 class Page extends Entity
 {
@@ -35,7 +34,6 @@ class Page extends Entity
      * @var string
      */
     protected string $url = '';
-
 
     /**
      * @var string
@@ -92,10 +90,11 @@ class Page extends Entity
      */
     protected DateTime $lastEditedTime;
 
-
     /**
      * Page constructor.
-     * @param array|null $responseData
+     *
+     * @param  array|null  $responseData
+     *
      * @throws HandlingException
      * @throws NotionException
      */
@@ -105,22 +104,21 @@ class Page extends Entity
         parent::__construct($responseData);
     }
 
-
     /**
-     * @param array $responseData
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
      */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'page') throw HandlingException::instance('invalid json-array: the given object is not a page');
+        if ($responseData['object'] !== 'page') {
+            throw HandlingException::instance('invalid json-array: the given object is not a page');
+        }
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     private function fillFromRaw(): void
     {
         $this->fillId();
@@ -134,9 +132,6 @@ class Page extends Entity
         $this->fillLastEditedTime();
     }
 
-    /**
-     *
-     */
     private function fillObjectType(): void
     {
         if (Arr::exists($this->responseData, 'object')) {
@@ -161,9 +156,6 @@ class Page extends Entity
         }
     }
 
-    /**
-     *
-     */
     private function fillTitle(): void
     {
         $titleProperty = $this->properties->filter(function ($property) {
@@ -180,44 +172,32 @@ class Page extends Entity
         }
     }
 
-     /**
-     *
-     */
     private function fillIcon(): void
     {
         if (Arr::exists($this->responseData, 'icon') && $this->responseData['icon'] != null) {
             $this->iconType = $this->responseData['icon']['type'];
-            if(Arr::exists($this->responseData['icon'], 'emoji')){
+            if (Arr::exists($this->responseData['icon'], 'emoji')) {
                 $this->icon = $this->responseData['icon']['emoji'];
-            }
-            else if(Arr::exists($this->responseData['icon'], 'file')){
+            } elseif (Arr::exists($this->responseData['icon'], 'file')) {
                 $this->icon = $this->responseData['icon']['file']['url'];
-            }
-            else if(Arr::exists($this->responseData['icon'], 'external')){
+            } elseif (Arr::exists($this->responseData['icon'], 'external')) {
                 $this->icon = $this->responseData['icon']['external']['url'];
             }
         }
     }
 
-     /**
-     *
-     */
     private function fillCover(): void
     {
         if (Arr::exists($this->responseData, 'cover') && $this->responseData['cover'] != null) {
             $this->coverType = $this->responseData['cover']['type'];
-            if(Arr::exists($this->responseData['cover'], 'file')){
+            if (Arr::exists($this->responseData['cover'], 'file')) {
                 $this->cover = $this->responseData['cover']['file']['url'];
-            }
-            else if(Arr::exists($this->responseData['cover'], 'external')){
+            } elseif (Arr::exists($this->responseData['cover'], 'external')) {
                 $this->cover = $this->responseData['cover']['external']['url'];
             }
         }
     }
 
-    /**
-     *
-     */
     private function fillPageUrl(): void
     {
         if (Arr::exists($this->responseData, 'url')) {
@@ -351,7 +331,6 @@ class Page extends Entity
         return $this;
     }
 
-
     /**
      * @param $propertyTitle
      * @param $start
@@ -389,7 +368,6 @@ class Page extends Entity
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -414,7 +392,7 @@ class Page extends Entity
         return $this->iconType;
     }
 
-        /**
+    /**
      * @return string
      */
     public function getCover(): string
@@ -447,14 +425,15 @@ class Page extends Entity
     }
 
     /**
-     * @param string $propertyKey
+     * @param  string  $propertyKey
      * @return Property|null
      */
     public function getProperty(string $propertyKey): ?Property
     {
-        if (!isset($this->propertyMap[$propertyKey])) {
+        if (! isset($this->propertyMap[$propertyKey])) {
             return null;
         }
+
         return $this->propertyMap[$propertyKey];
     }
 

@@ -2,32 +2,30 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 
 /**
- * Class Pages
- * @package FiveamCode\LaravelNotionApi\Endpoints
+ * Class Pages.
  */
 class Pages extends Endpoint implements EndpointInterface
 {
-
     /**
      * Retrieve a page
      * url: https://api.notion.com/{version}/pages/{page_id}
-     * notion-api-docs: https://developers.notion.com/reference/get-page
+     * notion-api-docs: https://developers.notion.com/reference/get-page.
      *
-     * @param string $pageId
+     * @param  string  $pageId
      * @return Page
+     *
      * @throws HandlingException
      * @throws NotionException
      */
     public function find(string $pageId): Page
     {
         $response = $this->get(
-            $this->url(Endpoint::PAGES . '/' . $pageId)
+            $this->url(Endpoint::PAGES.'/'.$pageId)
         );
 
         return new Page($response->json());
@@ -45,9 +43,8 @@ class Pages extends Endpoint implements EndpointInterface
             $properties[$property->getTitle()] = $property->getRawContent();
         }
 
-        $postData["parent"] = ["database_id" => $parentId];
-        $postData["properties"] = $properties;
-
+        $postData['parent'] = ['database_id' => $parentId];
+        $postData['properties'] = $properties;
 
         $response = $this
             ->post(
@@ -59,7 +56,7 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-        /**
+    /**
      * @return Page
      */
     public function createInPage(string $parentId, Page $page): Page
@@ -71,9 +68,8 @@ class Pages extends Endpoint implements EndpointInterface
             $properties[$property->getTitle()] = $property->getRawContent();
         }
 
-        $postData["parent"] = ["page_id" => $parentId];
-        $postData["properties"] = $properties;
-
+        $postData['parent'] = ['page_id' => $parentId];
+        $postData['properties'] = $properties;
 
         $response = $this
             ->post(
@@ -85,10 +81,9 @@ class Pages extends Endpoint implements EndpointInterface
         return new Page($response);
     }
 
-
-
     /**
      * @return array
+     *
      * @throws HandlingException
      */
     public function update(Page $page): Page
@@ -100,11 +95,11 @@ class Pages extends Endpoint implements EndpointInterface
             $properties[$property->getTitle()] = $property->getRawContent();
         }
 
-        $postData["properties"] = $properties;
+        $postData['properties'] = $properties;
 
         $response = $this
             ->patch(
-                $this->url(Endpoint::PAGES . "/" . $page->getId()),
+                $this->url(Endpoint::PAGES.'/'.$page->getId()),
                 $postData
             )
             ->json();
