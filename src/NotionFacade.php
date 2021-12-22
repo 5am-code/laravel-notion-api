@@ -4,10 +4,8 @@ namespace FiveamCode\LaravelNotionApi;
 
 use Illuminate\Support\Facades\Facade;
 
-
 /**
- * Class NotionFacade
- * @package FiveamCode\LaravelNotionApi
+ * Class NotionFacade.
  */
 class NotionFacade extends Facade
 {

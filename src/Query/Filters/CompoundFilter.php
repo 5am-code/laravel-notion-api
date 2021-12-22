@@ -6,8 +6,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Query\QueryHelper;
 
 /**
- * Class CompoundFilter
- * @package FiveamCode\LaravelNotionApi\Query
+ * Class CompoundFilter.
  */
 class CompoundFilter extends QueryHelper
 {
@@ -15,6 +14,7 @@ class CompoundFilter extends QueryHelper
 
     /**
      * CompoundFilter constructor.
+     *
      * @throws HandlingException
      */
     public function __construct()

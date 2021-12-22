@@ -6,8 +6,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
 
 /**
- * Class User
- * @package FiveamCode\LaravelNotionApi\Entities
+ * Class User.
  */
 class User extends Entity
 {
@@ -22,20 +21,20 @@ class User extends Entity
     private string $avatarUrl;
 
     /**
-     * @param array $responseData
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
      */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'user') throw HandlingException::instance('invalid json-array: the given object is not a user');
+        if ($responseData['object'] !== 'user') {
+            throw HandlingException::instance('invalid json-array: the given object is not a user');
+        }
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     private function fillFromRaw(): void
     {
         $this->fillId();
@@ -43,9 +42,6 @@ class User extends Entity
         $this->fillAvatarUrl();
     }
 
-    /**
-     *
-     */
     private function fillName(): void
     {
         if (Arr::exists($this->responseData, 'name') && $this->responseData['name'] !== null) {
@@ -53,16 +49,12 @@ class User extends Entity
         }
     }
 
-    /**
-     *
-     */
     private function fillAvatarUrl(): void
     {
         if (Arr::exists($this->responseData, 'avatar_url') && $this->responseData['avatar_url'] !== null) {
             $this->avatarUrl = $this->responseData['avatar_url'];
         }
     }
-
 
     /**
      * @return string
