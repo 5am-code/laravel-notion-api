@@ -7,8 +7,7 @@ use Exception;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class CreatedTime
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class CreatedTime.
  */
 class CreatedTime extends Property
 {
@@ -27,7 +26,6 @@ class CreatedTime extends Property
             throw HandlingException::instance('The content of created_time is not a valid ISO 8601 date time string.');
         }
     }
-
 
     /**
      * @return DateTime

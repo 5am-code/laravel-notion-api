@@ -5,8 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 
 /**
- * Class Email
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Email.
  */
 class Email extends Property implements Modifiable
 {
@@ -20,25 +19,18 @@ class Email extends Property implements Modifiable
         $emailProperty->content = $email;
 
         $emailProperty->rawContent = [
-            "email" => $email
+            'email' => $email,
         ];
 
         return $emailProperty;
     }
 
-
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillEmail();
     }
 
-    /**
-     *
-     */
     protected function fillEmail(): void
     {
         $this->content = $this->rawContent;

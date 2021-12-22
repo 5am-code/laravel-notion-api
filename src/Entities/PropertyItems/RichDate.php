@@ -7,8 +7,7 @@ use FiveamCode\LaravelNotionApi\Entities\Entity;
 use Illuminate\Support\Arr;
 
 /**
- * Class RichDate
- * @package FiveamCode\LaravelNotionApi\Entities\PropertyItems
+ * Class RichDate.
  */
 class RichDate extends Entity
 {
@@ -18,9 +17,8 @@ class RichDate extends Entity
     protected DateTime $start;
     protected ?DateTime $end = null;
 
-
     /**
-     * @param array $responseData
+     * @param  array  $responseData
      */
     protected function setResponseData(array $responseData): void
     {
@@ -28,18 +26,12 @@ class RichDate extends Entity
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         $this->fillFrom();
         $this->fillTo();
     }
 
-    /**
-     *
-     */
     protected function fillFrom(): void
     {
         if (Arr::exists($this->responseData, 'from')) {
@@ -47,16 +39,12 @@ class RichDate extends Entity
         }
     }
 
-    /**
-     *
-     */
     protected function fillTo(): void
     {
         if (Arr::exists($this->responseData, 'to')) {
             $this->from .= $this->responseData['to'];
         }
     }
-
 
     /**
      * @return bool
@@ -74,7 +62,6 @@ class RichDate extends Entity
         return $this->start;
     }
 
-
     /**
      * @return DateTime
      */
@@ -83,17 +70,11 @@ class RichDate extends Entity
         return $this->end;
     }
 
-    /**
-     *
-     */
     public function setStart($start): void
     {
         $this->start = $start;
     }
 
-
-    /**
-     */
     public function setEnd($end): void
     {
         $this->end = $end;

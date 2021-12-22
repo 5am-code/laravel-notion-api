@@ -8,12 +8,10 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class Date
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Date.
  */
 class Date extends Property implements Modifiable
 {
-
     /**
      * @param $start
      * @param $end
@@ -30,16 +28,16 @@ class Date extends Property implements Modifiable
 
         if ($richDate->isRange()) {
             $dateProperty->rawContent = [
-                "date" => [
-                    "start" => $start->format("c"),
-                    "end" => $end->format("c")
-                ]
+                'date' => [
+                    'start' => $start->format('c'),
+                    'end' => $end->format('c'),
+                ],
             ];
         } else {
             $dateProperty->rawContent = [
-                "date" => [
-                    "start" => $start->format("c")
-                ]
+                'date' => [
+                    'start' => $start->format('c'),
+                ],
             ];
         }
 
@@ -59,14 +57,13 @@ class Date extends Property implements Modifiable
     {
         $richDate = new RichDate();
 
-        if (isset($this->rawContent["start"])) {
-            $startAsIsoString = $this->rawContent["start"];
+        if (isset($this->rawContent['start'])) {
+            $startAsIsoString = $this->rawContent['start'];
             $richDate->setStart(new DateTime($startAsIsoString));
         }
 
-
-        if (isset($this->rawContent["end"])) {
-            $endAsIsoString = $this->rawContent["end"];
+        if (isset($this->rawContent['end'])) {
+            $endAsIsoString = $this->rawContent['end'];
             $richDate->setEnd(new DateTime($endAsIsoString));
         }
 

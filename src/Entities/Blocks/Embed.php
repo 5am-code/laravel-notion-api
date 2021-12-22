@@ -6,15 +6,14 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 
 /**
- * Class Paragraph
- * @package FiveamCode\LaravelNotionApi\Entities\Blocks
+ * Class Paragraph.
  */
 class Embed extends Block implements Modifiable
 {
     private RichText $caption;
-    private string $url = "";
+    private string $url = '';
 
-    public static function create(string $url, string $caption = ""): Embed
+    public static function create(string $url, string $caption = ''): Embed
     {
         $embed = new Embed();
 
@@ -24,10 +23,10 @@ class Embed extends Block implements Modifiable
                 [
                     'type' => 'text',
                     'text' => [
-                        'content' => $caption
-                    ]
-                ]
-            ]
+                        'content' => $caption,
+                    ],
+                ],
+            ],
         ];
 
         $embed->fillContent();
@@ -35,24 +34,18 @@ class Embed extends Block implements Modifiable
         return $embed;
     }
 
-    function __construct(array $responseData = null)
+    public function __construct(array $responseData = null)
     {
-        $this->type = "embed";
+        $this->type = 'embed';
         parent::__construct($responseData);
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillContent();
     }
 
-    /**
-     *
-     */
     protected function fillContent(): void
     {
         $this->url = $this->rawContent['url'];
