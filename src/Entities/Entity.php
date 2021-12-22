@@ -9,8 +9,7 @@ use Illuminate\Support\Arr;
 use JsonSerializable;
 
 /**
- * Class Entity
- * @package FiveamCode\LaravelNotionApi\Entities
+ * Class Entity.
  */
 class Entity implements JsonSerializable
 {
@@ -24,27 +23,32 @@ class Entity implements JsonSerializable
      */
     protected array $responseData = [];
 
-
     /**
      * Entity constructor.
-     * @param array|null $responseData
+     *
+     * @param  array|null  $responseData
+     *
      * @throws HandlingException
      * @throws NotionException
      */
     public function __construct(array $responseData = null)
     {
-        if ($responseData != null) $this->setResponseData($responseData);
+        if ($responseData != null) {
+            $this->setResponseData($responseData);
+        }
     }
 
     /**
-     * @param array $responseData
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      * @throws NotionException
      */
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'object'))
+        if (! Arr::exists($responseData, 'object')) {
             throw new HandlingException('invalid json-array: no object given');
+        }
 
         // TODO
         // Currently, the API returns not-found objects with status code 200 -
@@ -57,14 +61,13 @@ class Entity implements JsonSerializable
             throw NotionException::instance('Not found', compact('responseData'));
         }
 
-        if (!Arr::exists($responseData, 'id')) throw HandlingException::instance('invalid json-array: no id provided');
+        if (! Arr::exists($responseData, 'id')) {
+            throw HandlingException::instance('invalid json-array: no id provided');
+        }
 
         $this->responseData = $responseData;
     }
 
-    /**
-     *
-     */
     protected function fillCreatedTime()
     {
         if (Arr::exists($this->responseData, 'created_time')) {
@@ -72,9 +75,6 @@ class Entity implements JsonSerializable
         }
     }
 
-    /**
-     *
-     */
     protected function fillLastEditedTime()
     {
         if (Arr::exists($this->responseData, 'last_edited_time')) {
@@ -82,9 +82,6 @@ class Entity implements JsonSerializable
         }
     }
 
-    /**
-     *
-     */
     protected function fillId()
     {
         $this->id = $this->responseData['id'];
@@ -98,9 +95,6 @@ class Entity implements JsonSerializable
         return $this->id;
     }
 
-    /**
-     *
-     */
     public function setId($id): void
     {
         $this->id = $id;

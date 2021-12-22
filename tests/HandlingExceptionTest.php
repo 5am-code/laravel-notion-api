@@ -2,17 +2,14 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use PHPUnit\Framework\TestCase;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Class HandlingExceptionTest
- * @package FiveamCode\LaravelNotionApi\Tests
+ * Class HandlingExceptionTest.
  */
 class HandlingExceptionTest extends TestCase
 {
-
-
     /** @test */
     public function it_returns_a_handling_exception_instance_with_payload()
     {
@@ -24,7 +21,6 @@ class HandlingExceptionTest extends TestCase
         );
 
         $this->assertNotEmpty($wrapperException->getPayload());
-
     }
 
     /** @test */

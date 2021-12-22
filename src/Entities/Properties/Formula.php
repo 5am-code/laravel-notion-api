@@ -7,16 +7,12 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use Illuminate\Support\Arr;
 
 /**
- * Class Formula
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Formula.
  */
 class Formula extends Property
 {
     protected string $formulaType;
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
@@ -26,10 +22,14 @@ class Formula extends Property
 
             if ($this->formulaType === 'string' || $this->formulaType === 'number' || $this->formulaType === 'boolean') {
                 $this->content = $this->rawContent[$this->formulaType];
-            } else if ($this->formulaType === 'date') {
+            } elseif ($this->formulaType === 'date') {
                 $this->content = new RichDate();
-                if (isset($this->rawContent[$this->formulaType]['start'])) $this->content->setStart(new DateTime($this->rawContent[$this->formulaType]['start']));
-                if (isset($this->rawContent[$this->formulaType]['end'])) $this->content->setEnd(new DateTime($this->rawContent[$this->formulaType]['end']));
+                if (isset($this->rawContent[$this->formulaType]['start'])) {
+                    $this->content->setStart(new DateTime($this->rawContent[$this->formulaType]['start']));
+                }
+                if (isset($this->rawContent[$this->formulaType]['end'])) {
+                    $this->content->setEnd(new DateTime($this->rawContent[$this->formulaType]['end']));
+                }
             }
         }
     }

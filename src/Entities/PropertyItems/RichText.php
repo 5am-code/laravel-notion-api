@@ -6,8 +6,7 @@ use FiveamCode\LaravelNotionApi\Entities\Entity;
 use Illuminate\Support\Arr;
 
 /**
- * Class RichText
- * @package FiveamCode\LaravelNotionApi\Entities\PropertyItems
+ * Class RichText.
  */
 class RichText extends Entity
 {
@@ -16,9 +15,8 @@ class RichText extends Entity
      */
     protected string $plainText = '';
 
-
     /**
-     * @param array $responseData
+     * @param  array  $responseData
      */
     protected function setResponseData(array $responseData): void
     {
@@ -26,17 +24,11 @@ class RichText extends Entity
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         $this->fillPlainText();
     }
 
-    /**
-     *
-     */
     protected function fillPlainText(): void
     {
         if (is_array($this->responseData)) {
