@@ -6,12 +6,10 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class Checkbox
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Checkbox.
  */
 class Checkbox extends Property implements Modifiable
 {
-
     /**
      * @param $checked
      * @return Checkbox
@@ -22,7 +20,7 @@ class Checkbox extends Property implements Modifiable
         $checkboxProperty->content = $checked;
 
         $checkboxProperty->rawContent = [
-            "checkbox" => $checkboxProperty->isChecked()
+            'checkbox' => $checkboxProperty->isChecked(),
         ];
 
         return $checkboxProperty;
@@ -58,6 +56,6 @@ class Checkbox extends Property implements Modifiable
      */
     public function asText(): string
     {
-        return ($this->getContent()) ? "true" : "false";
+        return ($this->getContent()) ? 'true' : 'false';
     }
 }

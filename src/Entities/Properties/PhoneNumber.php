@@ -5,8 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 
 /**
- * Class PhoneNumber
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class PhoneNumber.
  */
 class PhoneNumber extends Property implements Modifiable
 {
@@ -20,25 +19,18 @@ class PhoneNumber extends Property implements Modifiable
         $urlProperty->content = $phoneNumber;
 
         $urlProperty->rawContent = [
-            "phone_number" => $phoneNumber
+            'phone_number' => $phoneNumber,
         ];
 
         return $urlProperty;
     }
 
-
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillPhoneNumber();
     }
 
-    /**
-     *
-     */
     protected function fillPhoneNumber(): void
     {
         $this->content = $this->rawContent;

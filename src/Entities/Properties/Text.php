@@ -7,8 +7,7 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 /**
- * Class Text
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Text.
  */
 class Text extends Property implements Modifiable
 {
@@ -36,16 +35,16 @@ class Text extends Property implements Modifiable
         }
 
         //!INFO: Currently only plain_text is transfered into rawContent
-        //TODO: Later the RichText has to return it's raw structure into 'content' 
+        //TODO: Later the RichText has to return it's raw structure into 'content'
         $textProperty->rawContent = [
-            "rich_text" => [
+            'rich_text' => [
                 [
-                    "type" => "text",
-                    "text" => [
-                        "content" => $richText->getPlainText()
-                    ]
-                ]
-            ]
+                    'type' => 'text',
+                    'text' => [
+                        'content' => $richText->getPlainText(),
+                    ],
+                ],
+            ],
         ];
 
         return $textProperty;
@@ -57,15 +56,13 @@ class Text extends Property implements Modifiable
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
-        if (!is_array($this->rawContent))
+        if (! is_array($this->rawContent)) {
             throw HandlingException::instance('The property-type is text, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.');
+        }
 
         $this->fillText();
     }
 
-    /**
-     *
-     */
     protected function fillText(): void
     {
         $this->content = new RichText($this->rawContent);
