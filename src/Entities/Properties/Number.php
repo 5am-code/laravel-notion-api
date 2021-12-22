@@ -5,8 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 
 /**
- * Class Number
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Number.
  */
 class Number extends Property implements Modifiable
 {
@@ -15,7 +14,6 @@ class Number extends Property implements Modifiable
      */
     protected float $number = 0;
 
-
     public static function value(float $number): Number
     {
         $numberProperty = new Number();
@@ -23,25 +21,18 @@ class Number extends Property implements Modifiable
         $numberProperty->content = $number;
 
         $numberProperty->rawContent = [
-            "number" => $number
+            'number' => $number,
         ];
 
         return $numberProperty;
     }
 
-
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillNumber();
     }
 
-    /**
-     *
-     */
     protected function fillNumber(): void
     {
         $this->content = $this->rawContent;

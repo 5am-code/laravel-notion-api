@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\Page;
@@ -11,10 +10,8 @@ use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-
 /**
- * Class EntityCollection
- * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ * Class EntityCollection.
  */
 class EntityCollection
 {
@@ -35,7 +32,9 @@ class EntityCollection
 
     /**
      * EntityCollection constructor.
-     * @param array|null $responseData
+     *
+     * @param  array|null  $responseData
+     *
      * @throws HandlingException
      * @throws NotionException
      */
@@ -45,7 +44,8 @@ class EntityCollection
     }
 
     /**
-     * @param array $responseData
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      * @throws NotionException
      */
@@ -63,45 +63,45 @@ class EntityCollection
             throw NotionException::instance('Not found', compact('responseData'));
         }
 
-        if (!Arr::exists($responseData, 'object')) throw HandlingException::instance('invalid json-array: no object given');
-        if (!Arr::exists($responseData, 'results')) throw HandlingException::instance('invalid json-array: no results given');
-        if ($responseData['object'] !== 'list') throw HandlingException::instance('invalid json-array: the given object is not a list');
+        if (! Arr::exists($responseData, 'object')) {
+            throw HandlingException::instance('invalid json-array: no object given');
+        }
+        if (! Arr::exists($responseData, 'results')) {
+            throw HandlingException::instance('invalid json-array: no results given');
+        }
+        if ($responseData['object'] !== 'list') {
+            throw HandlingException::instance('invalid json-array: the given object is not a list');
+        }
 
         $this->responseData = $responseData;
         $this->fillFromRaw();
         $this->collectChildren();
     }
 
-    /**
-     *
-     */
     protected function collectChildren(): void
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $pageChild) {
             if (Arr::exists($pageChild, 'object')) {
-                if ($pageChild['object'] == 'page') $this->collection->add(new Page($pageChild));
-                if ($pageChild['object'] == 'database') $this->collection->add(new Database($pageChild));
+                if ($pageChild['object'] == 'page') {
+                    $this->collection->add(new Page($pageChild));
+                }
+                if ($pageChild['object'] == 'database') {
+                    $this->collection->add(new Database($pageChild));
+                }
             }
         }
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw()
     {
         $this->fillResult();
     }
 
-    /**
-     *
-     */
     protected function fillResult()
     {
         $this->rawResults = $this->responseData['results'];
     }
-
 
     /**
      * @return array

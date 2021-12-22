@@ -3,8 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Query;
 
 /**
- * Class StartCursor
- * @package FiveamCode\LaravelNotionApi\Query
+ * Class StartCursor.
  */
 class StartCursor
 {
@@ -15,14 +14,16 @@ class StartCursor
 
     /**
      * StartCursor constructor.
-     * @param string $cursor
+     *
+     * @param  string  $cursor
      */
     public function __construct(string $cursor)
     {
         $this->cursor = $cursor;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->cursor;
     }
 }

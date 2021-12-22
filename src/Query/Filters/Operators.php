@@ -6,7 +6,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 
 class Operators
 {
-    # ToDo: Make this a enum with PHP 8.1
+    // ToDo: Make this a enum with PHP 8.1
     const EQUALS = 'equals';
     const DOES_NOT_EQUAL = 'does_not_equal';
     const CONTAINS = 'contains';
@@ -32,8 +32,7 @@ class Operators
 
     // TODO: Formula filter condition
 
-
-    static function getValidComparisonOperators($filterType)
+    public static function getValidComparisonOperators($filterType)
     {
         switch ($filterType) {
             case 'text':
@@ -41,7 +40,7 @@ class Operators
             case 'number':
                 return Operators::number();
             default:
-                throw HandlingException::instance("Invalid filterType.", compact("filterType"));
+                throw HandlingException::instance('Invalid filterType.', compact('filterType'));
         }
     }
 
@@ -55,7 +54,7 @@ class Operators
             Operators::STARTS_WITH,
             Operators::ENDS_WITH,
             Operators::IS_EMPTY,
-            Operators::IS_NOT_EMPTY
+            Operators::IS_NOT_EMPTY,
         ];
     }
 
@@ -69,8 +68,7 @@ class Operators
             Operators::GREATER_THAN_OR_EQUAL_TO,
             Operators::LESS_THAN_OR_EQUAL_TO,
             Operators::IS_EMPTY,
-            Operators::IS_NOT_EMPTY
+            Operators::IS_NOT_EMPTY,
         ];
     }
-
 }
