@@ -2,13 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 
 class NotionTest extends NotionApiTest
 {
-
     /** @test */
     public function it_returns_notion_instance_with_set_token_and_connection()
     {

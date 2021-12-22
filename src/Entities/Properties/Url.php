@@ -5,8 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 
 /**
- * Class Url
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Url.
  */
 class Url extends Property implements Modifiable
 {
@@ -20,25 +19,18 @@ class Url extends Property implements Modifiable
         $urlProperty->content = $url;
 
         $urlProperty->rawContent = [
-            "url" => $url
+            'url' => $url,
         ];
 
         return $urlProperty;
     }
 
-
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillUrl();
     }
 
-    /**
-     *
-     */
     protected function fillUrl(): void
     {
         $this->content = $this->rawContent;

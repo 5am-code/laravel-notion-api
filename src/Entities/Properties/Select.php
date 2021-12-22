@@ -8,13 +8,12 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class Select
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Select.
  */
 class Select extends Property implements Modifiable
 {
     /**
-     * @var Collection 
+     * @var Collection
      */
     private Collection $options;
 
@@ -31,9 +30,9 @@ class Select extends Property implements Modifiable
         $selectProperty->content = $selectItem;
 
         $selectProperty->rawContent = [
-            "select" => [
-                "name" => $selectItem->getName()
-            ]
+            'select' => [
+                'name' => $selectItem->getName(),
+            ],
         ];
 
         return $selectProperty;
@@ -45,8 +44,9 @@ class Select extends Property implements Modifiable
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
-        if (!is_array($this->rawContent))
+        if (! is_array($this->rawContent)) {
             throw HandlingException::instance('The property-type is select, however the raw data-structure does not reprecent this type. Please check the raw response-data.');
+        }
 
         if (array_key_exists('options', $this->rawContent)) {
             $this->options = new Collection();

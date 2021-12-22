@@ -6,12 +6,10 @@ use FiveamCode\LaravelNotionApi\Entities\Database;
 use Illuminate\Support\Collection;
 
 /**
- * Class DatabaseCollection
- * @package FiveamCode\LaravelNotionApi\Entities\Collections
+ * Class DatabaseCollection.
  */
 class DatabaseCollection extends EntityCollection
 {
-
     protected function collectChildren(): void
     {
         $this->collection = new Collection();

@@ -6,12 +6,11 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 
 /**
- * Class TextBlock
- * @package FiveamCode\LaravelNotionApi\Entities\Blocks
+ * Class TextBlock.
  */
 class BaseFileBlock extends Block implements Modifiable
 {
-    protected static final function createFileBlock(BaseFileBlock $fileBlock, string $url, string $caption = ""): BaseFileBlock
+    final protected static function createFileBlock(BaseFileBlock $fileBlock, string $url, string $caption = ''): BaseFileBlock
     {
         $fileBlock->rawContent = [
             'type' => 'external',
@@ -19,13 +18,13 @@ class BaseFileBlock extends Block implements Modifiable
                 [
                     'type' => 'text',
                     'text' => [
-                        'content' => $caption
-                    ]
-                ]
+                        'content' => $caption,
+                    ],
+                ],
             ],
             'external' => [
                 'url' => $url,
-            ]
+            ],
         ];
 
         $fileBlock->fillContent();
@@ -33,23 +32,16 @@ class BaseFileBlock extends Block implements Modifiable
         return $fileBlock;
     }
 
-    private string $hostingType = "";
-    private string $url = "";
+    private string $hostingType = '';
+    private string $url = '';
     private RichText $caption;
 
-
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillContent();
     }
 
-    /**
-     *
-     */
     protected function fillContent(): void
     {
         $this->hostingType = $this->rawContent['type'];

@@ -3,13 +3,11 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Properties;
 
 use DateTime;
-use Exception;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Throwable;
 
 /**
- * Class LastEditedTime
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class LastEditedTime.
  */
 class LastEditedTime extends Property
 {
@@ -28,7 +26,6 @@ class LastEditedTime extends Property
             throw HandlingException::instance('The content of last_edited_time is not a valid ISO 8601 date time string.');
         }
     }
-
 
     /**
      * @return DateTime

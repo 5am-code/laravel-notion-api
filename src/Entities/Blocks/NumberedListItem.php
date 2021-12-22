@@ -3,8 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
 /**
- * Class NumberedListItem
- * @package FiveamCode\LaravelNotionApi\Entities\Blocks
+ * Class NumberedListItem.
  */
 class NumberedListItem extends TextBlock
 {
@@ -12,12 +11,13 @@ class NumberedListItem extends TextBlock
     {
         $numberedListItem = new NumberedListItem();
         TextBlock::createTextBlock($numberedListItem, $textContent);
+
         return $numberedListItem;
     }
 
-    function __construct(array $responseData = null)
+    public function __construct(array $responseData = null)
     {
-        $this->type = "numbered_list_item";
+        $this->type = 'numbered_list_item';
         parent::__construct($responseData);
     }
 }

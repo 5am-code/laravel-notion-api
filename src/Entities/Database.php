@@ -8,10 +8,8 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-
 /**
- * Class Database
- * @package FiveamCode\LaravelNotionApi\Entities
+ * Class Database.
  */
 class Database extends Entity
 {
@@ -85,22 +83,15 @@ class Database extends Entity
      */
     protected DateTime $lastEditedTime;
 
-
-
-    /**
-     * 
-     */
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        if ($responseData['object'] !== 'database')
+        if ($responseData['object'] !== 'database') {
             throw HandlingException::instance('invalid json-array: the given object is not a database');
+        }
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     private function fillFromRaw()
     {
         $this->fillId();
@@ -114,9 +105,6 @@ class Database extends Entity
         $this->fillLastEditedTime();
     }
 
-    /**
-     *
-     */
     private function fillTitle(): void
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
@@ -125,9 +113,6 @@ class Database extends Entity
         }
     }
 
-    /**
-     *
-     */
     private function fillDatabaseUrl(): void
     {
         if (Arr::exists($this->responseData, 'url')) {
@@ -135,44 +120,32 @@ class Database extends Entity
         }
     }
 
-      /**
-     *
-     */
     private function fillIcon(): void
     {
         if (Arr::exists($this->responseData, 'icon') && $this->responseData['icon'] != null) {
             $this->iconType = $this->responseData['icon']['type'];
-            if(Arr::exists($this->responseData['icon'], 'emoji')){
+            if (Arr::exists($this->responseData['icon'], 'emoji')) {
                 $this->icon = $this->responseData['icon']['emoji'];
-            }
-            else if(Arr::exists($this->responseData['icon'], 'file')){
+            } elseif (Arr::exists($this->responseData['icon'], 'file')) {
                 $this->icon = $this->responseData['icon']['file']['url'];
-            }
-            else if(Arr::exists($this->responseData['icon'], 'external')){
+            } elseif (Arr::exists($this->responseData['icon'], 'external')) {
                 $this->icon = $this->responseData['icon']['external']['url'];
             }
         }
     }
 
-     /**
-     *
-     */
     private function fillCover(): void
     {
         if (Arr::exists($this->responseData, 'cover') && $this->responseData['cover'] != null) {
             $this->coverType = $this->responseData['cover']['type'];
-            if(Arr::exists($this->responseData['cover'], 'file')){
+            if (Arr::exists($this->responseData['cover'], 'file')) {
                 $this->cover = $this->responseData['cover']['file']['url'];
-            }
-            else if(Arr::exists($this->responseData['cover'], 'external')){
+            } elseif (Arr::exists($this->responseData['cover'], 'external')) {
                 $this->cover = $this->responseData['cover']['external']['url'];
             }
         }
     }
 
-    /**
-     *
-     */
     private function fillObjectType(): void
     {
         if (Arr::exists($this->responseData, 'object')) {
@@ -180,9 +153,6 @@ class Database extends Entity
         }
     }
 
-    /**
-     *
-     */
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
@@ -199,14 +169,15 @@ class Database extends Entity
     }
 
     /**
-     * @param string $propertyKey
+     * @param  string  $propertyKey
      * @return Property|null
      */
     public function getProperty(string $propertyKey): ?Property
     {
-        if (!isset($this->propertyMap[$propertyKey])) {
+        if (! isset($this->propertyMap[$propertyKey])) {
             return null;
         }
+
         return $this->propertyMap[$propertyKey];
     }
 
@@ -250,7 +221,7 @@ class Database extends Entity
         return $this->iconType;
     }
 
-        /**
+    /**
      * @return string
      */
     public function getCover(): string

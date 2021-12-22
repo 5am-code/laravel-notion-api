@@ -2,39 +2,36 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Notion;
-use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
+use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Number;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Select;
-use FiveamCode\LaravelNotionApi\Entities\Properties\MultiSelect;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\SelectItem;
+use Illuminate\Support\Facades\Http;
+use Notion;
 
 /**
- * Class EndpointPagePropertyTest
+ * Class EndpointPagePropertyTest.
  *
  * The fake API responses are based on our test environment with real api-calls (since the current Notion examples do not match with the actual calls).
- * @see https://developers.notion.com/reference/get-page
  *
- * @package FiveamCode\LaravelNotionApi\Tests
+ * @see https://developers.notion.com/reference/get-page
  */
 class PagePropertyTest extends NotionApiTest
 {
-
     /** @test */
     public function it_checks_if_specific_page_property_is_a_valid_multi_select_property()
     {
         // successful /v1/pages/PAGE_DOES_EXIST
         Http::fake([
-            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
-            => Http::response(
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
@@ -53,18 +50,16 @@ class PagePropertyTest extends NotionApiTest
         $this->assertSame('4e1cfee9-0acf-4cf0-ab01-121790c3eeab', $multiSelect->getItems()->first()->getId());
     }
 
-
     /** @test */
     public function it_checks_if_specific_page_property_is_a_valid_select_property()
     {
         // successful /v1/pages/PAGE_DOES_EXIST
         Http::fake([
-            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
-            => Http::response(
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
@@ -88,12 +83,11 @@ class PagePropertyTest extends NotionApiTest
     {
         // successful /v1/pages/PAGE_DOES_EXIST
         Http::fake([
-            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
-            => Http::response(
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
@@ -111,18 +105,16 @@ class PagePropertyTest extends NotionApiTest
         $this->assertCount(2, $text->getRichText()->getRawResponse());
     }
 
-
     /** @test */
     public function it_checks_if_specific_page_property_is_a_valid_number_property()
     {
         // successful /v1/pages/PAGE_DOES_EXIST
         Http::fake([
-            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
-            => Http::response(
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
@@ -142,12 +134,11 @@ class PagePropertyTest extends NotionApiTest
     {
         // successful /v1/pages/PAGE_DOES_EXIST
         Http::fake([
-            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8'
-            => Http::response(
+            'https://api.notion.com/v1/pages/afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/pages/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $pageResult = Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
