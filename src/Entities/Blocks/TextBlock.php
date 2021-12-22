@@ -11,8 +11,10 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
  */
 class TextBlock extends Block implements Modifiable
 {
-    protected static function createTextBlock(TextBlock $textBlock, array|string $textContent): TextBlock
+    protected static function createTextBlock(TextBlock $textBlock, $textContent): TextBlock
     {
+        self::assertValidTextContent($textContent);
+
         if (is_string($textContent)) {
             $textContent = [$textContent];
         }

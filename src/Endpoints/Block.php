@@ -78,8 +78,12 @@ class Block extends Endpoint
      * @return FiveamCode\LaravelNotionApi\Entities\Blocks\Block
      * @throws HandlingException
      */
-    public function append(array|BlockEntity $appendices): BlockEntity
+    public function append($appendices): BlockEntity
     {
+        if(!is_array($appendices) && !$appendices instanceof BlockEntity) {
+            throw new HandlingException('$appendices must be an array or instance of BlockEntity');
+        }
+
         if (!is_array($appendices)) {
             $appendices = [$appendices];
         }

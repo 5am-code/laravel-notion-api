@@ -38,7 +38,11 @@ class NotionApiTest extends TestCase
         ];
     }
 
-    protected function assertContainsInstanceOf(string $class, Collection|array $haystack): bool {
+    protected function assertContainsInstanceOf(string $class, $haystack): bool {
+
+        if(!is_array($haystack) && !($haystack instanceof Collection)) {
+            throw new \InvalidArgumentException('$haystack must be an array or a Collection');
+        }
 
         foreach($haystack as $item) {
             if(get_class($item) === $class) return true;

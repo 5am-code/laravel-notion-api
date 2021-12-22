@@ -75,8 +75,12 @@ class Filter extends QueryHelper
      * @return Filter
      * @throws HandlingException
      */
-    public static function numberFilter(string $property, string $comparisonOperator, float|int $number): Filter
+    public static function numberFilter(string $property, string $comparisonOperator, $number): Filter
     {
+        if(!is_numeric($number)) {
+            throw new HandlingException('The number must be numeric.');
+        }
+
         self::isValidComparisonOperatorFor('number', $comparisonOperator);
         return new Filter($property, 'number', [$comparisonOperator => $number]);
     }

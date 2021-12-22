@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use Notion;
 use Illuminate\Support\Facades\Http;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
@@ -299,6 +298,32 @@ class EndpointBlocksTest extends NotionApiTest
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle, $embed, $image, $video, $pdf]);
         $this->assertInstanceOf(Block::class, $parentBlock);
+    }
+
+    /**
+     * @dataProvider classProvider
+     */
+    public function classProvider(): array
+    {
+        return [
+            [BulletedListItem::class],
+            [HeadingOne::class],
+            [HeadingTwo::class],
+            [HeadingThree::class],
+            [NumberedListItem::class],
+            [Paragraph::class],
+            [ToDo::class],
+            [Toggle::class],
+        ];
+    }
+
+    /** @test
+     * @dataProvider classProvider
+     * @param $entityClass
+     */
+    public function it_throws_an_handling_exception_for_wrong_type($entityClass) {
+        $this->expectException(HandlingException::class);
+        $paragraph = $entityClass::create(new \stdClass());
     }
 
     /** @test */
