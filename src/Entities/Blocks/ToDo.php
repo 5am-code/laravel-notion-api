@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class ToDo extends TextBlock
 {
-    public static function create(array|string $textContent): ToDo
+    public static function create($textContent): ToDo
     {
+        self::assertValidTextContent($textContent);
+
         $toDo = new ToDo();
         TextBlock::createTextBlock($toDo, $textContent);
 

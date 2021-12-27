@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class NumberedListItem extends TextBlock
 {
-    public static function create(array|string $textContent): NumberedListItem
+    public static function create($textContent): NumberedListItem
     {
+        self::assertValidTextContent($textContent);
+
         $numberedListItem = new NumberedListItem();
         TextBlock::createTextBlock($numberedListItem, $textContent);
 

@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class HeadingTwo extends TextBlock
 {
-    public static function create(array|string $textContent): HeadingTwo
+    public static function create($textContent): HeadingTwo
     {
+        self::assertValidTextContent($textContent);
+
         $headingTwo = new HeadingTwo();
         HeadingTwo::createTextBlock($headingTwo, $textContent);
 
