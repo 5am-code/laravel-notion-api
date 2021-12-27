@@ -17,10 +17,6 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\ToDo;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Toggle;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Video;
 use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use Illuminate\Support\Facades\Http;
-use Notion;
 
 /**
  * Class EndpointBlocksTest.
