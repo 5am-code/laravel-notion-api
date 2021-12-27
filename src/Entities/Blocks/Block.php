@@ -216,7 +216,7 @@ class Block extends Entity
     protected static function assertValidTextContent($textContent)
     {
         if (! is_array($textContent) && ! is_string($textContent)) {
-            throw new HandlingException('$textContent content must be a string.');
+            throw new HandlingException('$textContent content must be a string or an array.');
         }
     }
 }
