@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class BulletedListItem extends TextBlock
 {
-    public static function create(array|string $textContent): BulletedListItem
+    public static function create($textContent): BulletedListItem
     {
+        self::assertValidTextContent($textContent);
+
         $bulletedListItem = new BulletedListItem();
         TextBlock::createTextBlock($bulletedListItem, $textContent);
 

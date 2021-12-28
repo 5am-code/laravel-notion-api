@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class Toggle extends TextBlock
 {
-    public static function create(array|string $textContent): Toggle
+    public static function create($textContent): Toggle
     {
+        self::assertValidTextContent($textContent);
+
         $toggle = new Toggle();
         TextBlock::createTextBlock($toggle, $textContent);
 

@@ -212,4 +212,11 @@ class Block extends Entity
                 return Block::class;
         }
     }
+
+    protected static function assertValidTextContent($textContent)
+    {
+        if (! is_array($textContent) && ! is_string($textContent)) {
+            throw new HandlingException('$textContent content must be a string or an array.');
+        }
+    }
 }

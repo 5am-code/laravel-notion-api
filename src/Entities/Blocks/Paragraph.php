@@ -7,8 +7,10 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class Paragraph extends TextBlock
 {
-    public static function create(array|string $textContent): Paragraph
+    public static function create($textContent): Paragraph
     {
+        self::assertValidTextContent($textContent);
+
         $paragraph = new Paragraph();
         TextBlock::createTextBlock($paragraph, $textContent);
 
