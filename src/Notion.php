@@ -14,10 +14,8 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
-
 /**
- * Class Notion
- * @package FiveamCode\LaravelNotionApi
+ * Class Notion.
  */
 class Notion
 {
@@ -48,8 +46,10 @@ class Notion
 
     /**
      * Notion constructor.
-     * @param string|null $version
-     * @param string|null $token
+     *
+     * @param  string|null  $version
+     * @param  string|null  $token
+     *
      * @throws HandlingException
      */
     public function __construct(string $token, string $version = 'v1')
@@ -60,33 +60,34 @@ class Notion
 
         $this->setVersion($version);
         $this->connect();
-
     }
 
     /**
-     *
      * @return Notion
+     *
      * @throws HandlingException
      */
     private function connect(): Notion
     {
-        $this->connection = Http
-            ::withHeaders($this->buildRequestHeader())
+        $this->connection = Http::withHeaders($this->buildRequestHeader())
             ->withToken($this->token);
+
         return $this;
     }
 
     /**
-     * Set version of notion-api
+     * Set version of notion-api.
      *
-     * @param string $version
+     * @param  string  $version
      * @return Notion
+     *
      * @throws HandlingException
      */
     public function setVersion(string $version): Notion
     {
         $this->checkValidVersion($version);
         $this->version = $version;
+
         return $this;
     }
 
@@ -94,29 +95,32 @@ class Notion
      * Wrapper function to set version to v1.
      *
      * @return $this
+     *
      * @throws HandlingException
      */
     public function v1(): Notion
     {
         $this->setVersion('v1');
+
         return $this;
     }
 
     /**
-     * Set notion-api bearer-token
+     * Set notion-api bearer-token.
      *
-     * @param string $token
+     * @param  string  $token
      * @return Notion
      */
     private function setToken(string $token): Notion
     {
         $this->token = $token;
+
         return $this;
     }
 
-
     /**
      * @return Databases
+     *
      * @throws HandlingException
      */
     public function databases(): Databases
@@ -125,8 +129,9 @@ class Notion
     }
 
     /**
-     * @param string $databaseId
+     * @param  string  $databaseId
      * @return Database
+     *
      * @throws Exceptions\LaravelNotionAPIException
      * @throws HandlingException
      */
@@ -137,6 +142,7 @@ class Notion
 
     /**
      * @return Pages
+     *
      * @throws HandlingException
      */
     public function pages(): Pages
@@ -145,8 +151,9 @@ class Notion
     }
 
     /**
-     * @param string $blockId
+     * @param  string  $blockId
      * @return Block
+     *
      * @throws Exceptions\LaravelNotionAPIException
      * @throws HandlingException
      */
@@ -157,6 +164,7 @@ class Notion
 
     /**
      * @return Users
+     *
      * @throws HandlingException
      */
     public function users(): Users
@@ -165,8 +173,9 @@ class Notion
     }
 
     /**
-     * @param string|null $searchText
+     * @param  string|null  $searchText
      * @return Search
+     *
      * @throws Exceptions\LaravelNotionAPIException
      * @throws HandlingException
      */
@@ -192,14 +201,15 @@ class Notion
     }
 
     /**
-     * Checks if given version for notion-api is valid
+     * Checks if given version for notion-api is valid.
      *
-     * @param string $version
+     * @param  string  $version
+     *
      * @throws HandlingException
      */
     public function checkValidVersion(string $version): void
     {
-        if (!$this->validVersions->contains($version)) {
+        if (! $this->validVersions->contains($version)) {
             throw HandlingException::instance('Invalid version for Notion-API endpoint', ['invalidVersion' => $version]);
         }
     }
@@ -212,7 +222,7 @@ class Notion
     private function buildRequestHeader(): array
     {
         return [
-            'Notion-Version' => $this->mapVersionToHeaderVersion()
+            'Notion-Version' => $this->mapVersionToHeaderVersion(),
         ];
     }
 
@@ -221,7 +231,9 @@ class Notion
      * with v* as well as a dated version in the request header, this method
      * maps the given version (e.g. v1) to the version date Notion requires
      * in the header (e.g. "2021-05-13").
+     *
      * @return string
+     *
      * @throws HandlingException
      */
     private function mapVersionToHeaderVersion(): string

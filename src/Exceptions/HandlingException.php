@@ -3,15 +3,13 @@
 namespace FiveamCode\LaravelNotionApi\Exceptions;
 
 /**
- * Class HandlingException
- * @package FiveamCode\LaravelNotionApi\Exceptions
+ * Class HandlingException.
  */
 class HandlingException extends LaravelNotionAPIException
 {
-
     /**
-     * @param string $message
-     * @param array $payload
+     * @param  string  $message
+     * @param  array  $payload
      * @return HandlingException
      */
     public static function instance(string $message, array $payload = []): HandlingException

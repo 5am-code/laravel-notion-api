@@ -2,34 +2,31 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Notion;
-use Illuminate\Support\Facades\Http;
+use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
+use Illuminate\Support\Facades\Http;
+use Notion;
 
 /**
- * Class EndpointUsersTest
+ * Class EndpointUsersTest.
  *
  * The fake API responses are based on Notions documentation.
- * @see https://developers.notion.com/reference/get-users
  *
- * @package FiveamCode\LaravelNotionApi\Tests
+ * @see https://developers.notion.com/reference/get-users
  */
 class EndpointUsersTest extends NotionApiTest
 {
-
     /** @test */
     public function it_throws_a_notion_exception_bad_request()
     {
         // failing /v1/users
         Http::fake([
-            'https://api.notion.com/v1/users?*'
-            => Http::response(
+            'https://api.notion.com/v1/users?*' => Http::response(
                 json_decode('{}', true),
                 400,
                 ['Headers']
-            )
+            ),
         ]);
 
         $this->expectException(NotionException::class);
@@ -43,12 +40,11 @@ class EndpointUsersTest extends NotionApiTest
     {
         // successful /v1/users
         Http::fake([
-            'https://api.notion.com/v1/users?*'
-            => Http::response(
+            'https://api.notion.com/v1/users?*' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/users/response_all_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $users = Notion::users()->all();
@@ -72,12 +68,11 @@ class EndpointUsersTest extends NotionApiTest
     {
         // successful /v1/users/USER_DOES_EXITS
         Http::fake([
-            'https://api.notion.com/v1/users/d40e767c-d7af-4b18-a86d-55c61f1e39a4'
-            => Http::response(
+            'https://api.notion.com/v1/users/d40e767c-d7af-4b18-a86d-55c61f1e39a4' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/users/response_specific_200.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $user = Notion::users()->find('d40e767c-d7af-4b18-a86d-55c61f1e39a4');
@@ -92,12 +87,11 @@ class EndpointUsersTest extends NotionApiTest
     {
         // failing /v1/pages/PAGE_DOES_NOT_EXIST
         Http::fake([
-            'https://api.notion.com/v1/users/d40e767c-d7af-4b18-a86d-55c61f1e39a1'
-            => Http::response(
+            'https://api.notion.com/v1/users/d40e767c-d7af-4b18-a86d-55c61f1e39a1' => Http::response(
                 json_decode(file_get_contents('tests/stubs/endpoints/users/response_specific_404.json'), true),
                 200,
                 ['Headers']
-            )
+            ),
         ]);
 
         $this->expectException(NotionException::class);
@@ -105,5 +99,4 @@ class EndpointUsersTest extends NotionApiTest
 
         Notion::users()->find('d40e767c-d7af-4b18-a86d-55c61f1e39a1');
     }
-
 }

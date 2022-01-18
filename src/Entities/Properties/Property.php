@@ -7,8 +7,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
 
 /**
- * Class Property
- * @package FiveamCode\LaravelNotionApi\Entities\Properties
+ * Class Property.
  */
 class Property extends Entity
 {
@@ -34,30 +33,33 @@ class Property extends Entity
 
     /**
      * Property constructor.
-     * @param string|null $title
-     * @param array $responseData
+     *
+     * @param  string|null  $title
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      */
     public function __construct(string $title = null)
     {
-        if ($title !== null) $this->title = $title;
+        if ($title !== null) {
+            $this->title = $title;
+        }
     }
 
-
     /**
-     * @param array $responseData
+     * @param  array  $responseData
+     *
      * @throws HandlingException
      */
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'id')) throw HandlingException::instance("invalid json-array: no id provided");
+        if (! Arr::exists($responseData, 'id')) {
+            throw HandlingException::instance('invalid json-array: no id provided');
+        }
         $this->responseData = $responseData;
         $this->fillFromRaw();
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         $this->fillId();
@@ -65,9 +67,6 @@ class Property extends Entity
         $this->fillContent();
     }
 
-    /**
-     *
-     */
     private function fillType(): void
     {
         if (Arr::exists($this->responseData, 'type')) {
@@ -75,9 +74,6 @@ class Property extends Entity
         }
     }
 
-    /**
-     *
-     */
     private function fillContent(): void
     {
         if (Arr::exists($this->responseData, $this->getType())) {
@@ -95,7 +91,7 @@ class Property extends Entity
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      */
     public function setTitle(string $title): void
     {
@@ -115,7 +111,10 @@ class Property extends Entity
      */
     public function asText(): string
     {
-        if ($this->content == null) return "";
+        if ($this->content == null) {
+            return '';
+        }
+
         return json_encode($this->content);
     }
 
@@ -136,9 +135,10 @@ class Property extends Entity
     }
 
     /**
-     * @param string $propertyKey
+     * @param  string  $propertyKey
      * @param $rawContent
      * @return Property
+     *
      * @throws HandlingException
      */
     public static function fromResponse(string $propertyKey, $rawContent): Property
@@ -151,16 +151,14 @@ class Property extends Entity
         return $property;
     }
 
-
     /**
      * Maps the type of a property to the corresponding package class by converting the type name.
      *
-     * @param string $type
+     * @param  string  $type
      * @return string
      */
     private static function mapTypeToClass(string $type): string
     {
-
         switch ($type) {
             case 'multi_select':
             case 'select':
@@ -180,14 +178,14 @@ class Property extends Entity
             case 'formula':
             case 'rollup':
                 $class = str_replace('_', '', ucwords($type, '_'));
-                return "FiveamCode\\LaravelNotionApi\\Entities\\Properties\\" . $class;
+
+                return 'FiveamCode\\LaravelNotionApi\\Entities\\Properties\\'.$class;
             case 'text':
             case 'rich_text':
-                # TODO: Depending on the Notion API version.
+                // TODO: Depending on the Notion API version.
                 return Text::class;
             default:
                 return Property::class;
         }
-
     }
 }

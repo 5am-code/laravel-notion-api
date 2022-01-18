@@ -2,24 +2,22 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Orchestra\Testbench\TestCase;
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Collection;
+use Orchestra\Testbench\TestCase;
 
 /**
- * Class EndpointPageTest
+ * Class EndpointPageTest.
  *
  * The fake API responses are based on our test environment (since the current Notion examples do not match with the actual calls).
- * @see https://developers.notion.com/reference/get-page
  *
- * @package FiveamCode\LaravelNotionApi\Tests
+ * @see https://developers.notion.com/reference/get-page
  */
 class NotionApiTest extends TestCase
 {
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return string[]
      */
     protected function getPackageProviders($app): array
@@ -28,20 +26,26 @@ class NotionApiTest extends TestCase
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return string[]
      */
     protected function getPackageAliases($app): array
     {
         return [
-            'Notion' => NotionFacade::class
+            'Notion' => NotionFacade::class,
         ];
     }
 
-    protected function assertContainsInstanceOf(string $class, Collection|array $haystack): bool {
+    protected function assertContainsInstanceOf(string $class, $haystack): bool
+    {
+        if (! is_array($haystack) && ! ($haystack instanceof Collection)) {
+            throw new \InvalidArgumentException('$haystack must be an array or a Collection');
+        }
 
-        foreach($haystack as $item) {
-            if(get_class($item) === $class) return true;
+        foreach ($haystack as $item) {
+            if (get_class($item) === $class) {
+                return true;
+            }
         }
 
         return false;

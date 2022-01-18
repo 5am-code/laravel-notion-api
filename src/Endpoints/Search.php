@@ -8,8 +8,7 @@ use FiveamCode\LaravelNotionApi\Query\Sorting;
 use Illuminate\Support\Collection;
 
 /**
- * Class Search
- * @package FiveamCode\LaravelNotionApi\Endpoints
+ * Class Search.
  */
 class Search extends Endpoint
 {
@@ -28,11 +27,12 @@ class Search extends Endpoint
      */
     private ?Sorting $sort = null;
 
-
     /**
      * Search constructor.
-     * @param Notion $notion
-     * @param string $searchText
+     *
+     * @param  Notion  $notion
+     * @param  string  $searchText
+     *
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException
      */
@@ -44,6 +44,7 @@ class Search extends Endpoint
 
     /**
      * @return EntityCollection
+     *
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
      */
@@ -51,20 +52,25 @@ class Search extends Endpoint
     {
         $postData = [];
 
-        if ($this->sort !== null)
+        if ($this->sort !== null) {
             $postData['sort'] = $this->sort->toArray();
+        }
 
-        if ($this->filter !== null)
+        if ($this->filter !== null) {
             $postData['filter'] = ['property' => 'object', 'value' => $this->filter];
+        }
 
-        if ($this->startCursor !== null)
+        if ($this->startCursor !== null) {
             $postData['start_cursor'] = $this->startCursor;
+        }
 
-        if ($this->pageSize !== null)
+        if ($this->pageSize !== null) {
             $postData['page_size'] = $this->pageSize;
+        }
 
-        if ($this->searchText !== null)
+        if ($this->searchText !== null) {
             $postData['query'] = $this->searchText;
+        }
 
         $response = $this
             ->post(
@@ -77,12 +83,13 @@ class Search extends Endpoint
     }
 
     /**
-     * @param string $direction
+     * @param  string  $direction
      * @return $this
      */
     public function sortByLastEditedTime(string $direction = 'ascending'): Search
     {
         $this->sort = Sorting::timestampSort('last_edited_time', $direction);
+
         return $this;
     }
 
@@ -92,6 +99,7 @@ class Search extends Endpoint
     public function onlyDatabases(): Search
     {
         $this->filter = 'database';
+
         return $this;
     }
 
@@ -101,11 +109,13 @@ class Search extends Endpoint
     public function onlyPages(): Search
     {
         $this->filter = 'page';
+
         return $this;
     }
 
     /**
      * @return Collection
+     *
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
      */
@@ -123,6 +133,7 @@ class Search extends Endpoint
 
     /**
      * @return Collection
+     *
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\NotionException
      */
@@ -134,26 +145,29 @@ class Search extends Endpoint
         foreach ($results as $result) {
             $idCollection->add($result->getId());
         }
+
         return $idCollection;
     }
 
     /**
-     * @param string $filter
+     * @param  string  $filter
      * @return $this
      */
     public function filterBy(string $filter): Search
     {
         $this->filter = $filter;
+
         return $this;
     }
 
     /**
-     * @param Sorting $sort
+     * @param  Sorting  $sort
      * @return $this
      */
     public function sortBy(Sorting $sort): Search
     {
         $this->sort = $sort;
+
         return $this;
     }
 }

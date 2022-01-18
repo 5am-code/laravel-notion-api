@@ -6,13 +6,14 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 
 /**
- * Class TextBlock
- * @package FiveamCode\LaravelNotionApi\Entities\Blocks
+ * Class TextBlock.
  */
 class TextBlock extends Block implements Modifiable
 {
-    protected static function createTextBlock(TextBlock $textBlock, array|string $textContent): TextBlock
+    protected static function createTextBlock(TextBlock $textBlock, $textContent): TextBlock
     {
+        self::assertValidTextContent($textContent);
+
         if (is_string($textContent)) {
             $textContent = [$textContent];
         }
@@ -20,15 +21,15 @@ class TextBlock extends Block implements Modifiable
         $text = [];
         foreach ($textContent as $textItem) {
             $text[] = [
-                "type" => "text",
-                "text" => [
-                    "content" => $textItem
-                ]
+                'type' => 'text',
+                'text' => [
+                    'content' => $textItem,
+                ],
             ];
         }
 
         $textBlock->rawContent = [
-            "text" => $text
+            'text' => $text,
         ];
 
         $textBlock->fillContent();
@@ -41,28 +42,23 @@ class TextBlock extends Block implements Modifiable
         $this->getContent()->setPlainText($content);
 
         $text[] = [
-            "type" => "text",
-            "text" => [
-                "content" => $content
-            ]
+            'type' => 'text',
+            'text' => [
+                'content' => $content,
+            ],
         ];
 
         $this->rawContent['text'] = $text;
+
         return $this;
     }
 
-    /**
-     *
-     */
     protected function fillFromRaw(): void
     {
         parent::fillFromRaw();
         $this->fillContent();
     }
 
-    /**
-     *
-     */
     protected function fillContent(): void
     {
         $this->content = new RichText($this->rawContent['text']);
