@@ -37,7 +37,7 @@ class Rollup extends Property
                     break;
                 default:
                     throw new HandlingException("Unexpected rollupType {$this->rollupType}");
-        }
+            }
         }
     }
 
@@ -89,10 +89,19 @@ class Rollup extends Property
             // TODO
             $rollupPropertyItem['id'] = 'undefined';
 
-            $this->content->add(
-                Property::fromResponse('', $rollupPropertyItem)
-            );
+            if ($this->isRollupPropertyContentSet($rollupPropertyItem)) {
+                $this->content->add(
+                    Property::fromResponse('', $rollupPropertyItem)
+                );
+            }
         }
+    }
+
+    private function isRollupPropertyContentSet($rollupPropertyItem): bool
+    {
+        return Arr::exists($rollupPropertyItem, 'type')
+            && Arr::exists($rollupPropertyItem, $rollupPropertyItem['type'])
+            && !is_null($rollupPropertyItem[$rollupPropertyItem['type']]);
     }
 
     private function setRollupContentDate()
