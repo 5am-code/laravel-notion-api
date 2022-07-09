@@ -101,7 +101,7 @@ class Rollup extends Property
     {
         return Arr::exists($rollupPropertyItem, 'type')
             && Arr::exists($rollupPropertyItem, $rollupPropertyItem['type'])
-            && !is_null($rollupPropertyItem[$rollupPropertyItem['type']]);
+            && ! is_null($rollupPropertyItem[$rollupPropertyItem['type']]);
     }
 
     private function setRollupContentDate()
