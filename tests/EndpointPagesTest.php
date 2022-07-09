@@ -190,7 +190,6 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertArrayHasKey('end', $dateRangeContent['date']);
         $this->assertEquals($dateRangeEndValue->format('Y-m-d'), $dateRangeContent['date']['end']);
 
-
         // date range (with time)
         $this->assertTrue(
             $this->assertContainsInstanceOf(Date::class, $properties)
