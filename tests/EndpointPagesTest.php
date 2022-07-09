@@ -106,9 +106,11 @@ class EndpointPagesTest extends NotionApiTest
         $checkboxKey = 'CheckboxProperty';
         $checkboxValue = true;
         $dateRangeKey = 'DateRangeProperty';
+        $dateTimeRangeKey = 'DateTimeRangeProperty';
         $dateRangeStartValue = Carbon::now()->toDateTime();
         $dateRangeEndValue = Carbon::tomorrow()->toDateTime();
         $dateKey = 'DateProperty';
+        $dateTimeKey = 'DateTimeProperty';
         $dateValue = Carbon::yesterday()->toDateTime();
         $emailKey = 'EmailProperty';
         $emailValue = 'notion-is-awesome@example.org';
@@ -135,7 +137,9 @@ class EndpointPagesTest extends NotionApiTest
         $page->setTitle('Name', $pageTitle);
         $page->setCheckbox($checkboxKey, $checkboxValue);
         $page->setDate($dateRangeKey, $dateRangeStartValue, $dateRangeEndValue);
+        $page->setDateTime($dateTimeRangeKey, $dateRangeStartValue, $dateRangeEndValue);
         $page->setDate($dateKey, $dateValue);
+        $page->setDateTime($dateTimeKey, $dateValue);
         $page->setEmail($emailKey, $emailValue);
         $page->setMultiSelect($multiSelectKey, $multiSelectValues);
         $page->setNumber($numberKey, $numberValue);
@@ -186,6 +190,28 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertArrayHasKey('end', $dateRangeContent['date']);
         $this->assertEquals($dateRangeEndValue->format('Y-m-d'), $dateRangeContent['date']['end']);
 
+
+        // date range (with time)
+        $this->assertTrue(
+            $this->assertContainsInstanceOf(Date::class, $properties)
+        );
+        $dateTimeRangeProp = $page->getProperty($dateTimeRangeKey);
+        $this->assertInstanceOf(RichDate::class, $dateTimeRangeProp->getContent());
+        $dateTimeRangeContent = $dateTimeRangeProp->getContent();
+        $this->assertTrue($dateTimeRangeProp->isRange());
+        $this->assertEquals($dateRangeStartValue, $dateTimeRangeProp->getStart());
+        $this->assertEquals($dateRangeEndValue, $dateTimeRangeProp->getEnd());
+        $this->assertJson($dateTimeRangeProp->asText());
+        $this->assertStringContainsString($dateRangeStartValue->format('Y-m-d H:i:s'), $dateTimeRangeProp->asText());
+        $this->assertStringContainsString($dateRangeEndValue->format('Y-m-d H:i:s'), $dateTimeRangeProp->asText());
+        $dateTimeRangeContent = $dateTimeRangeProp->getRawContent();
+        $this->assertArrayHasKey('date', $dateTimeRangeContent);
+        $this->assertCount(2, $dateTimeRangeContent['date']);
+        $this->assertArrayHasKey('start', $dateTimeRangeContent['date']);
+        $this->assertEquals($dateRangeStartValue->format('c'), $dateTimeRangeContent['date']['start']);
+        $this->assertArrayHasKey('end', $dateTimeRangeContent['date']);
+        $this->assertEquals($dateRangeEndValue->format('c'), $dateTimeRangeContent['date']['end']);
+
         // date
         $dateProp = $page->getProperty($dateKey);
         $this->assertInstanceOf(RichDate::class, $dateProp->getContent());
@@ -196,6 +222,17 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertCount(1, $dateContent['date']);
         $this->assertArrayHasKey('start', $dateContent['date']);
         $this->assertEquals($dateValue->format('Y-m-d'), $dateContent['date']['start']);
+
+        // date (with time)
+        $dateTimeProp = $page->getProperty($dateTimeKey);
+        $this->assertInstanceOf(RichDate::class, $dateTimeProp->getContent());
+        $this->assertFalse($dateTimeProp->isRange());
+        $this->assertEquals($dateValue, $dateTimeProp->getStart());
+        $dateTimeContent = $dateTimeProp->getRawContent();
+        $this->assertArrayHasKey('date', $dateTimeContent);
+        $this->assertCount(1, $dateTimeContent['date']);
+        $this->assertArrayHasKey('start', $dateTimeContent['date']);
+        $this->assertEquals($dateValue->format('c'), $dateTimeContent['date']['start']);
 
         // email
         $this->assertTrue($this->assertContainsInstanceOf(Email::class, $properties));
