@@ -29,6 +29,39 @@ class Date extends Property implements Modifiable
         if ($richDate->isRange()) {
             $dateProperty->rawContent = [
                 'date' => [
+                    'start' => $start->format('Y-m-d'),
+                    'end' => $end->format('Y-m-d'),
+                ],
+            ];
+        } else {
+            $dateProperty->rawContent = [
+                'date' => [
+                    'start' => $start->format('Y-m-d'),
+                ],
+            ];
+        }
+
+        return $dateProperty;
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @return Date
+     */
+    public static function valueWithTime(?DateTime $start, ?DateTime $end = null): Date
+    {
+        $richDate = new RichDate();
+        $richDate->setStart($start);
+        $richDate->setEnd($end);
+        $richDate->setHasTime(true);
+
+        $dateProperty = new Date();
+        $dateProperty->content = $richDate;
+
+        if ($richDate->isRange()) {
+            $dateProperty->rawContent = [
+                'date' => [
                     'start' => $start->format('c'),
                     'end' => $end->format('c'),
                 ],
