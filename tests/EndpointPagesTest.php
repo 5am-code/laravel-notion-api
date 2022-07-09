@@ -182,9 +182,9 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertArrayHasKey('date', $dateRangeContent);
         $this->assertCount(2, $dateRangeContent['date']);
         $this->assertArrayHasKey('start', $dateRangeContent['date']);
-        $this->assertEquals($dateRangeStartValue->format('c'), $dateRangeContent['date']['start']);
+        $this->assertEquals($dateRangeStartValue->format('Y-m-d'), $dateRangeContent['date']['start']);
         $this->assertArrayHasKey('end', $dateRangeContent['date']);
-        $this->assertEquals($dateRangeEndValue->format('c'), $dateRangeContent['date']['end']);
+        $this->assertEquals($dateRangeEndValue->format('Y-m-d'), $dateRangeContent['date']['end']);
 
         // date
         $dateProp = $page->getProperty($dateKey);
@@ -195,7 +195,7 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertArrayHasKey('date', $dateContent);
         $this->assertCount(1, $dateContent['date']);
         $this->assertArrayHasKey('start', $dateContent['date']);
-        $this->assertEquals($dateValue->format('c'), $dateContent['date']['start']);
+        $this->assertEquals($dateValue->format('Y-m-d'), $dateContent['date']['start']);
 
         // email
         $this->assertTrue($this->assertContainsInstanceOf(Email::class, $properties));
