@@ -7,6 +7,7 @@ use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
+use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -24,6 +25,16 @@ class EntityCollection
      * @var array
      */
     protected array $rawResults = [];
+
+    /**
+     * @var bool
+     */
+    protected bool $hasMore = false;
+
+    /**
+     * @var string
+     */
+    protected ?string $nextCursor = null;
 
     /**
      * @var Collection
@@ -96,11 +107,22 @@ class EntityCollection
     protected function fillFromRaw()
     {
         $this->fillResult();
+        $this->fillCursorInformation();
     }
 
     protected function fillResult()
     {
         $this->rawResults = $this->responseData['results'];
+    }
+
+    protected function fillCursorInformation()
+    {
+        if (Arr::exists($this->responseData, 'has_more')) {
+            $this->hasMore = $this->responseData['has_more'];
+        }
+        if (Arr::exists($this->responseData, 'next_cursor')) {
+            $this->nextCursor = $this->responseData['next_cursor'];
+        }
     }
 
     /**
@@ -109,6 +131,14 @@ class EntityCollection
     public function getRawResponse(): array
     {
         return $this->responseData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawNextCursor(): ?string
+    {
+        return $this->nextCursor;
     }
 
     /**
@@ -127,5 +157,21 @@ class EntityCollection
         return $this->asCollection()->map(function (Entity $item) {
             return $item->toArray();
         });
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMoreEntries(): bool
+    {
+        return $this->hasMore;
+    }
+
+    /**
+     * @return StartCursor
+     */
+    public function nextCursor(): StartCursor
+    {
+        return new StartCursor($this->getRawNextCursor());
     }
 }

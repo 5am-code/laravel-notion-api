@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
@@ -66,7 +67,7 @@ class Database extends Endpoint
         } // TODO Compound filters!
 
         if ($this->startCursor !== null) {
-            $postData['start_cursor'] = $this->startCursor;
+            $postData['start_cursor'] = $this->startCursor->__toString();
         }
 
         if ($this->pageSize !== null) {
@@ -101,6 +102,17 @@ class Database extends Endpoint
     public function sortBy(Collection $sorts): Database
     {
         $this->sorts = $sorts;
+
+        return $this;
+    }
+
+    /**
+     * @param EntityCollection $entityCollection
+     * @return $this
+     */
+    public function offsetByResponse(EntityCollection $entityCollection): Database
+    {
+        $this->offset($entityCollection->nextCursor());
 
         return $this;
     }
