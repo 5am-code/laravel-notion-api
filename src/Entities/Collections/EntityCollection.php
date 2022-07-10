@@ -170,8 +170,10 @@ class EntityCollection
     /**
      * @return StartCursor
      */
-    public function nextCursor(): StartCursor
+    public function nextCursor(): ?StartCursor
     {
-        return new StartCursor($this->getRawNextCursor());
+        $rawNextCursor = $this->getRawNextCursor();
+        if($rawNextCursor === null) return null;
+        return new StartCursor($rawNextCursor);
     }
 }
