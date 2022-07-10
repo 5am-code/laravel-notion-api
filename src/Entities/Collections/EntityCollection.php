@@ -173,7 +173,10 @@ class EntityCollection
     public function nextCursor(): ?StartCursor
     {
         $rawNextCursor = $this->getRawNextCursor();
-        if($rawNextCursor === null) return null;
+        if ($rawNextCursor === null) {
+            return null;
+        }
+
         return new StartCursor($rawNextCursor);
     }
 }
