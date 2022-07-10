@@ -107,7 +107,7 @@ class Database extends Endpoint
     }
 
     /**
-     * @param EntityCollection $entityCollection
+     * @param  EntityCollection  $entityCollection
      * @return $this
      */
     public function offsetByResponse(EntityCollection $entityCollection): Database
