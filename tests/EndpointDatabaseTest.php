@@ -164,18 +164,17 @@ class EndpointDatabaseTest extends NotionApiTest
     {
         // success /v1/databases/DATABASE_DOES_EXIST/query
         Http::fake([
-            'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*' =>
-            Http::sequence()
+            'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*' => Http::sequence()
                 ->push(
-                    json_decode(file_get_contents("tests/stubs/endpoints/databases/response_query_offset_start_200.json"), true),
+                    json_decode(file_get_contents('tests/stubs/endpoints/databases/response_query_offset_start_200.json'), true),
                     200,
                     ['Headers']
                 )
                 ->push(
-                    json_decode(file_get_contents("tests/stubs/endpoints/databases/response_query_offset_end_200.json"), true),
+                    json_decode(file_get_contents('tests/stubs/endpoints/databases/response_query_offset_end_200.json'), true),
                     200,
                     ['Headers']
-                )
+                ),
         ]);
 
         $result = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
