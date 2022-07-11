@@ -69,9 +69,13 @@ class EndpointPagesTest extends NotionApiTest
         // check properties
         $this->assertSame('Notion Is Awesome', $pageResult->getTitle());
         $this->assertSame('page', $pageResult->getObjectType());
-        $this->assertCount(7, $pageResult->getRawProperties());
-        $this->assertCount(7, $pageResult->getProperties());
-        $this->assertCount(7, $pageResult->getPropertyKeys());
+        $this->assertCount(9, $pageResult->getRawProperties());
+        $this->assertCount(9, $pageResult->getProperties());
+        $this->assertCount(9, $pageResult->getPropertyKeys());
+
+        // check date and datetime properties
+        $this->assertTrue($pageResult->getProperty('DateWithTime')->hasTime());
+        $this->assertFalse($pageResult->getProperty('DateWithoutTime')->hasTime());
 
         $this->assertInstanceOf(Carbon::class, $pageResult->getCreatedTime());
         $this->assertInstanceOf(Carbon::class, $pageResult->getLastEditedTime());
@@ -179,6 +183,7 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertTrue($dateRangeProp->isRange());
         $this->assertEquals($dateRangeStartValue, $dateRangeProp->getStart());
         $this->assertEquals($dateRangeEndValue, $dateRangeProp->getEnd());
+        $this->assertFalse($dateRangeProp->hasTime());
         $this->assertJson($dateRangeProp->asText());
         $this->assertStringContainsString($dateRangeStartValue->format('Y-m-d H:i:s'), $dateRangeProp->asText());
         $this->assertStringContainsString($dateRangeEndValue->format('Y-m-d H:i:s'), $dateRangeProp->asText());
@@ -200,6 +205,7 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertTrue($dateTimeRangeProp->isRange());
         $this->assertEquals($dateRangeStartValue, $dateTimeRangeProp->getStart());
         $this->assertEquals($dateRangeEndValue, $dateTimeRangeProp->getEnd());
+        $this->assertTrue($dateTimeRangeProp->hasTime());
         $this->assertJson($dateTimeRangeProp->asText());
         $this->assertStringContainsString($dateRangeStartValue->format('Y-m-d H:i:s'), $dateTimeRangeProp->asText());
         $this->assertStringContainsString($dateRangeEndValue->format('Y-m-d H:i:s'), $dateTimeRangeProp->asText());
@@ -216,6 +222,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertInstanceOf(RichDate::class, $dateProp->getContent());
         $this->assertFalse($dateProp->isRange());
         $this->assertEquals($dateValue, $dateProp->getStart());
+        $this->assertNull($dateProp->getEnd());
+        $this->assertFalse($dateProp->hasTime());
         $dateContent = $dateProp->getRawContent();
         $this->assertArrayHasKey('date', $dateContent);
         $this->assertCount(1, $dateContent['date']);
@@ -227,6 +235,8 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertInstanceOf(RichDate::class, $dateTimeProp->getContent());
         $this->assertFalse($dateTimeProp->isRange());
         $this->assertEquals($dateValue, $dateTimeProp->getStart());
+        $this->assertNull($dateTimeProp->getEnd());
+        $this->assertTrue($dateTimeProp->hasTime());
         $dateTimeContent = $dateTimeProp->getRawContent();
         $this->assertArrayHasKey('date', $dateTimeContent);
         $this->assertCount(1, $dateTimeContent['date']);
