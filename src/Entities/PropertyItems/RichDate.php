@@ -11,11 +11,9 @@ use Illuminate\Support\Arr;
  */
 class RichDate extends Entity
 {
-    /**
-     * @var string
-     */
     protected DateTime $start;
     protected ?DateTime $end = null;
+    protected bool $hasTime = false;
 
     /**
      * @param  array  $responseData
@@ -63,11 +61,19 @@ class RichDate extends Entity
     }
 
     /**
-     * @return DateTime
+     * @return ?DateTime
      */
     public function getEnd(): ?DateTime
     {
         return $this->end;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTime(): bool
+    {
+        return $this->hasTime;
     }
 
     public function setStart($start): void
@@ -78,5 +84,10 @@ class RichDate extends Entity
     public function setEnd($end): void
     {
         $this->end = $end;
+    }
+
+    public function setHasTime($hasTime): void
+    {
+        $this->hasTime = $hasTime;
     }
 }
