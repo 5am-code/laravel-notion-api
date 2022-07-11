@@ -61,7 +61,7 @@ class RichDate extends Entity
     }
 
     /**
-     * @return DateTime
+     * @return ?DateTime
      */
     public function getEnd(): ?DateTime
     {
@@ -71,7 +71,7 @@ class RichDate extends Entity
     /**
      * @return bool
      */
-    public function getHasTime(): bool
+    public function hasTime(): bool
     {
         return $this->hasTime;
     }
