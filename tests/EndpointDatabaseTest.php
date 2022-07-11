@@ -158,10 +158,10 @@ class EndpointDatabaseTest extends NotionApiTest
         Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')->query();
     }
 
-    /** 
-     * @test 
+    /**
+     * @test
      * ! edge-case
-    */
+     */
     public function it_queries_a_database_with_a_rollup_property_with_empty_selects()
     {
         // success /v1/databases/DATABASE_DOES_EXIST/query
