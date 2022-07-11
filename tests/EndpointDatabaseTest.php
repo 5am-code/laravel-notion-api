@@ -159,7 +159,6 @@ class EndpointDatabaseTest extends NotionApiTest
         Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')->query();
     }
 
-
     /** @test */
     public function it_queries_a_database_with_and_without_offset_and_processes_result()
     {
@@ -216,7 +215,6 @@ class EndpointDatabaseTest extends NotionApiTest
         $page = $resultWithOffsetCollection->first();
         $this->assertEquals('Betty Holberton', $page->getTitle());
     }
-    
 
     /**
      * @test
@@ -236,7 +234,7 @@ class EndpointDatabaseTest extends NotionApiTest
         $result = Notion::database('11971214ce574df7a58389c1deda61d7')->query();
 
         $this->assertInstanceOf(PageCollection::class, $result);
-        
+
         $resultCollection = $result->asCollection();
 
         $this->assertIsIterable($resultCollection);
