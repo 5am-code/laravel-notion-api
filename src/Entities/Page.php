@@ -346,6 +346,19 @@ class Page extends Entity
 
     /**
      * @param $propertyTitle
+     * @param $start
+     * @param $end
+     * @return Page
+     */
+    public function setDateTime(string $propertyTitle, DateTime $start, ?DateTime $end = null): Page
+    {
+        $this->set($propertyTitle, Date::valueWithTime($start, $end));
+
+        return $this;
+    }
+
+    /**
+     * @param $propertyTitle
      * @param $relationIds
      * @return Page
      */

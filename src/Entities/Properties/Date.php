@@ -6,6 +6,7 @@ use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichDate;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use Illuminate\Support\Arr;
 
 /**
  * Class Date.
@@ -22,6 +23,39 @@ class Date extends Property implements Modifiable
         $richDate = new RichDate();
         $richDate->setStart($start);
         $richDate->setEnd($end);
+
+        $dateProperty = new Date();
+        $dateProperty->content = $richDate;
+
+        if ($richDate->isRange()) {
+            $dateProperty->rawContent = [
+                'date' => [
+                    'start' => $start->format('Y-m-d'),
+                    'end' => $end->format('Y-m-d'),
+                ],
+            ];
+        } else {
+            $dateProperty->rawContent = [
+                'date' => [
+                    'start' => $start->format('Y-m-d'),
+                ],
+            ];
+        }
+
+        return $dateProperty;
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @return Date
+     */
+    public static function valueWithTime(?DateTime $start, ?DateTime $end = null): Date
+    {
+        $richDate = new RichDate();
+        $richDate->setStart($start);
+        $richDate->setEnd($end);
+        $richDate->setHasTime(true);
 
         $dateProperty = new Date();
         $dateProperty->content = $richDate;
@@ -57,17 +91,24 @@ class Date extends Property implements Modifiable
     {
         $richDate = new RichDate();
 
-        if (isset($this->rawContent['start'])) {
+        if (Arr::exists($this->rawContent, 'start')) {
             $startAsIsoString = $this->rawContent['start'];
             $richDate->setStart(new DateTime($startAsIsoString));
+            $richDate->setHasTime($this->isIsoTimeString($startAsIsoString));
         }
 
-        if (isset($this->rawContent['end'])) {
+        if (Arr::exists($this->rawContent, 'end')) {
             $endAsIsoString = $this->rawContent['end'];
             $richDate->setEnd(new DateTime($endAsIsoString));
         }
 
         $this->content = $richDate;
+    }
+
+    // function for checking if ISO datetime string includes time or not
+    private function isIsoTimeString(string $isoTimeDateString): bool
+    {
+        return strpos($isoTimeDateString, 'T') !== false;
     }
 
     /**
@@ -91,14 +132,34 @@ class Date extends Property implements Modifiable
      */
     public function getStart(): DateTime
     {
+        if ($this->getContent() === null) {
+            throw new HandlingException('Invalid content: The content of the Date Property is null.');
+        }
+
         return $this->getContent()->getStart();
     }
 
     /**
-     * @return DateTime
+     * @return ?DateTime
      */
-    public function getEnd(): DateTime
+    public function getEnd(): ?DateTime
     {
+        if ($this->getContent() === null) {
+            return null;
+        }
+
         return $this->getContent()->getEnd();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTime(): bool
+    {
+        if ($this->getContent() === null) {
+            return false;
+        }
+
+        return $this->getContent()->hasTime();
     }
 }

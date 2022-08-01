@@ -22,7 +22,7 @@ class StartCursor
         $this->cursor = $cursor;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->cursor;
     }
