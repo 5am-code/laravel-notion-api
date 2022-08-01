@@ -132,6 +132,9 @@ class Date extends Property implements Modifiable
      */
     public function getStart(): DateTime
     {
+        if ($this->getContent() === null) {
+            throw new HandlingException('Invalid content: The content of the Date Property is null.');
+        }
         return $this->getContent()->getStart();
     }
 
@@ -140,6 +143,9 @@ class Date extends Property implements Modifiable
      */
     public function getEnd(): ?DateTime
     {
+        if ($this->getContent() === null) {
+            return null;
+        }
         return $this->getContent()->getEnd();
     }
 
@@ -148,6 +154,9 @@ class Date extends Property implements Modifiable
      */
     public function hasTime(): bool
     {
+        if ($this->getContent() === null) {
+            return false;
+        }
         return $this->getContent()->hasTime();
     }
 }
