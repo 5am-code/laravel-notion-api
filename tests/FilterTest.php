@@ -1,57 +1,43 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Tests;
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 
-/**
- * Class HandlingExceptionTest.
- */
-class FilterTest extends NotionApiTest
-{
-    /** @test */
-    public function it_creates_a_text_filter_with_the_given_data()
-    {
-        $filter = Filter::textFilter('Name', Operators::EQUALS, 'Ada Lovelace');
+it('creates a text filter with the given data', function () {
+    $filter = Filter::textFilter('Name', Operators::EQUALS, 'Ada Lovelace');
 
-        $this->assertInstanceOf(Filter::class, $filter);
-        $this->assertArrayHasKey('property', $filter->toQuery());
-        $this->assertEquals('Name', $filter->toQuery()['property']);
-        $this->assertArrayHasKey('text', $filter->toQuery());
-        $this->assertArrayHasKey('equals', $filter->toQuery()['text']);
-        $this->assertEquals('Ada Lovelace', $filter->toQuery()['text']['equals']);
-    }
+    $this->assertInstanceOf(Filter::class, $filter);
+    $this->assertArrayHasKey('property', $filter->toQuery());
+    $this->assertEquals('Name', $filter->toQuery()['property']);
+    $this->assertArrayHasKey('text', $filter->toQuery());
+    $this->assertArrayHasKey('equals', $filter->toQuery()['text']);
+    $this->assertEquals('Ada Lovelace', $filter->toQuery()['text']['equals']);#
+});
 
-    /** @test */
-    public function it_creates_a_number_filter_with_the_given_data()
-    {
-        $filter = Filter::numberFilter('Awesomeness Level', Operators::GREATER_THAN_OR_EQUAL_TO, 9000);
 
-        $this->assertInstanceOf(Filter::class, $filter);
-        $this->assertArrayHasKey('property', $filter->toQuery());
-        $this->assertEquals('Awesomeness Level', $filter->toQuery()['property']);
-        $this->assertArrayHasKey('number', $filter->toQuery());
-        $this->assertArrayHasKey('greater_than_or_equal_to', $filter->toQuery()['number']);
-        $this->assertEquals('9000', $filter->toQuery()['number']['greater_than_or_equal_to']);
-    }
+it('creates a number filter with the given data', function () {
+    $filter = Filter::numberFilter('Awesomeness Level', Operators::GREATER_THAN_OR_EQUAL_TO, 9000);
 
-    /** @test */
-    public function it_throws_an_exception_for_an_invalid_comparison_operator()
-    {
-        $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage('Invalid comparison operator');
-        $filter = Filter::numberFilter('Awesomeness Level', 'non_existing_operator', 9000);
-    }
+    $this->assertInstanceOf(Filter::class, $filter);
+    $this->assertArrayHasKey('property', $filter->toQuery());
+    $this->assertEquals('Awesomeness Level', $filter->toQuery()['property']);
+    $this->assertArrayHasKey('number', $filter->toQuery());
+    $this->assertArrayHasKey('greater_than_or_equal_to', $filter->toQuery()['number']);
+    $this->assertEquals('9000', $filter->toQuery()['number']['greater_than_or_equal_to']);
+});
 
-    /** @test */
-    public function it_throws_an_exception_for_an_invalid_filter_definition()
-    {
-        $filter = new Filter('Test');
+it('throws an HandlingException for an invalid comparison operator', function () {
+    $this->expectException(HandlingException::class);
+    $this->expectExceptionMessage('Invalid comparison operator');
+    $filter = Filter::numberFilter('Awesomeness Level', 'non_existing_operator', 9000);
+});
 
-        $this->expectException(HandlingException::class);
-        $this->expectExceptionMessage('Invalid filter definition.');
-        $filter->toArray();
-    }
-}
+it('throws an exception for an invalid filter definition', function () {
+    $filter = new Filter('Test');
+
+    $this->expectException(HandlingException::class);
+    $this->expectExceptionMessage('Invalid filter definition.');
+    $filter->toArray();
+});
