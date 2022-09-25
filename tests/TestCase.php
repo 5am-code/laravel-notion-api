@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
