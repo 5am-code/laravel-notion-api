@@ -1,6 +1,5 @@
 <?php
 
-
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
@@ -13,9 +12,8 @@ it('creates a text filter with the given data', function () {
     $this->assertEquals('Name', $filter->toQuery()['property']);
     $this->assertArrayHasKey('text', $filter->toQuery());
     $this->assertArrayHasKey('equals', $filter->toQuery()['text']);
-    $this->assertEquals('Ada Lovelace', $filter->toQuery()['text']['equals']);#
+    $this->assertEquals('Ada Lovelace', $filter->toQuery()['text']['equals']); //
 });
-
 
 it('creates a number filter with the given data', function () {
     $filter = Filter::numberFilter('Awesomeness Level', Operators::GREATER_THAN_OR_EQUAL_TO, 9000);
