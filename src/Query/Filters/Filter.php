@@ -150,7 +150,7 @@ class Filter extends QueryHelper
     {
         $queryFilter = new Collection();
 
-        $filter->each(function (Filter $filter) use ($queryFilter) {
+        $filter->each(function ($filter) use ($queryFilter) {
             $queryFilter->add($filter->toQuery());
         });
 
