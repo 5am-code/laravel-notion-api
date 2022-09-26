@@ -8,15 +8,14 @@ use Illuminate\Support\Collection;
 use Throwable;
 
 /**
- * Class FilterBag
+ * Class FilterBag.
  */
 class FilterBag extends QueryHelper
 {
-
     /**
      * @var string|mixed
      */
-    protected string $operator = "and"; // TODO shortcut instances + type checking + pretty operators
+    protected string $operator = 'and'; // TODO shortcut instances + type checking + pretty operators
 
     /**
      * @var Collection
@@ -28,7 +27,6 @@ class FilterBag extends QueryHelper
      */
     public ?FilterBag $parentFilterBag = null;
 
-
     /**
      * Creates a FilterBag instance with an "or" operator.
      *
@@ -36,7 +34,7 @@ class FilterBag extends QueryHelper
      */
     public static function or(): FilterBag
     {
-        return new FilterBag("or");
+        return new FilterBag('or');
     }
 
     /**
@@ -46,13 +44,13 @@ class FilterBag extends QueryHelper
      */
     public static function and(): FilterBag
     {
-        return new FilterBag("and");
+        return new FilterBag('and');
     }
 
     /**
-     * @param string $operator
+     * @param  string  $operator
      */
-    public function __construct(string $operator = "and")
+    public function __construct(string $operator = 'and')
     {
         $this->isValidOperator($operator);
 
@@ -60,12 +58,12 @@ class FilterBag extends QueryHelper
         $this->operator = $operator;
     }
 
-
     /**
-     * @param Filter $filter
+     * @param  Filter  $filter
      * @return $this
      */
-    public function addFilter(Filter $filter): self {
+    public function addFilter(Filter $filter): self
+    {
         $this->content->add($filter);
 
         return $this;
@@ -74,13 +72,14 @@ class FilterBag extends QueryHelper
     /**
      * @throws HandlingException|Throwable
      */
-    public function addFilterBag(FilterBag $filterBag): self {
+    public function addFilterBag(FilterBag $filterBag): self
+    {
         // A filter bag can only be added to another filter bag if it does not have a parent yet and does not
         // contain any other filter bags.
-        throw_if($this->parentFilterBag !== null, new HandlingException("The maximum nesting level of compound filters must not exceed 2."));
+        throw_if($this->parentFilterBag !== null, new HandlingException('The maximum nesting level of compound filters must not exceed 2.'));
 
         $filterBag->content->each(function ($bag) {
-            throw_if($bag instanceof FilterBag, new HandlingException("The maximum nesting level of compound filters must not exceed 2."));
+            throw_if($bag instanceof FilterBag, new HandlingException('The maximum nesting level of compound filters must not exceed 2.'));
         });
 
         $filterBag->parentFilterBag = $this;
@@ -92,25 +91,24 @@ class FilterBag extends QueryHelper
     /**
      * @return array
      */
-    public function toQuery() {
-
-        $filters = $this->content->map(function($set) {
+    public function toQuery()
+    {
+        $filters = $this->content->map(function ($set) {
             return $set->toQuery();
         })->toArray();
 
         return [
-            $this->operator => $filters
+            $this->operator => $filters,
         ];
     }
 
-    private function isValidOperator($operator) {
-        $validOperators = ["and", "or"];
+    private function isValidOperator($operator)
+    {
+        $validOperators = ['and', 'or'];
 
         throw_if(
-            !in_array($operator, $validOperators),
-            new HandlingException("Invalid operator for     FilterBag: " . $operator)
+            ! in_array($operator, $validOperators),
+            new HandlingException('Invalid operator for     FilterBag: '.$operator)
         );
     }
-
-
 }
