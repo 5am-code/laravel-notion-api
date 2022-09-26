@@ -2,14 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase as Orchestra;
 
-/**
- *
- */
 class NotionApiTest extends Orchestra
 {
     /**
@@ -46,5 +42,4 @@ class NotionApiTest extends Orchestra
 
         return false;
     }
-
 }
