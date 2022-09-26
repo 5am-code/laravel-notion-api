@@ -10,7 +10,6 @@ use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
-
 /**
  * Class EndpointDatabaseTest.
  *
@@ -28,8 +27,9 @@ use Illuminate\Support\Facades\Http;
  */
 
 it('returns a database endpoint instance', function () {
+
 // TODO make tests work again, update for new Filter behaviour
-    $endpoint = \FiveamCode\LaravelNotionApi\Notion::database('897e5a76ae524b489fdfe71f5945d1af');
+    $endpoint = \Notion::database('897e5a76ae524b489fdfe71f5945d1af');
 
     $this->assertInstanceOf(Database::class, $endpoint);
 });
