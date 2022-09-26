@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Http;
  * @see https://www.notion.so/8284f3ff77e24d4a939d19459e4d6bdc?v=bc3a9ce8cdb84d3faefc9ae490136ac2
  * @see https://developers.notion.com/reference/post-database-query
  */
-
 it('returns a database endpoint instance', function () {
 
 // TODO make tests work again, update for new Filter behaviour
@@ -121,7 +120,6 @@ it('queries a database with filter and sorting and has empty result', function (
     $this->assertCount(0, $resultCollection);
 });
 
-
 it('throws a notion exception for a bad request', function () {
 
     // failing /v1/databases
@@ -139,9 +137,8 @@ it('throws a notion exception for a bad request', function () {
     Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')->query();
 });
 
-
 it('queries a database with and without offset and processes result', function () {
-// success /v1/databases/DATABASE_DOES_EXIST/query
+    // success /v1/databases/DATABASE_DOES_EXIST/query
     Http::fake([
         'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*' => Http::sequence()
             ->push(
@@ -218,4 +215,3 @@ it('queries a database with a rollup property with empty selects', function () {
     $page = $resultCollection->first();
     $this->assertEquals(0, $page->getProperty('Rollup')->getContent()->count());
 });
-

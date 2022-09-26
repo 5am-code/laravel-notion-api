@@ -2,9 +2,9 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
+use FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use FiveamCode\LaravelNotionApi\LaravelNotionApiServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -23,6 +23,7 @@ class TestCase extends Orchestra
             LaravelNotionApiServiceProvider::class,
         ];
     }
+
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
