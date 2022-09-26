@@ -28,13 +28,13 @@ use Illuminate\Support\Facades\Http;
 
 it('returns a database endpoint instance', function () {
 
-// TODO make tests work again, update for new Filter behaviour
-    $endpoint = \Notion::database('897e5a76ae524b489fdfe71f5945d1af');
+// TODO update for new Filter behaviour
+    $endpoint = Notion::database('897e5a76ae524b489fdfe71f5945d1af');
 
     $this->assertInstanceOf(Database::class, $endpoint);
 });
 
-it('queries a database with filter and sorting and processes result', function () {
+it('queries a database with filter and sorting and processes result', function ($limit) {
     // success /v1/databases/DATABASE_DOES_EXIST/query
     Http::fake([
         'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*' => Http::response(

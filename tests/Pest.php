@@ -1,5 +1,5 @@
 <?php
 
-use FiveamCode\LaravelNotionApi\Tests\TestCase;
+use FiveamCode\LaravelNotionApi\Tests\NotionApiTest;
 
-uses(TestCase::class)->in(__DIR__);
+uses(NotionApiTest::class)->in(__DIR__);
