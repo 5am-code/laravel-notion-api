@@ -102,17 +102,19 @@ class Database extends Endpoint
      *
      * @throws HandlingException
      *
-     * @todo As soon as this package drops PHP 7.4 support, we can use union types here (Sorting and Collection)
      */
-    public function sortBy($sorts): Database
+    public function sortBy(Sorting|Collection $sorts): Database
     {
-        if($sorts instanceof Sorting) {
-            $this->sorts->push($sorts);
-        } elseif($sorts instanceof Collection) {
-            $this->sorts = $sorts;
-        }
-        else {
-            throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of Sortings.");
+        $sortInstance = get_class($sorts);
+        switch($sortInstance) {
+            case Sorting::class:
+                $this->sorts->push($sorts);
+                break;
+            case Collection::class:
+                $this->sorts = $sorts;
+                break;
+            default:
+                throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of Sortings.");
         }
 
         return $this;
