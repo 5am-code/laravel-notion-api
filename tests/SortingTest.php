@@ -5,7 +5,7 @@ use FiveamCode\LaravelNotionApi\Query\Sorting;
 use Illuminate\Support\Collection;
 
 it('can sort by a single property', function () {
-    $expectedSortQuery = '[{"property":"Birth year","direction":"ascending"}';
+    $expectedSortQuery = '[{"property":"Birth year","direction":"ascending"}]';
 
     $sortBy = Sorting::propertySort("Birth year", "ascending");
     $this->assertEquals($expectedSortQuery, json_encode(Sorting::sortQuery($sortBy)));});
@@ -22,7 +22,7 @@ it('can sort by multiple properties', function () {
 });
 
 it('refuses other classes than sorting or collection in the sortBy() method', function () {
-    $this->expectException(HandlingException::class);
+    $this->expectException(TypeError::class);
 
     Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
         ->sortBy(new stdClass())
