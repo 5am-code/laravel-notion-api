@@ -97,16 +97,15 @@ class Database extends Endpoint
     }
 
     /**
-     * @param Collection|Sorting $sorts
+     * @param  Collection|Sorting  $sorts
      * @return Database $this
      *
      * @throws HandlingException
-     *
      */
     public function sortBy(Sorting|Collection $sorts): Database
     {
         $sortInstance = get_class($sorts);
-        switch($sortInstance) {
+        switch ($sortInstance) {
             case Sorting::class:
                 $this->sorts->push($sorts);
                 break;
