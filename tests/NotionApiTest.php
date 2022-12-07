@@ -6,6 +6,7 @@ use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase as Orchestra;
+
 /**
  * Class EndpointPageTest.
  *

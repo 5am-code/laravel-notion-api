@@ -100,7 +100,7 @@ class Sorting extends QueryHelper
     {
         $querySortings = new Collection();
 
-        if($sortings instanceof Collection) {
+        if ($sortings instanceof Collection) {
             $sortings->each(function (Sorting $sorting) use ($querySortings) {
                 $querySortings->push($sorting->toArray());
             });
