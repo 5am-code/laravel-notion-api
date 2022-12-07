@@ -240,7 +240,7 @@ class Notion
     {
         switch ($this->version) {
             case 'v1':
-                return '2021-05-13';
+                return '2022-06-28';
             default:
                 throw new HandlingException('Invalid version.');
         }

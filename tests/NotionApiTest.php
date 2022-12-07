@@ -5,8 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Support\Collection;
-use Orchestra\Testbench\TestCase;
-
+use Orchestra\Testbench\TestCase as Orchestra;
 /**
  * Class EndpointPageTest.
  *
@@ -14,7 +13,7 @@ use Orchestra\Testbench\TestCase;
  *
  * @see https://developers.notion.com/reference/get-page
  */
-class NotionApiTest extends TestCase
+class NotionApiTest extends Orchestra
 {
     /**
      * @param  \Illuminate\Foundation\Application  $app
@@ -49,11 +48,5 @@ class NotionApiTest extends TestCase
         }
 
         return false;
-    }
-
-    /** @test */
-    public function it_asserts_true()
-    {
-        $this->assertTrue(true);
     }
 }

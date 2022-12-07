@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
@@ -96,12 +97,23 @@ class Database extends Endpoint
     }
 
     /**
-     * @param  Collection  $sorts
-     * @return $this
+     * @param Collection|Sorting $sorts
+     * @return Database $this
+     *
+     * @throws HandlingException
+     *
+     * @todo As soon as this package drops PHP 7.4 support, we can use union types here (Sorting and Collection)
      */
-    public function sortBy(Collection $sorts): Database
+    public function sortBy($sorts): Database
     {
-        $this->sorts = $sorts;
+        if($sorts instanceof Sorting) {
+            $this->sorts->push($sorts);
+        } elseif($sorts instanceof Collection) {
+            $this->sorts = $sorts;
+        }
+        else {
+            throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of Sortings.");
+        }
 
         return $this;
     }
