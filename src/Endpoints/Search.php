@@ -159,5 +159,4 @@ class Search extends Endpoint
 
         return $this;
     }
-
 }
