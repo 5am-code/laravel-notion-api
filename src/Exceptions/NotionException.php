@@ -10,13 +10,23 @@ use Illuminate\Http\Client\Response;
 class NotionException extends LaravelNotionAPIException
 {
     /**
-     * @param  string  $message
-     * @param  array  $payload
+     * @param string $message
+     * @param array $payload
      * @return NotionException
      */
     public static function instance(string $message, array $payload = []): NotionException
     {
-        $e = new NotionException($message);
+        $code = 0;
+
+        $responseDataExists = array_key_exists('responseData', $payload);
+
+        if ($responseDataExists) {
+            $responseData = $payload['responseData'];
+
+            $code = array_key_exists('status', $responseData) ? $responseData['status'] : 0;
+        }
+
+        $e = new NotionException($message, $code);
         $e->payload = $payload;
 
         return $e;
@@ -26,7 +36,7 @@ class NotionException extends LaravelNotionAPIException
      * Handy method to create a NotionException
      * from a failed request.
      *
-     * @param  Response  $response
+     * @param Response $response
      * @return NotionException
      */
     public static function fromResponse(Response $response): NotionException
