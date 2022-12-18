@@ -155,6 +155,7 @@ class EndpointDatabaseTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Bad Request');
+        $this->expectExceptionCode(400);
 
         Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')->query();
     }
