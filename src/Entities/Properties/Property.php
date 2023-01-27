@@ -177,6 +177,7 @@ class Property extends Entity
             case 'files':
             case 'formula':
             case 'rollup':
+            case 'relation':
                 $class = str_replace('_', '', ucwords($type, '_'));
 
                 return 'FiveamCode\\LaravelNotionApi\\Entities\\Properties\\'.$class;
