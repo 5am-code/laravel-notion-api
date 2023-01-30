@@ -52,18 +52,15 @@ it('queries a database with filter and sorting and processes result', function (
         Sorting::propertySort('Birth year', 'descending')
     );
 
-    $filters
-        ->add(
-            Filter::rawFilter(
-                'Known for',
-                [
-                    'multi_select' => ['contains' => 'UNIVAC'],
-                ]
-            )
-        );
+    $filter = Filter::rawFilter(
+        'Known for',
+        [
+            'multi_select' => ['contains' => 'UNIVAC'],
+        ]
+    );
 
     $result = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
-        ->filterBy($filters)
+        ->filterBy($filter)
         ->sortBy($sortings)
         ->limit($limit)
         ->query();
@@ -98,18 +95,15 @@ it('queries a database with filter and sorting and has empty result', function (
     // Let's search for something that doesn't exists
     $filters = new Collection();
 
-    $filters
-        ->add(
-            Filter::rawFilter(
-                'Known for',
-                [
-                    'multi_select' => ['contains' => "something that doesn't exists"],
-                ]
-            )
-        );
+    $filter = Filter::rawFilter(
+        'Known for',
+        [
+            'multi_select' => ['contains' => "something that doesn't exists"],
+        ]
+    );
 
     $result = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc')
-        ->filterBy($filters)
+        ->filterBy($filter)
         ->query();
 
     $this->assertInstanceOf(PageCollection::class, $result);

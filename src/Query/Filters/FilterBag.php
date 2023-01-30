@@ -108,7 +108,7 @@ class FilterBag extends QueryHelper
 
         throw_if(
             ! in_array($operator, $validOperators),
-            new HandlingException('Invalid operator for     FilterBag: '.$operator)
+            new HandlingException('Invalid operator for FilterBag: '.$operator)
         );
     }
 }
