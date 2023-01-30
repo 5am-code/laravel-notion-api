@@ -30,6 +30,9 @@ class Operators
     const NEXT_MONTH = 'next_month';
     const NEXT_YEAR = 'next_year';
 
+    CONST AND = 'and';
+    CONST OR = 'or';
+
     // TODO: Formula filter condition
 
     public static function getValidComparisonOperators($filterType)
