@@ -30,8 +30,8 @@ class Operators
     const NEXT_MONTH = 'next_month';
     const NEXT_YEAR = 'next_year';
 
-    CONST AND = 'and';
-    CONST OR = 'or';
+    const AND = 'and';
+    const OR = 'or';
 
     // TODO: Formula filter condition
 

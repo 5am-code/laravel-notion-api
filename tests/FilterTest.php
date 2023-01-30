@@ -2,7 +2,6 @@
 
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
-use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 
 it('creates a text filter with the given data', function () {
