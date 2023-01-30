@@ -55,22 +55,21 @@ it('only allows the nesting of FilterBags up to two levels', function () {
     $filterBag->addFilterBag($nameFilterBag);
 });
 
-
 it('creates a filter bag with the AND operator and two conditions', function () {
     $filterBag = new FilterBag(Operators::AND);
 
-    # Filter for all entries that are
-    # (Known for == UNIVAC && Known for == ENIAC)
+    // Filter for all entries that are
+    // (Known for == UNIVAC && Known for == ENIAC)
 
     $filterBag->addFilter(
-        Filter::rawFilter("Known for", [
-            "multi_select" => ["contains" => "UNIVAC"],
+        Filter::rawFilter('Known for', [
+            'multi_select' => ['contains' => 'UNIVAC'],
         ])
     );
 
     $filterBag->addFilter(
-        Filter::rawFilter("Known for", [
-            "multi_select" => ["contains" => "ENIAC"],
+        Filter::rawFilter('Known for', [
+            'multi_select' => ['contains' => 'ENIAC'],
         ])
     );
 
@@ -98,15 +97,13 @@ it('creates a filter bag with the AND operator and two conditions', function () 
 it('creates a filter bag with the OR operator and three conditions', function () {
     $filterBag = new FilterBag(Operators::OR);
 
-
-    # Filter for all entries that have
-    # (Name == Grace || Name == Jean || Name == Ada)
+    // Filter for all entries that have
+    // (Name == Grace || Name == Jean || Name == Ada)
 
     $filterBag
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Grace"))
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Jean"))
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Ada"));
-
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Grace'))
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Jean'))
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Ada'));
 
     $filterBagQuery = $filterBag->toQuery();
 
@@ -121,7 +118,6 @@ it('creates a filter bag with the OR operator and three conditions', function ()
     $this->assertArrayHasKey('contains', $filterQuery['text']);
     $this->assertEquals('Grace', $filterQuery['text']['contains']);
 
-
     // check value of second filter compound
     $filterQuery = $filterBagQuery[Operators::OR][1];
     $this->assertEquals('Jean', $filterQuery['text']['contains']);
@@ -129,26 +125,25 @@ it('creates a filter bag with the OR operator and three conditions', function ()
     // check value of third filter compound
     $filterQuery = $filterBagQuery[Operators::OR][2];
     $this->assertEquals('Ada', $filterQuery['text']['contains']);
-
 });
 
-it('creates a filter bag with with the AND operator and a nested OR condition', function() {
+it('creates a filter bag with with the AND operator and a nested OR condition', function () {
 
-    # Filter for all entries that are
-    # (KnownFor == Univac && (Name == Grace || Name == Jean))
+    // Filter for all entries that are
+    // (KnownFor == Univac && (Name == Grace || Name == Jean))
 
     $filterBag = new FilterBag(Operators::AND);
 
     $filterBag->addFilter(
-        Filter::rawFilter("Known for", [
-            "multi_select" => ["contains" => "UNIVAC"],
+        Filter::rawFilter('Known for', [
+            'multi_select' => ['contains' => 'UNIVAC'],
         ])
     );
 
     $nameFilterBag = new FilterBag(Operators::OR);
     $nameFilterBag
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Grace"))
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Jean"));
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Grace'))
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Jean'));
 
     $filterBag->addFilterBag($nameFilterBag);
 
@@ -190,23 +185,22 @@ it('creates a filter bag with with the AND operator and a nested OR condition', 
     $this->assertEquals('Jean', $filterQuery['text']['contains']);
 });
 
-it('throws an exception for nesting too many filter bags', function() {
-
+it('throws an exception for nesting too many filter bags', function () {
     $this->expectException(HandlingException::class);
     $this->expectExceptionMessage('The maximum nesting level of compound filters must not exceed 2.');
 
     $filterBag = new FilterBag(Operators::AND);
 
     $filterBag->addFilter(
-        Filter::rawFilter("Known for", [
-            "multi_select" => ["contains" => "UNIVAC"],
+        Filter::rawFilter('Known for', [
+            'multi_select' => ['contains' => 'UNIVAC'],
         ])
     );
 
     $nameFilterBag = new FilterBag(Operators::OR);
     $nameFilterBag
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Grace"))
-        ->addFilter(Filter::textFilter("Name", Operators::CONTAINS, "Jean"));
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Grace'))
+        ->addFilter(Filter::textFilter('Name', Operators::CONTAINS, 'Jean'));
 
     $anotherBag = new FilterBag();
     $nameFilterBag->addFilterBag($anotherBag);
