@@ -227,7 +227,7 @@ class Notion
     }
 
     /**
-     * Due to the inconsistency of the Notion API requiring a endpoint url
+     * Due to the inconsistency of the Notion API requiring an endpoint url
      * with v* as well as a dated version in the request header, this method
      * maps the given version (e.g. v1) to the version date Notion requires
      * in the header (e.g. "2021-05-13").

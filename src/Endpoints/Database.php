@@ -134,12 +134,24 @@ class Database extends Endpoint
     }
 
     /**
-     * @param  Collection  $sorts
-     * @return $this
+     * @param  Collection|Sorting  $sorts
+     * @return Database $this
+     *
+     * @throws HandlingException
      */
-    public function sortBy(Collection $sorts): Database
+    public function sortBy(Sorting|Collection $sorts): Database
     {
-        $this->sorts = $sorts;
+        $sortInstance = get_class($sorts);
+        switch ($sortInstance) {
+            case Sorting::class:
+                $this->sorts->push($sorts);
+                break;
+            case Collection::class:
+                $this->sorts = $sorts;
+                break;
+            default:
+                throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of Sortings.");
+        }
 
         return $this;
     }

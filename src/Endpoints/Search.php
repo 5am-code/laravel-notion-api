@@ -159,15 +159,4 @@ class Search extends Endpoint
 
         return $this;
     }
-
-    /**
-     * @param  Sorting  $sort
-     * @return $this
-     */
-    public function sortBy(Sorting $sort): Search
-    {
-        $this->sort = $sort;
-
-        return $this;
-    }
 }
