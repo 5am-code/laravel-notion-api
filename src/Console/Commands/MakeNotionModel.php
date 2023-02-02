@@ -30,7 +30,6 @@ class MakeNotionModel extends Command
      */
     public function handle()
     {
-
         $databaseId = $this->argument('database_id');
         $databaseName = $this->argument('database_name');
 
@@ -39,10 +38,10 @@ class MakeNotionModel extends Command
         $this->info("Fetching structure of {$databaseId} database from Notion...");
 
         $databaseStruct = $notion->databases()->find($databaseId);
-        $phpDocsProperties = "";
-        $visibleArray = "";
-        $propertyTypeMape = "";
-        $propertyTitleMap = "";
+        $phpDocsProperties = '';
+        $visibleArray = '';
+        $propertyTypeMape = '';
+        $propertyTitleMap = '';
 
         if ($databaseName === null) {
             $databaseName = Str::singular(Str::studly(Str::slug($databaseStruct->getTitle(), '_')));
@@ -53,16 +52,14 @@ class MakeNotionModel extends Command
             $propType = $reflection->getReturnType() ?? 'mixed';
             $notionPropType = Str::studly(Str::slug($propertyInfo->getType(), '_'));
 
-            if ($reflection->getReturnType() !== null && !$propType->isBuiltin()) {
-                $propType = '\\' . $propType->getName();
+            if ($reflection->getReturnType() !== null && ! $propType->isBuiltin()) {
+                $propType = '\\'.$propType->getName();
             }
 
             $propName = Str::slug($propertyInfo->getTitle(), '_');
             $phpDocsProperties .= " * @property {$propType} \${$propName} $notionPropType \n";
             $visibleArray .= "        '$propName',\n";
         }
-
-
 
         $contents = "<?php
 namespace App\NotionModels;
@@ -93,6 +90,7 @@ $visibleArray    ];
 
         File::put("app/NotionModels/$databaseName.php", $contents);
         $this->info("Model for database {$this->argument('database_id')} has been created at 'app/NotionModels/$databaseName.php' .");
+
         return 0;
     }
 }

@@ -5,13 +5,11 @@ namespace FiveamCode\LaravelNotionApi\Models;
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Collection;
-use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -23,7 +21,6 @@ class NotionQueryBuilder
     private static ?StartCursor $nextCursor = null;
 
     private $modelClass = null;
-
 
     public ?Database $endpoint = null;
     public ?Collection $filters = null;
@@ -41,7 +38,8 @@ class NotionQueryBuilder
     public function pluck($value, $key = null): Collection
     {
         $pageCollection = $this->internalQuery();
-        return $pageCollection->pluck('props.' . $value, $key !== null ? 'props.' . $key : null);
+
+        return $pageCollection->pluck('props.'.$value, $key !== null ? 'props.'.$key : null);
     }
 
     private function queryToNotion(int $limit = 100): PageCollection
@@ -110,7 +108,6 @@ class NotionQueryBuilder
         return $this->internalQuery();
     }
 
-
     /**
      * @return string
      */
@@ -132,22 +129,23 @@ class NotionQueryBuilder
     public function propsToText()
     {
         $this->localConvertPropsToText = true;
+
         return $this;
     }
-
 
     public function offset($offset)
     {
         $this->endpoint->offset($offset);
+
         return $this;
     }
 
     public function limit($offset)
     {
         $this->endpoint->limit($offset);
+
         return $this;
     }
-
 
     public function orderBy($property, $direction = 'asc')
     {
@@ -218,7 +216,7 @@ class NotionQueryBuilder
             $this->filters->add(
                 Filter::textFilter($property, $operator, $value)
             );
-        } else if (is_numeric($value)) {
+        } elseif (is_numeric($value)) {
             $this->filters->add(
                 Filter::numberFilter($property, $operator, $value)
             );
@@ -231,8 +229,6 @@ class NotionQueryBuilder
         return $this;
     }
 
-
-
     public function paginate($pageSize = 100)
     {
         $this->endpoint->limit($pageSize);
@@ -243,7 +239,6 @@ class NotionQueryBuilder
         }
 
         $result = $this->internalQuery();
-
 
         return [
             'per_page' => $pageSize,
@@ -262,9 +257,9 @@ class NotionQueryBuilder
     {
         $postCacheKey = '';
         if ($this->nextCursor !== null) {
-            $postCacheKey = '-' . $this->nextCursor->__toString();
+            $postCacheKey = '-'.$this->nextCursor->__toString();
         }
 
-        return  $this->modelClass::$preCacheKey . $this->modelClass::$databaseId . $postCacheKey;
+        return  $this->modelClass::$preCacheKey.$this->modelClass::$databaseId.$postCacheKey;
     }
 }
