@@ -2,18 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Tests;
 
-use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase as Orchestra;
 
-/**
- * Class EndpointPageTest.
- *
- * The fake API responses are based on our test environment (since the current Notion examples do not match with the actual calls).
- *
- * @see https://developers.notion.com/reference/get-page
- */
 class NotionApiTest extends Orchestra
 {
     /**
