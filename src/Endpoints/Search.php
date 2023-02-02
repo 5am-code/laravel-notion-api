@@ -61,7 +61,7 @@ class Search extends Endpoint
         }
 
         if ($this->startCursor !== null) {
-            $postData['start_cursor'] = $this->startCursor;
+            $postData['start_cursor'] = $this->startCursor->__toString();
         }
 
         if ($this->pageSize !== null) {
@@ -156,17 +156,6 @@ class Search extends Endpoint
     public function filterBy(string $filter): Search
     {
         $this->filter = $filter;
-
-        return $this;
-    }
-
-    /**
-     * @param  Sorting  $sort
-     * @return $this
-     */
-    public function sortBy(Sorting $sort): Search
-    {
-        $this->sort = $sort;
 
         return $this;
     }
