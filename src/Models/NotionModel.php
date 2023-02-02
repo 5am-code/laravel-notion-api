@@ -2,19 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Models;
 
-use FiveamCode\LaravelNotionApi\Endpoints\Database;
-use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use Illuminate\Support\Collection;
 use FiveamCode\LaravelNotionApi\Notion;
-use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
-use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
-use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
 
 class NotionModel
 {
@@ -44,14 +37,13 @@ class NotionModel
     public static $cacheDurationInSeconds = 0;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public static $convertPropsToText = false;
 
     public $props;
 
     public Page $page;
-
 
     public function __construct($databaseId = null)
     {
@@ -60,10 +52,10 @@ class NotionModel
         }
     }
 
-    public static function createInstance(){
+    public static function createInstance()
+    {
         return new static();
     }
-
 
     /**
      * @return string
@@ -77,7 +69,7 @@ class NotionModel
     }
 
     /**
-     * @return 
+     * @return
      */
     public static function notionInstance(): Notion
     {
@@ -104,8 +96,6 @@ class NotionModel
     {
         return self::query()->get();
     }
-
-
 
     /**
      * @return ?static
@@ -142,5 +132,4 @@ class NotionModel
     {
         return self::$nextCursor;
     }
-
 }
