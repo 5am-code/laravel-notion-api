@@ -61,7 +61,7 @@ class Search extends Endpoint
         }
 
         if ($this->startCursor !== null) {
-            $postData['start_cursor'] = $this->startCursor;
+            $postData['start_cursor'] = $this->startCursor->__toString();
         }
 
         if ($this->pageSize !== null) {
