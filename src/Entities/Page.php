@@ -18,7 +18,6 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 /**
@@ -469,7 +468,7 @@ class Page extends Entity
      */
     public function getProperty(string $propertyKey): ?Property
     {
-        if (!isset($this->propertyMap[$propertyKey])) {
+        if (! isset($this->propertyMap[$propertyKey])) {
             return null;
         }
 
