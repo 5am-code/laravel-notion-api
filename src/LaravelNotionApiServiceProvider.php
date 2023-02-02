@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
+use FiveamCode\LaravelNotionApi\Console\Commands\MakeNotionModel;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -16,8 +17,12 @@ class LaravelNotionApiServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-notion-api.php'),
+                __DIR__ . '/../config/config.php' => config_path('laravel-notion-api.php'),
             ], 'config');
+
+            $this->commands([
+                MakeNotionModel::class,
+            ]);
         }
     }
 
@@ -27,7 +32,7 @@ class LaravelNotionApiServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-notion-api');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'laravel-notion-api');
 
         $this->app->singleton(Notion::class, function () {
             return new Notion(config('laravel-notion-api.notion-api-token'), config('laravel-notion-api.version'));
