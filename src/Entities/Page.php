@@ -18,6 +18,7 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 /**
@@ -54,6 +55,16 @@ class Page extends Entity
      * @var string
      */
     private string $coverType = '';
+
+    /**
+     * @var string
+     */
+    private string $parentId = '';
+
+    /**
+     * @var string
+     */
+    private string $parentType = '';
 
     /**
      * @var string
@@ -122,6 +133,7 @@ class Page extends Entity
     private function fillFromRaw(): void
     {
         $this->fillId();
+        $this->fillParent();
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
@@ -202,6 +214,20 @@ class Page extends Entity
     {
         if (Arr::exists($this->responseData, 'url')) {
             $this->url = $this->responseData['url'];
+        }
+    }
+
+    private function fillParent(): void
+    {
+        if (Arr::exists($this->responseData, 'parent')) {
+            $this->parentType = $this->responseData['parent']['type'];
+            if (Arr::exists($this->responseData['parent'], 'database_id')) {
+                $this->parentId = $this->responseData['parent']['database_id'];
+            } elseif (Arr::exists($this->responseData['parent'], 'page_id')) {
+                $this->parentId = $this->responseData['parent']['page_id'];
+            } elseif (Arr::exists($this->responseData['parent'], 'workspace')) {
+                $this->parentId = $this->responseData['parent']['workspace'];
+            }
         }
     }
 
@@ -443,7 +469,7 @@ class Page extends Entity
      */
     public function getProperty(string $propertyKey): ?Property
     {
-        if (! isset($this->propertyMap[$propertyKey])) {
+        if (!isset($this->propertyMap[$propertyKey])) {
             return null;
         }
 
@@ -456,6 +482,22 @@ class Page extends Entity
     public function getObjectType(): string
     {
         return $this->objectType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentId(): string
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentType(): string
+    {
+        return $this->parentType;
     }
 
     /**
