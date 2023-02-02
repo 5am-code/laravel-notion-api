@@ -45,6 +45,7 @@ class EndpointBlocksTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Bad Request');
+        $this->expectExceptionCode(400);
 
         Notion::block('b55c9c91-384d-452b-81db-d1ef79372b76')->children();
     }
@@ -216,6 +217,7 @@ class EndpointBlocksTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Not found');
+        $this->expectExceptionCode(404);
 
         Notion::block('b55c9c91-384d-452b-81db-d1ef79372b11')->children();
     }

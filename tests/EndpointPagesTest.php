@@ -46,6 +46,7 @@ class EndpointPagesTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Bad Request');
+        $this->expectExceptionCode(400);
 
         Notion::pages()->find('afd5f6fb-1cbd-41d1-a108-a22ae0d9bac8');
     }
@@ -97,6 +98,7 @@ class EndpointPagesTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Not found');
+        $this->expectExceptionCode(404);
 
         Notion::pages()->find('b55c9c91-384d-452b-81db-d1ef79372b79');
     }

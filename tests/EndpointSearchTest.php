@@ -32,6 +32,7 @@ class EndpointSearchTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Bad Request');
+        $this->expectExceptionCode(400);
 
         Notion::search()->query();
     }
