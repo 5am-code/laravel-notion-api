@@ -99,6 +99,7 @@ class PagePropertyTest extends NotionApiTest
         $this->assertSame('text', $text->getType());
         $this->assertSame('|Zt@', $text->getId());
         $this->assertSame('this is a nice Text :-)', $text->getPlainText());
+        $this->assertSame('this is a nice Text :-)', $text->asText());
         $this->assertInstanceOf(RichText::class, $text->getRichText());
         $this->assertInstanceOf(RichText::class, $text->getContent());
         $this->assertSame('this is a nice Text :-)', $text->getRichText()->getPlainText());
@@ -149,6 +150,7 @@ class PagePropertyTest extends NotionApiTest
         $this->assertSame('title', $title->getType());
         $this->assertSame('title', $title->getId());
         $this->assertSame('Notion Is Awesome', $title->getPlainText());
+        $this->assertSame('Notion Is Awesome', $title->asText());
         $this->assertInstanceOf(RichText::class, $title->getContent());
         $this->assertSame('Notion Is Awesome', $title->getContent()->getPlainText());
     }

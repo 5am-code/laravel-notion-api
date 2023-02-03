@@ -93,16 +93,20 @@ class Sorting extends QueryHelper
     }
 
     /**
-     * @param  Collection  $sortings
+     * @param  Sorting|Collection  $sortings
      * @return array
      */
-    public static function sortQuery(Collection $sortings): array
+    public static function sortQuery(Sorting|Collection $sortings): array
     {
         $querySortings = new Collection();
 
-        $sortings->each(function (Sorting $sorting) use ($querySortings) {
-            $querySortings->add($sorting->toArray());
-        });
+        if ($sortings instanceof Collection) {
+            $sortings->each(function (Sorting $sorting) use ($querySortings) {
+                $querySortings->push($sorting->toArray());
+            });
+        } else {
+            $querySortings->push($sortings->toArray());
+        }
 
         return $querySortings->toArray();
     }
