@@ -6,6 +6,7 @@ use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Arr;
@@ -23,7 +24,7 @@ class NotionQueryBuilder
     private $modelClass = null;
 
     public ?Database $endpoint = null;
-    public ?Collection $filters = null;
+    public ?FilterBag $filters = null;
     public ?Collection $sortings = null;
 
     private $localConvertPropsToText = false;
@@ -179,7 +180,7 @@ class NotionQueryBuilder
     public function where($property, $operator, $value = null)
     {
         if ($this->filters == null) {
-            $this->filters = collect();
+            $this->filters = new FilterBag();
         }
 
         if ($value == null) {
@@ -213,15 +214,15 @@ class NotionQueryBuilder
         }
 
         if (is_string($value)) {
-            $this->filters->add(
+            $this->filters->addFilter(
                 Filter::textFilter($property, $operator, $value)
             );
         } elseif (is_numeric($value)) {
-            $this->filters->add(
+            $this->filters->addFilter(
                 Filter::numberFilter($property, $operator, $value)
             );
         } else {
-            $this->filters->add(
+            $this->filters->addFilter(
                 Filter::textFilter($property, $operator, $value)
             );
         }
