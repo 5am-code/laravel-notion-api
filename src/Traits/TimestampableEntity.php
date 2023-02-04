@@ -4,17 +4,14 @@ namespace FiveamCode\LaravelNotionApi\Traits;
 
 use Carbon\Carbon;
 use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Arr;
 
 /**
- * Trait UpdatableEntity
- * @package FiveamCode\LaravelNotionApi\Traits
+ * Trait UpdatableEntity.
  */
 trait TimestampableEntity
 {
-
     /**
      * @var array
      */
