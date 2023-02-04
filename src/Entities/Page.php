@@ -17,6 +17,7 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\TimestampableEntity;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -25,6 +26,8 @@ use Illuminate\Support\Collection;
  */
 class Page extends Entity
 {
+    use TimestampableEntity;
+
     /**
      * @var string
      */
@@ -81,16 +84,6 @@ class Page extends Entity
     protected Collection $properties;
 
     /**
-     * @var DateTime
-     */
-    protected DateTime $createdTime;
-
-    /**
-     * @var DateTime
-     */
-    protected DateTime $lastEditedTime;
-
-    /**
      * Page constructor.
      *
      * @param  array|null  $responseData
@@ -128,8 +121,7 @@ class Page extends Entity
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillCreatedTime();
-        $this->fillLastEditedTime();
+        $this->fillTimestampableProperties();
     }
 
     private function fillObjectType(): void
@@ -474,19 +466,4 @@ class Page extends Entity
         return $this->propertyKeys;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedTime(): DateTime
-    {
-        return $this->createdTime;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getLastEditedTime(): DateTime
-    {
-        return $this->lastEditedTime;
-    }
 }

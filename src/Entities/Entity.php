@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use Carbon\Carbon;
+use DateTime;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Arr;
@@ -68,19 +69,6 @@ class Entity implements JsonSerializable
         $this->responseData = $responseData;
     }
 
-    protected function fillCreatedTime()
-    {
-        if (Arr::exists($this->responseData, 'created_time')) {
-            $this->createdTime = new Carbon($this->responseData['created_time']);
-        }
-    }
-
-    protected function fillLastEditedTime()
-    {
-        if (Arr::exists($this->responseData, 'last_edited_time')) {
-            $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
-        }
-    }
 
     protected function fillId()
     {

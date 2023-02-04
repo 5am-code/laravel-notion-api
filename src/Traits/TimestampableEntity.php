@@ -1,0 +1,110 @@
+<?php
+
+namespace FiveamCode\LaravelNotionApi\Traits;
+
+use Carbon\Carbon;
+use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Entity;
+use FiveamCode\LaravelNotionApi\Entities\User;
+use Illuminate\Support\Arr;
+
+/**
+ * Trait UpdatableEntity
+ * @package FiveamCode\LaravelNotionApi\Traits
+ */
+trait TimestampableEntity
+{
+
+    /**
+     * @var array
+     */
+    protected array $responseData = [];
+
+    /**
+     * @var DateTime
+     */
+    protected DateTime $createdTime;
+
+    /**
+     * @var DateTime
+     */
+    protected DateTime $lastEditedTime;
+
+    /**
+     * @var User
+     */
+    protected User $createdBy;
+
+    /**
+     * @var User
+     */
+    protected User $lastEditedBy;
+
+    protected function fillTimestampableProperties(): void
+    {
+        $this->fillCreatedTime();
+        $this->fillLastEditedTime();
+        $this->fillCreatedBy();
+        $this->fillLastEditedBy();
+    }
+
+    protected function fillCreatedTime(): void
+    {
+        if (Arr::exists($this->responseData, 'created_time')) {
+            $this->createdTime = new Carbon($this->responseData['created_time']);
+        }
+    }
+
+    protected function fillLastEditedTime(): void
+    {
+        if (Arr::exists($this->responseData, 'last_edited_time')) {
+            $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
+        }
+    }
+
+    protected function fillCreatedBy(): void
+    {
+        if (Arr::exists($this->responseData, 'created_by')) {
+            $this->createdBy = new User($this->responseData['created_by']);
+        }
+    }
+
+    protected function fillLastEditedBy(): void
+    {
+        if (Arr::exists($this->responseData, 'last_edited_by')) {
+            $this->lastEditedBy = new User($this->responseData['last_edited_by']);
+        }
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedTime(): DateTime
+    {
+        return $this->createdTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getLastEditedTime(): DateTime
+    {
+        return $this->lastEditedTime;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCreatedBy(): User
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @return User
+     */
+    public function getLastEditedBy(): User
+    {
+        return $this->lastEditedBy;
+    }
+}

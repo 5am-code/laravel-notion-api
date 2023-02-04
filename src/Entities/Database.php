@@ -3,8 +3,10 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use DateTime;
+use FiveamCode\LaravelNotionApi\Entities\Properties\People;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\TimestampableEntity;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -13,6 +15,8 @@ use Illuminate\Support\Collection;
  */
 class Database extends Entity
 {
+    use TimestampableEntity;
+
     /**
      * @var string
      */
@@ -73,15 +77,7 @@ class Database extends Entity
      */
     protected Collection $properties;
 
-    /**
-     * @var DateTime
-     */
-    protected DateTime $createdTime;
 
-    /**
-     * @var DateTime
-     */
-    protected DateTime $lastEditedTime;
 
     protected function setResponseData(array $responseData): void
     {
@@ -101,8 +97,7 @@ class Database extends Entity
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillDatabaseUrl();
-        $this->fillCreatedTime();
-        $this->fillLastEditedTime();
+        $this->fillTimestampableProperties();
     }
 
     private function fillTitle(): void
@@ -267,21 +262,5 @@ class Database extends Entity
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedTime(): DateTime
-    {
-        return $this->createdTime;
-    }
-
-    /**
-     * @return array
-     */
-    public function getLastEditedTime(): DateTime
-    {
-        return $this->lastEditedTime;
     }
 }
