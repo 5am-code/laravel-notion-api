@@ -2,8 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use Carbon\Carbon;
-use DateTime;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Arr;
@@ -68,7 +66,6 @@ class Entity implements JsonSerializable
 
         $this->responseData = $responseData;
     }
-
 
     protected function fillId()
     {

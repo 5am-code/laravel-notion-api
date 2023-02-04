@@ -2,8 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\Properties\People;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Traits\TimestampableEntity;
@@ -76,8 +74,6 @@ class Database extends Entity
      * @var Collection
      */
     protected Collection $properties;
-
-
 
     protected function setResponseData(array $responseData): void
     {
