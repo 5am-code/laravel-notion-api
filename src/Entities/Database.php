@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Entities;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasArchive;
 use FiveamCode\LaravelNotionApi\Traits\HasParent;
 use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
@@ -15,7 +16,7 @@ use Illuminate\Support\Collection;
  */
 class Database extends Entity
 {
-    use HasTimestamps, HasParent;
+    use HasTimestamps, HasArchive, HasParent;
 
     /**
      * @var string
@@ -113,6 +114,7 @@ class Database extends Entity
         $this->fillProperties();
         $this->fillDatabaseUrl();
         $this->fillParentProperties();
+        $this->fillArchivedProperties();
         $this->fillTimestampableProperties();
     }
 
@@ -226,7 +228,7 @@ class Database extends Entity
     /**
      * @return bool
      */
-    public function getIsInline(): bool
+    public function isInline(): bool
     {
         return $this->isInline;
     }

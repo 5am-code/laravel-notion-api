@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasArchive;
 use FiveamCode\LaravelNotionApi\Traits\HasParent;
 use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
@@ -13,7 +14,7 @@ use Illuminate\Support\Arr;
  */
 class Block extends Entity
 {
-    use HasTimestamps, HasParent;
+    use HasTimestamps, HasArchive, HasParent;
 
     /**
      * @var string
@@ -63,6 +64,7 @@ class Block extends Entity
         $this->fillRawContent();
         $this->fillHasChildren();
         $this->fillParentProperties();
+        $this->fillArchivedProperties();
         $this->fillTimestampableProperties();
     }
 
