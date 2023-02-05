@@ -18,6 +18,11 @@ class Entity implements JsonSerializable
     private string $id;
 
     /**
+     * @var string
+     */
+    protected string $objectType = '';
+
+    /**
      * @var array
      */
     protected array $responseData = [];
@@ -67,9 +72,22 @@ class Entity implements JsonSerializable
         $this->responseData = $responseData;
     }
 
-    protected function fillId()
+    protected function fillEntityBase(): void
+    {
+        $this->fillId();
+        $this->fillObjectType();
+    }
+
+    private function fillId()
     {
         $this->id = $this->responseData['id'];
+    }
+
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
     }
 
     /**
@@ -80,9 +98,18 @@ class Entity implements JsonSerializable
         return $this->id;
     }
 
+    
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectType(): string
+    {
+        return $this->objectType;
     }
 
     /**

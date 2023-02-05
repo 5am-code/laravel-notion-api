@@ -59,7 +59,7 @@ class Block extends Entity
 
     protected function fillFromRaw(): void
     {
-        $this->fillId();
+        parent::fillEntityBase();
         $this->fillType();
         $this->fillRawContent();
         $this->fillHasChildren();

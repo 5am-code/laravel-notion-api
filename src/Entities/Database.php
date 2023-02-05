@@ -54,11 +54,6 @@ class Database extends Entity
     private string $url;
 
     /**
-     * @var string
-     */
-    protected string $objectType = '';
-
-    /**
      * @var ?RichText
      */
     protected ?RichText $richTitle = null;
@@ -104,13 +99,12 @@ class Database extends Entity
 
     private function fillFromRaw()
     {
-        $this->fillId();
+        parent::fillEntityBase();
         $this->fillIcon();
         $this->fillCover();
         $this->fillTitle();
         $this->fillIsInline();
         $this->fillDescription();
-        $this->fillObjectType();
         $this->fillProperties();
         $this->fillDatabaseUrl();
         $this->fillParentProperties();
@@ -174,13 +168,6 @@ class Database extends Entity
         }
     }
 
-    private function fillObjectType(): void
-    {
-        if (Arr::exists($this->responseData, 'object')) {
-            $this->objectType = $this->responseData['object'];
-        }
-    }
-
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
@@ -207,14 +194,6 @@ class Database extends Entity
         }
 
         return $this->propertyMap[$propertyKey];
-    }
-
-    /**
-     * @return string
-     */
-    public function getObjectType(): string
-    {
-        return $this->objectType;
     }
 
     /**

@@ -61,11 +61,6 @@ class Page extends Entity
     private string $coverType = '';
 
     /**
-     * @var string
-     */
-    protected string $objectType = '';
-
-    /**
      * @var array
      */
     protected array $rawProperties = [];
@@ -116,8 +111,7 @@ class Page extends Entity
 
     private function fillFromRaw(): void
     {
-        $this->fillId();
-        $this->fillObjectType();
+        parent::fillEntityBase();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillPageUrl();
@@ -126,13 +120,6 @@ class Page extends Entity
         $this->fillParentProperties();
         $this->fillArchivedProperties();
         $this->fillTimestampableProperties();
-    }
-
-    private function fillObjectType(): void
-    {
-        if (Arr::exists($this->responseData, 'object')) {
-            $this->objectType = $this->responseData['object'];
-        }
     }
 
     /**
@@ -444,14 +431,6 @@ class Page extends Entity
         }
 
         return $this->propertyMap[$propertyKey];
-    }
-
-    /**
-     * @return string
-     */
-    public function getObjectType(): string
-    {
-        return $this->objectType;
     }
 
     /**
