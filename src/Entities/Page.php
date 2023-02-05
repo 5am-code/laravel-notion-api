@@ -17,6 +17,7 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasParent;
 use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -26,7 +27,7 @@ use Illuminate\Support\Collection;
  */
 class Page extends Entity
 {
-    use HasTimestamps;
+    use HasTimestamps, HasParent;
 
     /**
      * @var string
@@ -57,16 +58,6 @@ class Page extends Entity
      * @var string
      */
     private string $coverType = '';
-
-    /**
-     * @var string
-     */
-    private string $parentId = '';
-
-    /**
-     * @var string
-     */
-    private string $parentType = '';
 
     /**
      * @var string
@@ -125,13 +116,13 @@ class Page extends Entity
     private function fillFromRaw(): void
     {
         $this->fillId();
-        $this->fillParent();
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
+        $this->fillParentProperties();
         $this->fillTimestampableProperties();
     }
 
@@ -208,19 +199,6 @@ class Page extends Entity
         }
     }
 
-    private function fillParent(): void
-    {
-        if (Arr::exists($this->responseData, 'parent')) {
-            $this->parentType = $this->responseData['parent']['type'];
-            if (Arr::exists($this->responseData['parent'], 'database_id')) {
-                $this->parentId = $this->responseData['parent']['database_id'];
-            } elseif (Arr::exists($this->responseData['parent'], 'page_id')) {
-                $this->parentId = $this->responseData['parent']['page_id'];
-            } elseif (Arr::exists($this->responseData['parent'], 'workspace')) {
-                $this->parentId = $this->responseData['parent']['workspace'];
-            }
-        }
-    }
 
     /**
      * @param $propertyTitle
@@ -473,22 +451,6 @@ class Page extends Entity
     public function getObjectType(): string
     {
         return $this->objectType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentId(): string
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentType(): string
-    {
-        return $this->parentType;
     }
 
     /**
