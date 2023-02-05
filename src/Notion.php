@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi;
 
 use FiveamCode\LaravelNotionApi\Endpoints\Block;
+use FiveamCode\LaravelNotionApi\Endpoints\Comments;
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
@@ -182,6 +183,11 @@ class Notion
     public function search(?string $searchText = ''): Search
     {
         return new Search($this, $searchText);
+    }
+
+    public function comments(): Comments
+    {
+        return new Comments($this);
     }
 
     /**
