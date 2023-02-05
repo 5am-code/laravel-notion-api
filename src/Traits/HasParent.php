@@ -2,13 +2,10 @@
 
 namespace FiveamCode\LaravelNotionApi\Traits;
 
-use Carbon\Carbon;
-use DateTime;
-use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Arr;
 
 /**
- * Trait HasParent
+ * Trait HasParent.
  */
 trait HasParent
 {
@@ -26,7 +23,6 @@ trait HasParent
      * @var string
      */
     private string $parentType = '';
-
 
     protected function fillParentProperties(): void
     {
