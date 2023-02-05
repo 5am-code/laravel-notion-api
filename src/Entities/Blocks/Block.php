@@ -4,7 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
-use FiveamCode\LaravelNotionApi\Traits\TimestampableEntity;
+use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
 
 /**
@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
  */
 class Block extends Entity
 {
-    use TimestampableEntity;
+    use HasTimestamps;
 
     /**
      * @var string

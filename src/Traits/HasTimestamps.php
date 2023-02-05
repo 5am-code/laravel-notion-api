@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 /**
  * Trait UpdatableEntity.
  */
-trait TimestampableEntity
+trait HasTimestamps
 {
     /**
      * @var array
