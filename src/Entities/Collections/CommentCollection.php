@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Collections;
 
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Entities\Comment;
 use Illuminate\Support\Collection;
 
