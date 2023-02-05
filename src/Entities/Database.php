@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Entities;
 
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Traits\TimestampableEntity;
 use Illuminate\Support\Arr;
@@ -19,6 +20,11 @@ class Database extends Entity
      * @var string
      */
     protected string $title = '';
+
+    /**
+     * @var string
+     */
+    protected string $description = '';
 
     /**
      * @var string
@@ -51,9 +57,14 @@ class Database extends Entity
     protected string $objectType = '';
 
     /**
-     * @var array
+     * @var ?RichText
      */
-    protected array $rawTitle = [];
+    protected ?RichText $richTitle = null;
+
+    /**
+     * @var ?RichText
+     */
+    protected ?RichText $richDescription = null;
 
     /**
      * @var array
@@ -90,6 +101,7 @@ class Database extends Entity
         $this->fillIcon();
         $this->fillCover();
         $this->fillTitle();
+        $this->fillDescription();
         $this->fillObjectType();
         $this->fillProperties();
         $this->fillDatabaseUrl();
@@ -100,7 +112,15 @@ class Database extends Entity
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
             $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
-            $this->rawTitle = $this->responseData['title'];
+            $this->richTitle = new RichText($this->responseData['title']);
+        }
+    }
+
+    private function fillDescription(): void
+    {
+        if (Arr::exists($this->responseData, 'description') && is_array($this->responseData['description'])) {
+            $this->description = Arr::first($this->responseData['description'], null, ['plain_text' => ''])['plain_text'];
+            $this->richDescription = new RichText($this->responseData['description']);
         }
     }
 
@@ -191,6 +211,14 @@ class Database extends Entity
     /**
      * @return string
      */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
     public function getUrl(): string
     {
         return $this->url;
@@ -237,11 +265,19 @@ class Database extends Entity
     }
 
     /**
-     * @return array
+     * @return ?RichText
      */
-    public function getRawTitle(): array
+    public function getRichTitle(): ?RichText
     {
-        return $this->rawTitle;
+        return $this->richTitle;
+    }
+
+    /**
+     * @return ?RichText
+     */
+    public function getRichDescription(): ?RichText
+    {
+        return $this->richDescription;
     }
 
     /**
