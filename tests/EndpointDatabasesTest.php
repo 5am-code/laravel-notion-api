@@ -94,7 +94,8 @@ class EndpointDatabasesTest extends NotionApiTest
         $this->assertSame('Grocery List Description', $databaseResult->getDescription());
         $this->assertSame('database', $databaseResult->getObjectType());
         $this->assertSame('668d797c-76fa-4934-9b05-ad288df2d136', $databaseResult->getId());
-        $this->assertTrue($databaseResult->getIsInline());
+        $this->assertTrue($databaseResult->isInline());
+        $this->assertTrue($databaseResult->isArchived());
 
         $this->assertInstanceOf(RichText::class, $databaseResult->getRichTitle());
         $this->assertInstanceOf(RichText::class, $databaseResult->getRichDescription());

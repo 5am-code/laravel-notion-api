@@ -346,5 +346,6 @@ class EndpointBlocksTest extends NotionApiTest
 
         $this->assertEquals('page_id', $block->getParentType());
         $this->assertEquals('f2939732-f694-4ce2-b613-f28db6ded673', $block->getParentId());
+        $this->assertTrue($block->isArchived());
     }
 }
