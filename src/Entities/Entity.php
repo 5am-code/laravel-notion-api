@@ -98,7 +98,6 @@ class Entity implements JsonSerializable
         return $this->id;
     }
 
-    
     public function setId($id): void
     {
         $this->id = $id;
