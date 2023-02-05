@@ -68,6 +68,11 @@ class Database extends Entity
     protected ?RichText $richDescription = null;
 
     /**
+     * @var bool
+     */
+    protected bool $isInline = false;
+
+    /**
      * @var array
      */
     protected array $rawProperties = [];
@@ -102,6 +107,7 @@ class Database extends Entity
         $this->fillIcon();
         $this->fillCover();
         $this->fillTitle();
+        $this->fillIsInline();
         $this->fillDescription();
         $this->fillObjectType();
         $this->fillProperties();
@@ -115,6 +121,13 @@ class Database extends Entity
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
             $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
             $this->richTitle = new RichText($this->responseData['title']);
+        }
+    }
+
+    private function fillIsInline(): void
+    {
+        if (Arr::exists($this->responseData, 'is_inline')) {
+            $this->isInline = $this->responseData['is_inline'];
         }
     }
 
@@ -208,6 +221,14 @@ class Database extends Entity
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsInline(): bool
+    {
+        return $this->isInline;
     }
 
     /**
