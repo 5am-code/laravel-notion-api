@@ -199,7 +199,6 @@ class Page extends Entity
         }
     }
 
-
     /**
      * @param $propertyTitle
      * @param $property
