@@ -6,12 +6,16 @@
   "has_children": false,
   "archived": false,
   "type": "paragraph",
+  "parent": {
+    "type": "page_id",
+    "page_id": "f2939732-f694-4ce2-b613-f28db6ded673"
+  },
   "paragraph": {
     "text": [
       {
         "type": "text",
         "text": {
-          "content": "C:\\xampp\\php",
+          "content": "This is a paragraph test",
           "link": null
         },
         "annotations": {
@@ -22,7 +26,7 @@
           "code": false,
           "color": "default"
         },
-        "plain_text": "C:\\xampp\\php",
+        "plain_text": "This is a paragraph test",
         "href": null
       }
     ]

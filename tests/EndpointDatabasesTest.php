@@ -102,6 +102,9 @@ class EndpointDatabasesTest extends NotionApiTest
 
         $this->assertInstanceOf(Carbon::class, $databaseResult->getCreatedTime());
         $this->assertInstanceOf(Carbon::class, $databaseResult->getLastEditedTime());
+
+        $this->assertEquals('page_id', $databaseResult->getParentType());
+        $this->assertEquals('f2939732-f694-4ce2-b613-f28db6ded673', $databaseResult->getParentId());
     }
 
     /** @test */

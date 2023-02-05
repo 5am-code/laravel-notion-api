@@ -340,5 +340,11 @@ class EndpointBlocksTest extends NotionApiTest
 
         $this->assertInstanceOf(Block::class, $block);
         $this->assertInstanceOf(Paragraph::class, $block);
+        $this->assertEquals('a6f8ebe8-d5df-4ffa-b543-bcd54d1c3bad', $block->getId());
+        $this->assertEquals('paragraph', $block->getType());
+        $this->assertEquals('This is a paragraph test', $block->getContent()->getPlainText());
+
+        $this->assertEquals('page_id', $block->getParentType());
+        $this->assertEquals('f2939732-f694-4ce2-b613-f28db6ded673', $block->getParentId());
     }
 }
