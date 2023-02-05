@@ -3,6 +3,25 @@
   "id": "668d797c-76fa-4934-9b05-ad288df2d136",
   "created_time": "2020-03-17T19:10:04.968Z",
   "last_edited_time": "2020-03-17T21:49:37.913Z",
+  "description": [
+    {
+      "type": "text",
+      "text": {
+        "content": "Grocery List Description",
+        "link": null
+      },
+      "annotations": {
+        "bold": false,
+        "italic": false,
+        "strikethrough": false,
+        "underline": false,
+        "code": false,
+        "color": "default"
+      },
+      "plain_text": "Grocery List Description",
+      "href": null
+    }
+  ],
   "title": [
     {
       "type": "text",

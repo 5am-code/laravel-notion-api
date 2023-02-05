@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 use Notion;
@@ -90,9 +91,13 @@ class EndpointDatabasesTest extends NotionApiTest
 
         // check properties
         $this->assertSame('Grocery List', $databaseResult->getTitle());
+        $this->assertSame('Grocery List Description', $databaseResult->getDescription());
         $this->assertSame('database', $databaseResult->getObjectType());
 
-        $this->assertCount(1, $databaseResult->getRawTitle());
+        $this->assertInstanceOf(RichText::class, $databaseResult->getRichTitle());
+        $this->assertInstanceOf(RichText::class, $databaseResult->getRichDescription());
+        $this->assertCount(1, $databaseResult->getRichTitle()->getRawResponse());
+        $this->assertCount(1, $databaseResult->getRichDescription()->getRawResponse());
         $this->assertCount(12, $databaseResult->getRawProperties());
 
         $this->assertInstanceOf(Carbon::class, $databaseResult->getCreatedTime());
