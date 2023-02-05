@@ -5,7 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Traits;
 use Illuminate\Support\Arr;
 
 /**
- * Trait HasArchive
+ * Trait HasArchive.
  */
 trait HasArchive
 {
@@ -18,7 +18,6 @@ trait HasArchive
      * @var bool
      */
     private bool $archived = false;
-
 
     protected function fillArchivedProperties(): void
     {
