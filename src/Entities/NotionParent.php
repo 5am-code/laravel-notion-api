@@ -31,7 +31,7 @@ class NotionParent extends Entity
 
     private function fillFromRaw(): void
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
     }
 
     /**
