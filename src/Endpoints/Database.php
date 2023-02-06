@@ -8,6 +8,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use Illuminate\Support\Collection;
 
@@ -61,6 +62,18 @@ class Database extends Endpoint
      */
     public function query(): PageCollection
     {
+        $response = $this
+            ->post(
+                $this->url(Endpoint::DATABASES."/{$this->databaseId}/query"),
+                $this->getPostData()
+            )
+            ->json();
+
+        return new PageCollection($response);
+    }
+
+    public function getPostData(): array
+    {
         $postData = [];
 
         if ($this->sorts->isNotEmpty()) {
@@ -81,14 +94,7 @@ class Database extends Endpoint
             $postData['page_size'] = $this->pageSize;
         }
 
-        $response = $this
-            ->post(
-                $this->url(Endpoint::DATABASES."/{$this->databaseId}/query"),
-                $postData
-            )
-            ->json();
-
-        return new PageCollection($response);
+        return $postData;
     }
 
     /**
@@ -96,13 +102,12 @@ class Database extends Endpoint
      * @return Database $this
      *
      * @throws HandlingException
-     *
-     * @todo As soon as this package drops PHP 7.4 support, we can use union types here (FilterBag and Filter)
      */
-    public function filterBy($filter): Database // TODO that's a breaking change
+    public function filterBy(Collection|Filter|FilterBag $filter): Database
     {
-        $this->checkFilterType($filter);
-
+        if ($filter instanceof Collection) {
+            return $this->filterByCollection($filter);
+        }
         if ($filter instanceof FilterBag) {
             return $this->filterByBag($filter);
         }
@@ -113,6 +118,12 @@ class Database extends Endpoint
         return $this;
     }
 
+    /**
+     * @param  Filter  $filter
+     * @return $this
+     *
+     * @throws HandlingException
+     */
     public function filterBySingleFilter(Filter $filter): Database
     {
         $this->filter = $filter;
@@ -123,7 +134,7 @@ class Database extends Endpoint
 
     /**
      * @param  FilterBag  $filterBag
-     * @return $this
+     * @return Database $this
      */
     public function filterByBag(FilterBag $filterBag): Database
     {
@@ -131,6 +142,18 @@ class Database extends Endpoint
         $this->filterData = $filterBag->toQuery();
 
         return $this;
+    }
+
+    /**
+     * @param  Collection  $filterCollection
+     * @return Database $this
+     */
+    public function filterByCollection(Collection $filterCollection): Database
+    {
+        $filterBag = new FilterBag(Operators::OR);
+        $filterBag->addFilters($filterCollection);
+
+        return $this->filterByBag($filterBag);
     }
 
     /**
@@ -150,7 +173,7 @@ class Database extends Endpoint
                 $this->sorts = $sorts;
                 break;
             default:
-                throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of Sortings.");
+                throw new HandlingException("The parameter 'sorts' must be either a instance of the class Sorting or a Collection of sortings.");
         }
 
         return $this;
@@ -165,12 +188,5 @@ class Database extends Endpoint
         $this->offset($entityCollection->nextCursor());
 
         return $this;
-    }
-
-    private function checkFilterType($filter): void
-    {
-        if (! ($filter instanceof Filter || $filter instanceof FilterBag)) {
-            throw new HandlingException('Please provide either a filter bag or a single filter.');
-        }
     }
 }

@@ -36,7 +36,7 @@ class SelectItem extends Entity
 
     protected function fillFromRaw(): void
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
         $this->fillName();
         $this->fillColor();
     }
