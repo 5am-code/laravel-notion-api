@@ -80,8 +80,8 @@ class Comment extends Entity
         parent::fillEntityBase();
         $this->fillRichText();
         $this->fillDiscussionId();
-        $this->fillParentProperties();
-        $this->fillTimestampableProperties();
+        $this->fillParentAttributes();
+        $this->fillTimestampableAttributes();
     }
 
     private function fillDiscussionId(): void
