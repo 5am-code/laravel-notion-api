@@ -3,12 +3,9 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
-use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
-use FiveamCode\LaravelNotionApi\Entities\Comment;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
 use FiveamCode\LaravelNotionApi\Entities\Page;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
@@ -34,8 +31,8 @@ class Resolve extends Endpoint
 
     /**
      * @param  User  $user
-     * 
      * @return User
+     *
      * @throws HandlingException
      * @throws NotionException
      */
@@ -46,8 +43,8 @@ class Resolve extends Endpoint
 
     /**
      * @param  NotionParent  $parent
-     * 
      * @return Page|Database|Block
+     *
      * @throws HandlingException
      * @throws NotionException
      */
