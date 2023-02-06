@@ -41,7 +41,6 @@ it('should throw correct exception if block_id has not been found when listing c
     \Notion::comments()->ofBlock('cbf6b0af-6eaa-45ca-9715-9fa147ef6b17')->list();
 });
 
-
 it('should fetch list of comments with an accurate representation of attributes', function () {
 
     // successfull /v1/comments
@@ -79,7 +78,6 @@ it('should fetch list of comments with an accurate representation of attributes'
     expect($json)->toBeJson();
 });
 
-
 it('should throw correct exception if comment access not allowed by api when creating a comment', function () {
     // not_found /v1/comments
     Http::fake([
@@ -114,7 +112,7 @@ it('should throw correct exception if discussion is not found with discussion_id
     \Notion::comments()->onDiscussion('141216d8-bbc5-4c24-9d37-3c45d3bc15cc')->create(Comment::create('Hello world'));
 });
 
-it('successfully creates a comment within a page', function(){
+it('successfully creates a comment within a page', function () {
 
     // successfull (post) /v1/comments
     Http::fake([
@@ -140,5 +138,3 @@ it('successfully creates a comment within a page', function(){
     expect($comment->getParentType())->toBe('page_id');
     expect($comment->getDiscussionId())->toBe('f1407351-36f5-4c49-a13c-49f8ba11776d');
 });
-
-
