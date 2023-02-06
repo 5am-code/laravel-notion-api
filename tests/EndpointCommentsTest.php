@@ -68,6 +68,7 @@ it('should fetch list of comments with an accurate representation of attributes'
     expect($collection->first()->getCreatedTime())->toEqual(Carbon::parse('2022-07-15T16:52:00.000Z')->toDateTime());
     expect($collection->first()->getLastEditedTime())->toEqual(Carbon::parse('2022-07-15T19:16:00.000Z')->toDateTime());
     expect($collection->first()->getCreatedBy()->getId())->toBe('9b15170a-9941-4297-8ee6-83fa7649a87a');
+    expect($collection->first()->getLastEditedBy())->toBe(null);
     expect($collection->first()->getText())->toBe('Single comment');
     expect($collection->first()->getRichText()->getPlainText())->toBe('Single comment');
     expect($collection->first()->getRichText())->toBeInstanceOf(RichText::class);
