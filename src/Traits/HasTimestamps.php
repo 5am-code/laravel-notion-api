@@ -8,7 +8,7 @@ use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Arr;
 
 /**
- * Trait UpdatableEntity.
+ * Trait HasTimestamps.
  */
 trait HasTimestamps
 {
@@ -20,22 +20,22 @@ trait HasTimestamps
     /**
      * @var DateTime
      */
-    protected DateTime $createdTime;
+    protected ?DateTime $createdTime = null;
 
     /**
      * @var DateTime
      */
-    protected DateTime $lastEditedTime;
+    protected ?DateTime $lastEditedTime = null;
 
     /**
      * @var User
      */
-    protected User $createdBy;
+    protected ?User $createdBy = null;
 
     /**
      * @var User
      */
-    protected User $lastEditedBy;
+    protected ?User $lastEditedBy = null;
 
     protected function fillTimestampableAttributes(): void
     {
@@ -74,33 +74,33 @@ trait HasTimestamps
     }
 
     /**
-     * @return DateTime
+     * @return ?DateTime
      */
-    public function getCreatedTime(): DateTime
+    public function getCreatedTime(): ?DateTime
     {
         return $this->createdTime;
     }
 
     /**
-     * @return DateTime
+     * @return ?DateTime
      */
-    public function getLastEditedTime(): DateTime
+    public function getLastEditedTime(): ?DateTime
     {
         return $this->lastEditedTime;
     }
 
     /**
-     * @return User
+     * @return ?User
      */
-    public function getCreatedBy(): User
+    public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
 
     /**
-     * @return User
+     * @return ?User
      */
-    public function getLastEditedBy(): User
+    public function getLastEditedBy(): ?User
     {
         return $this->lastEditedBy;
     }
