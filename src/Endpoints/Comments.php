@@ -2,8 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
-use FiveamCode\LaravelNotionApi\Entities\Blocks\Block as BlockEntity;
-use FiveamCode\LaravelNotionApi\Entities\Collections\BlockCollection;
 use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
 use FiveamCode\LaravelNotionApi\Entities\Comment;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
@@ -52,7 +50,7 @@ class Comments extends Endpoint
     public function ofBlock(string $blockId): CommentCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::COMMENTS . "?block_id={$blockId}&{$this->buildPaginationQuery()}")
+            $this->url(Endpoint::COMMENTS."?block_id={$blockId}&{$this->buildPaginationQuery()}")
         );
 
         return new CommentCollection($response->json());
@@ -60,31 +58,31 @@ class Comments extends Endpoint
 
     /**
      * @param  string  $discussionId
-     * 
      * @return Comments
      */
     public function onDiscussion(string $discussionId): self
     {
-        if($this->pageId !== null) {
+        if ($this->pageId !== null) {
             throw new HandlingException('You can only use ``->onDiscussion(...)`` or ``->onPage(...)``.');
         }
 
         $this->discussionId = $discussionId;
+
         return $this;
     }
 
     /**
      * @param  string  $pageId
-     * 
      * @return Comments
      */
     public function onPage(string $pageId): self
     {
-        if($this->discussionId !== null) {
+        if ($this->discussionId !== null) {
             throw new HandlingException('You can only use ``->onDiscussion(...)`` or ``->onPage(...)``.');
         }
 
         $this->pageId = $pageId;
+
         return $this;
     }
 
