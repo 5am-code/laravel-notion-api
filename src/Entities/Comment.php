@@ -77,11 +77,9 @@ class Comment extends Entity
 
     private function fillFromRaw(): void
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
         $this->fillRichText();
         $this->fillDiscussionId();
-        $this->fillParentAttributes();
-        $this->fillTimestampableAttributes();
     }
 
     private function fillDiscussionId(): void
