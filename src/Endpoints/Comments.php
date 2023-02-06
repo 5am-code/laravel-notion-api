@@ -41,8 +41,8 @@ class Comments extends Endpoint
      * Retrieve a list of comments
      * url: https://api.notion.com/{version}/comments?block_id=* [get]
      * notion-api-docs: https://developers.notion.com/reference/retrieve-a-comment.
-     * @param  string  $blockId
      *
+     * @param  string  $blockId
      * @return CommentCollection
      *
      * @throws HandlingException
@@ -51,7 +51,7 @@ class Comments extends Endpoint
     public function ofBlock(string $blockId): CommentCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::COMMENTS . "?block_id={$blockId}&{$this->buildPaginationQuery()}")
+            $this->url(Endpoint::COMMENTS."?block_id={$blockId}&{$this->buildPaginationQuery()}")
         );
 
         return new CommentCollection($response->json());
@@ -91,8 +91,8 @@ class Comments extends Endpoint
      * Create a comment
      * url: https://api.notion.com/{version}/comments [post]
      * notion-api-docs: https://developers.notion.com/reference/create-a-comment.
-     * @param  CommentEntity  $comment
      *
+     * @param  CommentEntity  $comment
      * @return CommentEntity
      *
      * @throws HandlingException
