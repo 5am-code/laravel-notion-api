@@ -92,7 +92,7 @@ it('should throw correct exception if comment access not allowed by api when cre
     $this->expectExceptionMessage('Insufficient permissions for this endpoint.');
     $this->expectExceptionCode(403);
 
-    \Notion::comments()->onPage('5c6a2821-6bb1-4a7e-b6e1-c50111515c3d')->create(Comment::create('Hello world'));
+    \Notion::comments()->onPage('5c6a2821-6bb1-4a7e-b6e1-c50111515c3d')->create(Comment::fromText('Hello world'));
 });
 
 it('should throw correct exception if discussion is not found with discussion_id when creating a comment', function () {
@@ -109,7 +109,7 @@ it('should throw correct exception if discussion is not found with discussion_id
     $this->expectExceptionMessage('Could not find discussion with ID: 141216d8-bbc5-4c24-9d37-3c45d3bc15cc.');
     $this->expectExceptionCode(404);
 
-    \Notion::comments()->onDiscussion('141216d8-bbc5-4c24-9d37-3c45d3bc15cc')->create(Comment::create('Hello world'));
+    \Notion::comments()->onDiscussion('141216d8-bbc5-4c24-9d37-3c45d3bc15cc')->create(Comment::fromText('Hello world'));
 });
 
 it('successfully creates a comment within a page', function () {
@@ -123,7 +123,7 @@ it('successfully creates a comment within a page', function () {
         ),
     ]);
 
-    $comment = \Notion::comments()->onPage('5c6a2821-6bb1-4a7e-b6e1-c50111515c3d')->create(Comment::create('Hello world'));
+    $comment = \Notion::comments()->onPage('5c6a2821-6bb1-4a7e-b6e1-c50111515c3d')->create(Comment::fromText('Hello world'));
 
     expect($comment)->toBeInstanceOf(Comment::class);
     expect($comment->getObjectType())->toBe('comment');

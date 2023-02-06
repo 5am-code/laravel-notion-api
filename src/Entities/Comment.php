@@ -32,7 +32,7 @@ class Comment extends Entity
         }
     }
 
-    public static function create($content): Comment
+    public static function fromText($content): Comment
     {
         $commentEntity = new Comment();
 
