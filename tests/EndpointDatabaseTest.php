@@ -3,8 +3,11 @@
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 use FiveamCode\LaravelNotionApi\Query\Sorting;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
@@ -31,6 +34,24 @@ it('returns a database endpoint instance', function () {
     $endpoint = Notion::database('897e5a76ae524b489fdfe71f5945d1af');
 
     $this->assertInstanceOf(Database::class, $endpoint);
+});
+
+it('allows a filter, filter bag or collection of filters inside the filterBy method', function () {
+    $filter = Filter::textFilter('Name', Operators::CONTAINS, 'Grace');
+    $filterCollection = (new Collection)->add($filter);
+    $filterBag = (new FilterBag(Operators::AND))->addFilter($filter);
+
+    $endpoint = Notion::database('8284f3ff77e24d4a939d19459e4d6bdc');
+
+    $endpoint->filterBy($filter);
+    $endpoint->filterBy($filterCollection);
+    $endpoint->filterBy($filterBag);
+
+    $this->expectException(HandlingException::class);
+    $this->expectExceptionMessage('The filter bag must only contain filter objects.');
+
+    $filterCollection->add(1);
+    $endpoint->filterBy($filterCollection);
 });
 
 it('queries a database with filter and sorting and processes result', function ($limit) {
@@ -92,7 +113,7 @@ it('queries a database with filter and sorting and has empty result', function (
         ),
     ]);
 
-    // Let's search for something that doesn't exists
+    // Let's search for something that doesn't exist
     $filters = new Collection();
 
     $filter = Filter::rawFilter(

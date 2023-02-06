@@ -69,6 +69,18 @@ class FilterBag extends QueryHelper
         return $this;
     }
 
+    public function addFilters(Collection $filters): self
+    {
+        foreach ($filters as $filter) {
+            if (! $filter instanceof Filter) {
+                throw new HandlingException('The filter bag must only contain filter objects.');
+            }
+            $this->addFilter($filter);
+        }
+
+        return $this;
+    }
+
     /**
      * @throws HandlingException|Throwable
      */
