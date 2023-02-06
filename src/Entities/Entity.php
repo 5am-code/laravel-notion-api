@@ -50,7 +50,7 @@ class Entity implements JsonSerializable
      */
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'object')) {
+        if (! Arr::exists($responseData, 'object')) {
             throw new HandlingException('invalid json-array: no object given');
         }
 
@@ -65,7 +65,7 @@ class Entity implements JsonSerializable
             throw NotionException::instance('Not found', compact('responseData'));
         }
 
-        if (!Arr::exists($responseData, 'id')) {
+        if (! Arr::exists($responseData, 'id')) {
             throw HandlingException::instance('invalid json-array: no id provided');
         }
 
