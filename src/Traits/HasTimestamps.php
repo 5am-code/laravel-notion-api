@@ -37,7 +37,7 @@ trait HasTimestamps
      */
     protected User $lastEditedBy;
 
-    protected function fillTimestampableProperties(): void
+    protected function fillTimestampableAttributes(): void
     {
         $this->fillCreatedTime();
         $this->fillLastEditedTime();
@@ -45,28 +45,28 @@ trait HasTimestamps
         $this->fillLastEditedBy();
     }
 
-    protected function fillCreatedTime(): void
+    private function fillCreatedTime(): void
     {
         if (Arr::exists($this->responseData, 'created_time')) {
             $this->createdTime = new Carbon($this->responseData['created_time']);
         }
     }
 
-    protected function fillLastEditedTime(): void
+    private function fillLastEditedTime(): void
     {
         if (Arr::exists($this->responseData, 'last_edited_time')) {
             $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
         }
     }
 
-    protected function fillCreatedBy(): void
+    private function fillCreatedBy(): void
     {
         if (Arr::exists($this->responseData, 'created_by')) {
             $this->createdBy = new User($this->responseData['created_by']);
         }
     }
 
-    protected function fillLastEditedBy(): void
+    private function fillLastEditedBy(): void
     {
         if (Arr::exists($this->responseData, 'last_edited_by')) {
             $this->lastEditedBy = new User($this->responseData['last_edited_by']);

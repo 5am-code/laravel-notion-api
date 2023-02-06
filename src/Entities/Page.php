@@ -121,7 +121,7 @@ class Page extends Entity
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillTimestampableProperties();
+        $this->fillTimestampableAttributes();
     }
 
     private function fillObjectType(): void
