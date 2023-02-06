@@ -63,9 +63,9 @@ class Block extends Entity
         $this->fillType();
         $this->fillRawContent();
         $this->fillHasChildren();
-        $this->fillParentProperties();
-        $this->fillArchivedProperties();
-        $this->fillTimestampableProperties();
+        $this->fillParentAttributes();
+        $this->fillArchivedAttributes();
+        $this->fillTimestampableAttributes();
     }
 
     private function fillType(): void
