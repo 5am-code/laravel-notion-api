@@ -63,7 +63,7 @@ trait HasParent
     {
         return new NotionParent([
             'id' => $this->getParentId(),
-            'object' => $this->getParentType()
+            'object' => $this->getParentType(),
         ]);
     }
 }
