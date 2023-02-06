@@ -39,8 +39,8 @@ class Database extends Endpoint
     /**
      * Database constructor.
      *
-     * @param string $databaseId
-     * @param Notion $notion
+     * @param  string  $databaseId
+     * @param  Notion  $notion
      *
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\HandlingException
      * @throws \FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException
@@ -64,7 +64,7 @@ class Database extends Endpoint
     {
         $response = $this
             ->post(
-                $this->url(Endpoint::DATABASES . "/{$this->databaseId}/query"),
+                $this->url(Endpoint::DATABASES."/{$this->databaseId}/query"),
                 $this->getPostData()
             )
             ->json();
@@ -72,16 +72,17 @@ class Database extends Endpoint
         return new PageCollection($response);
     }
 
-    public function getPostData():array {
+    public function getPostData(): array
+    {
         $postData = [];
 
         if ($this->sorts->isNotEmpty()) {
             $postData['sorts'] = Sorting::sortQuery($this->sorts);
         }
 
-        if ($this->filter !== null && !is_null($this->filterBag)) {
+        if ($this->filter !== null && ! is_null($this->filterBag)) {
             throw new HandlingException('Please provide either a filter bag or a single filter.');
-        } elseif ($this->filter !== null || !is_null($this->filterBag)) {
+        } elseif ($this->filter !== null || ! is_null($this->filterBag)) {
             $postData['filter'] = $this->filterData;
         }
 
@@ -101,11 +102,10 @@ class Database extends Endpoint
      * @return Database $this
      *
      * @throws HandlingException
-     *
      */
     public function filterBy(Collection|Filter|FilterBag $filter): Database
     {
-        if($filter instanceof Collection) {
+        if ($filter instanceof Collection) {
             return $this->filterByCollection($filter);
         }
         if ($filter instanceof FilterBag) {
@@ -119,8 +119,9 @@ class Database extends Endpoint
     }
 
     /**
-     * @param Filter $filter
+     * @param  Filter  $filter
      * @return $this
+     *
      * @throws HandlingException
      */
     public function filterBySingleFilter(Filter $filter): Database
@@ -132,7 +133,7 @@ class Database extends Endpoint
     }
 
     /**
-     * @param FilterBag $filterBag
+     * @param  FilterBag  $filterBag
      * @return Database $this
      */
     public function filterByBag(FilterBag $filterBag): Database
@@ -144,10 +145,11 @@ class Database extends Endpoint
     }
 
     /**
-     * @param Collection $filterCollection
+     * @param  Collection  $filterCollection
      * @return Database $this
      */
-    public function filterByCollection(Collection $filterCollection): Database {
+    public function filterByCollection(Collection $filterCollection): Database
+    {
         $filterBag = new FilterBag(Operators::OR);
         $filterBag->addFilters($filterCollection);
 
@@ -155,7 +157,7 @@ class Database extends Endpoint
     }
 
     /**
-     * @param Collection|Sorting $sorts
+     * @param  Collection|Sorting  $sorts
      * @return Database $this
      *
      * @throws HandlingException
@@ -178,7 +180,7 @@ class Database extends Endpoint
     }
 
     /**
-     * @param EntityCollection $entityCollection
+     * @param  EntityCollection  $entityCollection
      * @return $this
      */
     public function offsetByResponse(EntityCollection $entityCollection): Database
