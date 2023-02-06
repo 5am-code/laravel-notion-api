@@ -59,13 +59,10 @@ class Block extends Entity
 
     protected function fillFromRaw(): void
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
         $this->fillType();
         $this->fillRawContent();
         $this->fillHasChildren();
-        $this->fillParentAttributes();
-        $this->fillArchivedAttributes();
-        $this->fillTimestampableAttributes();
     }
 
     private function fillType(): void

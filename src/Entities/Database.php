@@ -99,7 +99,7 @@ class Database extends Entity
 
     private function fillFromRaw()
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
         $this->fillIcon();
         $this->fillCover();
         $this->fillTitle();
@@ -107,9 +107,6 @@ class Database extends Entity
         $this->fillDescription();
         $this->fillProperties();
         $this->fillDatabaseUrl();
-        $this->fillParentAttributes();
-        $this->fillArchivedAttributes();
-        $this->fillTimestampableAttributes();
     }
 
     private function fillTitle(): void

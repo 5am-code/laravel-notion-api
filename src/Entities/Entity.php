@@ -50,7 +50,7 @@ class Entity implements JsonSerializable
      */
     protected function setResponseData(array $responseData): void
     {
-        if (! Arr::exists($responseData, 'object')) {
+        if (!Arr::exists($responseData, 'object')) {
             throw new HandlingException('invalid json-array: no object given');
         }
 
@@ -65,17 +65,55 @@ class Entity implements JsonSerializable
             throw NotionException::instance('Not found', compact('responseData'));
         }
 
-        if (! Arr::exists($responseData, 'id')) {
+        if (!Arr::exists($responseData, 'id')) {
             throw HandlingException::instance('invalid json-array: no id provided');
         }
 
         $this->responseData = $responseData;
     }
 
-    protected function fillEntityBase(): void
+    protected function fillEssentials(): void
     {
         $this->fillId();
         $this->fillObjectType();
+        $this->fillTraitAttributes();
+    }
+
+    private function fillTraitAttributes(): void
+    {
+        $traitMapping = [
+            'FiveamCode\LaravelNotionApi\Traits\HasTimestamps' => function ($entity) {
+                $entity->fillTimestampableAttributes();
+            },
+            'FiveamCode\LaravelNotionApi\Traits\HasParent' => function ($entity) {
+                $entity->fillParentAttributes();
+            },
+            'FiveamCode\LaravelNotionApi\Traits\HasArchive' => function ($entity) {
+                $entity->fillArchivedAttributes();
+            },
+        ];
+
+        $traits = $this->class_uses_deep($this);
+        foreach ($traits as $trait) {
+            if (Arr::exists($traitMapping, $trait)) {
+                $traitMapping[$trait]($this);
+            }
+        }
+    }
+
+    private function class_uses_deep($class, $autoload = true)
+    {
+        $traits = [];
+
+        do {
+            $traits = array_merge(class_uses($class, $autoload), $traits);
+        } while ($class = get_parent_class($class));
+
+        foreach ($traits as $trait => $same) {
+            $traits = array_merge(class_uses($trait, $autoload), $traits);
+        }
+
+        return array_unique($traits);
     }
 
     private function fillId()

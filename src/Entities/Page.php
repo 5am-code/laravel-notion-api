@@ -111,15 +111,12 @@ class Page extends Entity
 
     private function fillFromRaw(): void
     {
-        parent::fillEntityBase();
+        parent::fillEssentials();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillParentAttributes();
-        $this->fillArchivedAttributes();
-        $this->fillTimestampableAttributes();
     }
 
     /**
