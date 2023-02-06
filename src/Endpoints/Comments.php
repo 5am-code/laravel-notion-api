@@ -3,7 +3,7 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
-use FiveamCode\LaravelNotionApi\Entities\Comment;
+use FiveamCode\LaravelNotionApi\Entities\Comment as CommentEntity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
@@ -38,9 +38,10 @@ class Comments extends Endpoint
     }
 
     /**
-     * Retrieve block children
+     * Retrieve a list of comments
      * url: https://api.notion.com/{version}/comments?block_id=* [get]
      * notion-api-docs: https://developers.notion.com/reference/retrieve-a-comment.
+     * @param  string  $blockId
      *
      * @return CommentCollection
      *
@@ -50,7 +51,7 @@ class Comments extends Endpoint
     public function ofBlock(string $blockId): CommentCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::COMMENTS."?block_id={$blockId}&{$this->buildPaginationQuery()}")
+            $this->url(Endpoint::COMMENTS . "?block_id={$blockId}&{$this->buildPaginationQuery()}")
         );
 
         return new CommentCollection($response->json());
@@ -86,7 +87,18 @@ class Comments extends Endpoint
         return $this;
     }
 
-    public function create($comment): Comment
+    /**
+     * Create a comment
+     * url: https://api.notion.com/{version}/comments [post]
+     * notion-api-docs: https://developers.notion.com/reference/create-a-comment.
+     * @param  CommentEntity  $comment
+     *
+     * @return CommentEntity
+     *
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    public function create($comment): CommentEntity
     {
         if ($this->discussionId === null && $this->pageId === null) {
             throw new HandlingException('You must use `onDiscussion()` or `onPage()`.');
@@ -106,6 +118,6 @@ class Comments extends Endpoint
             $body
         );
 
-        return new Comment($response->json());
+        return new CommentEntity($response->json());
     }
 }
