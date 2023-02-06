@@ -50,7 +50,7 @@ class Comments extends Endpoint
     public function ofBlock(string $blockId): CommentCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::COMMENTS."?block_id={$blockId}&{$this->buildPaginationQuery()}")
+            $this->url(Endpoint::COMMENTS . "?block_id={$blockId}&{$this->buildPaginationQuery()}")
         );
 
         return new CommentCollection($response->json());
@@ -63,7 +63,7 @@ class Comments extends Endpoint
     public function onDiscussion(string $discussionId): self
     {
         if ($this->pageId !== null) {
-            throw new HandlingException('You can only use ``->onDiscussion(...)`` or ``->onPage(...)``.');
+            throw new HandlingException('You can only use `onDiscussion()` or `onPage()`.');
         }
 
         $this->discussionId = $discussionId;
@@ -78,7 +78,7 @@ class Comments extends Endpoint
     public function onPage(string $pageId): self
     {
         if ($this->discussionId !== null) {
-            throw new HandlingException('You can only use ``->onDiscussion(...)`` or ``->onPage(...)``.');
+            throw new HandlingException('You can only use `onDiscussion()` or `onPage()`.');
         }
 
         $this->pageId = $pageId;
@@ -89,7 +89,7 @@ class Comments extends Endpoint
     public function create($comment): Comment
     {
         if ($this->discussionId === null && $this->pageId === null) {
-            throw new HandlingException('You must use ``->onDiscussion(...)`` or ``->onPage(...)``.');
+            throw new HandlingException('You must use `onDiscussion()` or `onPage()`.');
         }
 
         $body = $comment->getRawResponse();
