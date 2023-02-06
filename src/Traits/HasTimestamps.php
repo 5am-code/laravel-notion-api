@@ -8,7 +8,7 @@ use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Arr;
 
 /**
- * Trait UpdatableEntity.
+ * Trait HasTimestamps.
  */
 trait HasTimestamps
 {
