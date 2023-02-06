@@ -119,7 +119,7 @@ class Page extends Entity
         $this->fillCover();
         $this->fillParentProperties();
         $this->fillArchivedProperties();
-        $this->fillTimestampableProperties();
+        $this->fillTimestampableAttributes();
     }
 
     /**

@@ -109,7 +109,7 @@ class Database extends Entity
         $this->fillDatabaseUrl();
         $this->fillParentProperties();
         $this->fillArchivedProperties();
-        $this->fillTimestampableProperties();
+        $this->fillTimestampableAttributes();
     }
 
     private function fillTitle(): void
