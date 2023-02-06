@@ -24,7 +24,7 @@ trait HasParent
      */
     private string $parentType = '';
 
-    protected function fillParentProperties(): void
+    protected function fillParentAttributes(): void
     {
         $this->fillParent();
     }

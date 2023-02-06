@@ -19,7 +19,7 @@ trait HasArchive
      */
     private bool $archived = false;
 
-    protected function fillArchivedProperties(): void
+    protected function fillArchivedAttributes(): void
     {
         $this->fillArchived();
     }

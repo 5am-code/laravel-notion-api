@@ -107,8 +107,8 @@ class Database extends Entity
         $this->fillDescription();
         $this->fillProperties();
         $this->fillDatabaseUrl();
-        $this->fillParentProperties();
-        $this->fillArchivedProperties();
+        $this->fillParentAttributes();
+        $this->fillArchivedAttributes();
         $this->fillTimestampableAttributes();
     }
 

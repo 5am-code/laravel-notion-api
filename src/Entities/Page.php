@@ -117,8 +117,8 @@ class Page extends Entity
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillParentProperties();
-        $this->fillArchivedProperties();
+        $this->fillParentAttributes();
+        $this->fillArchivedAttributes();
         $this->fillTimestampableAttributes();
     }
 
