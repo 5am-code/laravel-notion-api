@@ -50,7 +50,7 @@ class Comments extends Endpoint
     public function ofBlock(string $blockId): CommentCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::COMMENTS . "?block_id={$blockId}&{$this->buildPaginationQuery()}")
+            $this->url(Endpoint::COMMENTS."?block_id={$blockId}&{$this->buildPaginationQuery()}")
         );
 
         return new CommentCollection($response->json());
