@@ -185,6 +185,12 @@ class Notion
         return new Search($this, $searchText);
     }
 
+    /**
+     * @return Comments
+     *
+     * @throws Exceptions\LaravelNotionAPIException
+     * @throws HandlingException
+     */
     public function comments(): Comments
     {
         return new Comments($this);
