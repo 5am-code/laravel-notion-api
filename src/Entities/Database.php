@@ -2,9 +2,12 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasArchive;
+use FiveamCode\LaravelNotionApi\Traits\HasParent;
+use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -13,10 +16,17 @@ use Illuminate\Support\Collection;
  */
 class Database extends Entity
 {
+    use HasTimestamps, HasArchive, HasParent;
+
     /**
      * @var string
      */
     protected string $title = '';
+
+    /**
+     * @var string
+     */
+    protected string $description = '';
 
     /**
      * @var string
@@ -44,14 +54,19 @@ class Database extends Entity
     private string $url;
 
     /**
-     * @var string
+     * @var ?RichText
      */
-    protected string $objectType = '';
+    protected ?RichText $richTitle = null;
 
     /**
-     * @var array
+     * @var ?RichText
      */
-    protected array $rawTitle = [];
+    protected ?RichText $richDescription = null;
+
+    /**
+     * @var bool
+     */
+    protected bool $isInline = false;
 
     /**
      * @var array
@@ -73,16 +88,6 @@ class Database extends Entity
      */
     protected Collection $properties;
 
-    /**
-     * @var DateTime
-     */
-    protected DateTime $createdTime;
-
-    /**
-     * @var DateTime
-     */
-    protected DateTime $lastEditedTime;
-
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
@@ -94,22 +99,39 @@ class Database extends Entity
 
     private function fillFromRaw()
     {
-        $this->fillId();
+        parent::fillEntityBase();
         $this->fillIcon();
         $this->fillCover();
         $this->fillTitle();
-        $this->fillObjectType();
+        $this->fillIsInline();
+        $this->fillDescription();
         $this->fillProperties();
         $this->fillDatabaseUrl();
-        $this->fillCreatedTime();
-        $this->fillLastEditedTime();
+        $this->fillParentAttributes();
+        $this->fillArchivedAttributes();
+        $this->fillTimestampableAttributes();
     }
 
     private function fillTitle(): void
     {
         if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
             $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
-            $this->rawTitle = $this->responseData['title'];
+            $this->richTitle = new RichText($this->responseData['title']);
+        }
+    }
+
+    private function fillIsInline(): void
+    {
+        if (Arr::exists($this->responseData, 'is_inline')) {
+            $this->isInline = $this->responseData['is_inline'];
+        }
+    }
+
+    private function fillDescription(): void
+    {
+        if (Arr::exists($this->responseData, 'description') && is_array($this->responseData['description'])) {
+            $this->description = Arr::first($this->responseData['description'], null, ['plain_text' => ''])['plain_text'];
+            $this->richDescription = new RichText($this->responseData['description']);
         }
     }
 
@@ -146,13 +168,6 @@ class Database extends Entity
         }
     }
 
-    private function fillObjectType(): void
-    {
-        if (Arr::exists($this->responseData, 'object')) {
-            $this->objectType = $this->responseData['object'];
-        }
-    }
-
     private function fillProperties(): void
     {
         if (Arr::exists($this->responseData, 'properties')) {
@@ -184,17 +199,25 @@ class Database extends Entity
     /**
      * @return string
      */
-    public function getObjectType(): string
+    public function getTitle(): string
     {
-        return $this->objectType;
+        return $this->title;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInline(): bool
+    {
+        return $this->isInline;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getDescription(): string
     {
-        return $this->title;
+        return $this->description;
     }
 
     /**
@@ -246,11 +269,19 @@ class Database extends Entity
     }
 
     /**
-     * @return array
+     * @return ?RichText
      */
-    public function getRawTitle(): array
+    public function getRichTitle(): ?RichText
     {
-        return $this->rawTitle;
+        return $this->richTitle;
+    }
+
+    /**
+     * @return ?RichText
+     */
+    public function getRichDescription(): ?RichText
+    {
+        return $this->richDescription;
     }
 
     /**
@@ -267,21 +298,5 @@ class Database extends Entity
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedTime(): DateTime
-    {
-        return $this->createdTime;
-    }
-
-    /**
-     * @return array
-     */
-    public function getLastEditedTime(): DateTime
-    {
-        return $this->lastEditedTime;
     }
 }

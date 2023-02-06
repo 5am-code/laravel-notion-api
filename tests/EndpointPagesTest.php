@@ -75,6 +75,7 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertCount(9, $pageResult->getPropertyKeys());
         $this->assertSame('database_id', $pageResult->getParentType());
         $this->assertSame('f2939732-f694-4ce2-b613-f28db6ded673', $pageResult->getParentId());
+        $this->assertTrue($pageResult->isArchived());
 
         // check date and datetime properties
         $this->assertTrue($pageResult->getProperty('DateWithTime')->hasTime());

@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Arr;
@@ -17,6 +16,11 @@ class Entity implements JsonSerializable
      * @var string
      */
     private string $id;
+
+    /**
+     * @var string
+     */
+    protected string $objectType = '';
 
     /**
      * @var array
@@ -68,23 +72,22 @@ class Entity implements JsonSerializable
         $this->responseData = $responseData;
     }
 
-    protected function fillCreatedTime()
+    protected function fillEntityBase(): void
     {
-        if (Arr::exists($this->responseData, 'created_time')) {
-            $this->createdTime = new Carbon($this->responseData['created_time']);
-        }
+        $this->fillId();
+        $this->fillObjectType();
     }
 
-    protected function fillLastEditedTime()
-    {
-        if (Arr::exists($this->responseData, 'last_edited_time')) {
-            $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
-        }
-    }
-
-    protected function fillId()
+    private function fillId()
     {
         $this->id = $this->responseData['id'];
+    }
+
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
     }
 
     /**
@@ -98,6 +101,14 @@ class Entity implements JsonSerializable
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectType(): string
+    {
+        return $this->objectType;
     }
 
     /**

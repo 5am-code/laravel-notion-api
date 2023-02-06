@@ -80,6 +80,7 @@ class EndpointUsersTest extends NotionApiTest
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals('Avocado Lovelace', $user->getName());
+        $this->assertEquals('user', $user->getObjectType());
         $this->assertEquals('https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg', $user->getAvatarUrl());
     }
 

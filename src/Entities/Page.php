@@ -17,6 +17,9 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Text;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasArchive;
+use FiveamCode\LaravelNotionApi\Traits\HasParent;
+use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -25,6 +28,8 @@ use Illuminate\Support\Collection;
  */
 class Page extends Entity
 {
+    use HasTimestamps, HasArchive, HasParent;
+
     /**
      * @var string
      */
@@ -56,21 +61,6 @@ class Page extends Entity
     private string $coverType = '';
 
     /**
-     * @var string
-     */
-    private string $parentId = '';
-
-    /**
-     * @var string
-     */
-    private string $parentType = '';
-
-    /**
-     * @var string
-     */
-    protected string $objectType = '';
-
-    /**
      * @var array
      */
     protected array $rawProperties = [];
@@ -89,16 +79,6 @@ class Page extends Entity
      * @var Collection
      */
     protected Collection $properties;
-
-    /**
-     * @var DateTime
-     */
-    protected DateTime $createdTime;
-
-    /**
-     * @var DateTime
-     */
-    protected DateTime $lastEditedTime;
 
     /**
      * Page constructor.
@@ -131,23 +111,15 @@ class Page extends Entity
 
     private function fillFromRaw(): void
     {
-        $this->fillId();
-        $this->fillParent();
-        $this->fillObjectType();
+        parent::fillEntityBase();
         $this->fillProperties();
         $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillCreatedTime();
-        $this->fillLastEditedTime();
-    }
-
-    private function fillObjectType(): void
-    {
-        if (Arr::exists($this->responseData, 'object')) {
-            $this->objectType = $this->responseData['object'];
-        }
+        $this->fillParentAttributes();
+        $this->fillArchivedAttributes();
+        $this->fillTimestampableAttributes();
     }
 
     /**
@@ -213,20 +185,6 @@ class Page extends Entity
     {
         if (Arr::exists($this->responseData, 'url')) {
             $this->url = $this->responseData['url'];
-        }
-    }
-
-    private function fillParent(): void
-    {
-        if (Arr::exists($this->responseData, 'parent')) {
-            $this->parentType = $this->responseData['parent']['type'];
-            if (Arr::exists($this->responseData['parent'], 'database_id')) {
-                $this->parentId = $this->responseData['parent']['database_id'];
-            } elseif (Arr::exists($this->responseData['parent'], 'page_id')) {
-                $this->parentId = $this->responseData['parent']['page_id'];
-            } elseif (Arr::exists($this->responseData['parent'], 'workspace')) {
-                $this->parentId = $this->responseData['parent']['workspace'];
-            }
         }
     }
 
@@ -476,30 +434,6 @@ class Page extends Entity
     }
 
     /**
-     * @return string
-     */
-    public function getObjectType(): string
-    {
-        return $this->objectType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentId(): string
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentType(): string
-    {
-        return $this->parentType;
-    }
-
-    /**
      * @return array
      */
     public function getRawProperties(): array
@@ -513,21 +447,5 @@ class Page extends Entity
     public function getPropertyKeys(): array
     {
         return $this->propertyKeys;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedTime(): DateTime
-    {
-        return $this->createdTime;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getLastEditedTime(): DateTime
-    {
-        return $this->lastEditedTime;
     }
 }

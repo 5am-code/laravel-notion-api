@@ -37,7 +37,7 @@ class User extends Entity
 
     private function fillFromRaw(): void
     {
-        $this->fillId();
+        parent::fillEntityBase();
         $this->fillName();
         $this->fillAvatarUrl();
     }
