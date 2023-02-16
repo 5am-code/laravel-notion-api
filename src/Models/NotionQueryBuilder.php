@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Models;
 
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
-use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
 use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
 use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
@@ -40,7 +39,7 @@ class NotionQueryBuilder
     {
         $pageCollection = $this->internalQuery();
 
-        return $pageCollection->pluck('props.' . $value, $key !== null ? 'props.' . $key : null);
+        return $pageCollection->pluck('props.'.$value, $key !== null ? 'props.'.$key : null);
     }
 
     private function queryToNotion(int $limit = 100): PageCollection
@@ -82,7 +81,7 @@ class NotionQueryBuilder
         foreach ($queryResponse->asCollection() as $pageItem) {
             $instance = $this->modelClass::createInstance($this->modelClass::$databaseId);
             $instance->page = $pageItem;
-            
+
             foreach ($pageItem->getProperties() as $propertyItem) {
                 $propertyContent = $propertyItem->getContent();
                 if ($this->modelClass::$convertPropsToText || $this->localConvertPropsToText) {
@@ -268,9 +267,9 @@ class NotionQueryBuilder
     {
         $postCacheKey = '';
         if ($this->nextCursor !== null) {
-            $postCacheKey = '-' . $this->nextCursor->__toString();
+            $postCacheKey = '-'.$this->nextCursor->__toString();
         }
 
-        return  $this->modelClass::$preCacheKey . $this->modelClass::$databaseId . $postCacheKey;
+        return  $this->modelClass::$preCacheKey.$this->modelClass::$databaseId.$postCacheKey;
     }
 }
