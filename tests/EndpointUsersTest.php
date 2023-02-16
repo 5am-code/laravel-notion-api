@@ -31,6 +31,7 @@ class EndpointUsersTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Bad Request');
+        $this->expectExceptionCode(400);
 
         Notion::users()->all();
     }
@@ -79,6 +80,7 @@ class EndpointUsersTest extends NotionApiTest
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals('Avocado Lovelace', $user->getName());
+        $this->assertEquals('user', $user->getObjectType());
         $this->assertEquals('https://secure.notion-static.com/e6a352a8-8381-44d0-a1dc-9ed80e62b53d.jpg', $user->getAvatarUrl());
     }
 
@@ -96,6 +98,7 @@ class EndpointUsersTest extends NotionApiTest
 
         $this->expectException(NotionException::class);
         $this->expectExceptionMessage('Not found');
+        $this->expectExceptionCode(404);
 
         Notion::users()->find('d40e767c-d7af-4b18-a86d-55c61f1e39a1');
     }

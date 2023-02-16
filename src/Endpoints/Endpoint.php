@@ -19,6 +19,7 @@ class Endpoint
     public const PAGES = 'pages';
     public const USERS = 'users';
     public const SEARCH = 'search';
+    public const COMMENTS = 'comments';
 
     /**
      * @var Notion

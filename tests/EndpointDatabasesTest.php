@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Tests;
 
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 use Notion;
@@ -90,13 +91,23 @@ class EndpointDatabasesTest extends NotionApiTest
 
         // check properties
         $this->assertSame('Grocery List', $databaseResult->getTitle());
+        $this->assertSame('Grocery List Description', $databaseResult->getDescription());
         $this->assertSame('database', $databaseResult->getObjectType());
+        $this->assertSame('668d797c-76fa-4934-9b05-ad288df2d136', $databaseResult->getId());
+        $this->assertTrue($databaseResult->isInline());
+        $this->assertTrue($databaseResult->isArchived());
 
-        $this->assertCount(1, $databaseResult->getRawTitle());
+        $this->assertInstanceOf(RichText::class, $databaseResult->getRichTitle());
+        $this->assertInstanceOf(RichText::class, $databaseResult->getRichDescription());
+        $this->assertCount(1, $databaseResult->getRichTitle()->getRawResponse());
+        $this->assertCount(1, $databaseResult->getRichDescription()->getRawResponse());
         $this->assertCount(12, $databaseResult->getRawProperties());
 
         $this->assertInstanceOf(Carbon::class, $databaseResult->getCreatedTime());
         $this->assertInstanceOf(Carbon::class, $databaseResult->getLastEditedTime());
+
+        $this->assertEquals('page_id', $databaseResult->getParentType());
+        $this->assertEquals('f2939732-f694-4ce2-b613-f28db6ded673', $databaseResult->getParentId());
     }
 
     /** @test */

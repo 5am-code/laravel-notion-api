@@ -7,7 +7,7 @@
         "type": "database_id",
         "database_id": "f2939732-f694-4ce2-b613-f28db6ded673"
     },
-    "archived": false,
+    "archived": true,
     "properties": {
         "NumberProp": {
             "id": ">d{N",

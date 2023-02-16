@@ -62,7 +62,7 @@ class Property extends Entity
 
     protected function fillFromRaw(): void
     {
-        $this->fillId();
+        parent::fillEssentials();
         $this->fillType();
         $this->fillContent();
     }
@@ -177,6 +177,7 @@ class Property extends Entity
             case 'files':
             case 'formula':
             case 'rollup':
+            case 'relation':
                 $class = str_replace('_', '', ucwords($type, '_'));
 
                 return 'FiveamCode\\LaravelNotionApi\\Entities\\Properties\\'.$class;
