@@ -3,13 +3,16 @@
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
+use FiveamCode\LaravelNotionApi\Entities\Collections\PageCollection;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
 use FiveamCode\LaravelNotionApi\Entities\Page;
+use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
+use Illuminate\Support\Collection;
 
 /**
  * Class Resolve.
@@ -62,5 +65,30 @@ class Resolve extends Endpoint
             default:
                 throw new HandlingException('Unknown parent type while resolving the notion parent');
         }
+    }
+
+    /**
+     * @param  Relation  $relation
+     * @return Collection<Page>
+     *
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    public function relations(Relation $relation, bool $onlyTitles = false): Collection
+    {
+        $pages = collect();
+        $relationIds = $relation->getRelation()->map(function ($o) {
+            return $o['id'];
+        });
+
+        foreach ($relationIds as $relationId) {
+            if ($onlyTitles) {
+                $pages->add($this->notion->pages()->find($relationId)->getTitle());
+            } else {
+                $pages->add($this->notion->pages()->find($relationId));
+            }
+        }
+
+        return $pages;
     }
 }
