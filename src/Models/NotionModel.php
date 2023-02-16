@@ -57,12 +57,13 @@ class NotionModel implements JsonSerializable
     }
 
     /**
-     * @return array 
+     * @return array
      */
     public function toArray(): array
     {
         $array = get_object_vars($this);
         unset($array['page']);
+
         return $array;
     }
 
