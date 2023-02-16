@@ -70,6 +70,14 @@ class Text extends Property implements Modifiable
     }
 
     /**
+     * @return string
+     */
+    public function asText(): string
+    {
+        return $this->getPlainText();
+    }
+
+    /**
      * @return RichText
      */
     public function getContent(): RichText
