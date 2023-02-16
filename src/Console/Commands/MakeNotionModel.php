@@ -61,7 +61,6 @@ class MakeNotionModel extends Command
             $visibleArray .= "        '$propName',\n";
             $propertyTypeMape .= "        '$propName' => '$notionPropType',\n";
             $propertyTitleMap .= "        '$propName' => '{$propertyInfo->getTitle()}',\n";
-            
         }
 
         $contents = "<?php
