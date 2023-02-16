@@ -8,8 +8,9 @@ use FiveamCode\LaravelNotionApi\Notion;
 use FiveamCode\LaravelNotionApi\Query\StartCursor;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use JsonSerializable;
 
-class NotionModel
+class NotionModel implements JsonSerializable
 {
     /**
      * @var ?string
@@ -53,6 +54,24 @@ class NotionModel
     public function getPage(): Page
     {
         return $this->page;
+    }
+
+    /**
+     * @return array 
+     */
+    public function toArray(): array
+    {
+        $array = get_object_vars($this);
+        unset($array['page']);
+        return $array;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 
     public static function createInstance()
