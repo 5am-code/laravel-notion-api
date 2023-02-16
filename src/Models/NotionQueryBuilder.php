@@ -40,7 +40,7 @@ class NotionQueryBuilder
     {
         $pageCollection = $this->internalQuery();
 
-        return $pageCollection->pluck('props.'.$value, $key !== null ? 'props.'.$key : null);
+        return $pageCollection->pluck('props.' . $value, $key !== null ? 'props.' . $key : null);
     }
 
     private function queryToNotion(int $limit = 100): PageCollection
@@ -81,9 +81,8 @@ class NotionQueryBuilder
 
         foreach ($queryResponse->asCollection() as $pageItem) {
             $instance = $this->modelClass::createInstance($this->modelClass::$databaseId);
-            // $instance->page = $pageItem;
-
-            // $instance->{'props'} = (object)[];
+            $instance->page = $pageItem;
+            
             foreach ($pageItem->getProperties() as $propertyItem) {
                 $propertyContent = $propertyItem->getContent();
                 if ($this->modelClass::$convertPropsToText || $this->localConvertPropsToText) {
@@ -107,6 +106,14 @@ class NotionQueryBuilder
     public function get()
     {
         return $this->internalQuery();
+    }
+
+    /**
+     * @return static
+     */
+    public function first()
+    {
+        return $this->get()->first();
     }
 
     /**
@@ -187,7 +194,7 @@ class NotionQueryBuilder
             $value = $operator;
             $operator = Operators::EQUALS;
         } else {
-            switch ($operator) {
+            switch (Str::lower($operator)) {
                 case '=':
                     $operator = Operators::EQUALS;
                     break;
@@ -205,6 +212,9 @@ class NotionQueryBuilder
                     break;
                 case '>=':
                     $operator = Operators::GREATER_THAN_OR_EQUAL_TO;
+                    break;
+                case 'contains':
+                    $operator = Operators::CONTAINS;
                     break;
             }
         }
@@ -258,9 +268,9 @@ class NotionQueryBuilder
     {
         $postCacheKey = '';
         if ($this->nextCursor !== null) {
-            $postCacheKey = '-'.$this->nextCursor->__toString();
+            $postCacheKey = '-' . $this->nextCursor->__toString();
         }
 
-        return  $this->modelClass::$preCacheKey.$this->modelClass::$databaseId.$postCacheKey;
+        return  $this->modelClass::$preCacheKey . $this->modelClass::$databaseId . $postCacheKey;
     }
 }

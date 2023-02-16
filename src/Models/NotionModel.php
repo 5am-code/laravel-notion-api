@@ -41,8 +41,6 @@ class NotionModel
      */
     public static $convertPropsToText = false;
 
-    public $props;
-
     public Page $page;
 
     public function __construct($databaseId = null)
@@ -50,6 +48,11 @@ class NotionModel
         if ($databaseId == null) {
             $databaseId = static::$databaseId;
         }
+    }
+
+    public function getPage(): Page
+    {
+        return $this->page;
     }
 
     public static function createInstance()
@@ -77,11 +80,20 @@ class NotionModel
     }
 
     /**
-     * @return NotionModel
+     * @return NotionQueryBuilder
      */
     public static function query(): NotionQueryBuilder
     {
         return new NotionQueryBuilder(static::class);
+    }
+
+
+    /**
+     * @return NotionQueryBuilder
+     */
+    public static function where($property, $operator, $value = null)
+    {
+        return static::query()->where($property, $operator, $value);
     }
 
     /**

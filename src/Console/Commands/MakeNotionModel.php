@@ -21,7 +21,7 @@ class MakeNotionModel extends Command
      *
      * @var string
      */
-    protected $description = 'Make Notion Model';
+    protected $description = 'Make Notion Model based on a provided {database_id}';
 
     /**
      * Execute the console command.
@@ -59,6 +59,9 @@ class MakeNotionModel extends Command
             $propName = Str::slug($propertyInfo->getTitle(), '_');
             $phpDocsProperties .= " * @property {$propType} \${$propName} $notionPropType \n";
             $visibleArray .= "        '$propName',\n";
+            $propertyTypeMape .= "        '$propName' => '$notionPropType',\n";
+            $propertyTitleMap .= "        '$propName' => '{$propertyInfo->getTitle()}',\n";
+            
         }
 
         $contents = "<?php
@@ -79,10 +82,12 @@ class {$databaseName} extends NotionModel
     public static \$visible = [
 $visibleArray    ];
 
-    /**
-     * @var {$databaseName}Properties
-     */
-    public static \$props;
+    public static \$propertyTypeMap = [
+$propertyTypeMape    ];
+    
+    public static \$propertyTitleMap = [
+$propertyTitleMap    ];
+
 }
 
 ";
