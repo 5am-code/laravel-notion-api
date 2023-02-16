@@ -87,7 +87,6 @@ class NotionModel
         return new NotionQueryBuilder(static::class);
     }
 
-
     /**
      * @return NotionQueryBuilder
      */
