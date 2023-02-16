@@ -68,7 +68,7 @@ class Text extends Property implements Modifiable
         $this->content = new RichText($this->rawContent);
         $this->plainText = $this->content->getPlainText();
     }
-    
+
     /**
      * @return RichText
      */
