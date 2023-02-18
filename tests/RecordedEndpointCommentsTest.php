@@ -1,14 +1,11 @@
 <?php
 
 use Carbon\Carbon;
-use Dotenv\Dotenv;
 use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
 use FiveamCode\LaravelNotionApi\Entities\Comment;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
-use YourVendor\YourPackage\Middleware\InterceptRequestesForRecording;
 
 beforeEach(function () {
     Http::recordAndFakeLater('https://api.notion.com/v1/comments*')
