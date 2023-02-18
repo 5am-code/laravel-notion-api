@@ -1,0 +1,46 @@
+{
+    "status": 200,
+    "data": {
+        "object": "list",
+        "results": [
+            {
+                "object": "comment",
+                "id": "99457ae4-8262-413a-b224-0bd82346d885",
+                "parent": {
+                    "type": "page_id",
+                    "page_id": "cb588bcb-cbdb-4f2e-ac3d-b05446b8f5d9"
+                },
+                "discussion_id": "f203fa27-fe02-40c9-be9f-fb35e2e956ba",
+                "created_time": "2023-02-18T10:53:00.000Z",
+                "last_edited_time": "2023-02-18T10:53:00.000Z",
+                "created_by": {
+                    "object": "user",
+                    "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+                },
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "This is a Test Comment for Laravel",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "This is a Test Comment for Laravel",
+                        "href": null
+                    }
+                ]
+            }
+        ],
+        "next_cursor": null,
+        "has_more": false,
+        "type": "comment",
+        "comment": []
+    }
+}
