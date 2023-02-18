@@ -3,6 +3,7 @@
 namespace FiveamCode\LaravelNotionApi;
 
 use Illuminate\Support\ServiceProvider;
+use FiveamCode\LaravelNotionApi\Tests\Plugins\PestPluginHttpRecorder;
 
 /**
  * Class LaravelNotionApiServiceProvider.
@@ -32,5 +33,9 @@ class LaravelNotionApiServiceProvider extends ServiceProvider
         $this->app->singleton(Notion::class, function () {
             return new Notion(config('laravel-notion-api.notion-api-token'), config('laravel-notion-api.version'));
         });
+
+        if ($this->app->runningInConsole()) {
+            PestPluginHttpRecorder::register();
+        }
     }
 }
