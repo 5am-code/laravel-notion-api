@@ -3,3 +3,4 @@ vendor
 .phpunit.result.cache
 coverage/
 .phpunit.cache/
+.env*
