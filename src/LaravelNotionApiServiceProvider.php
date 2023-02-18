@@ -2,8 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use Illuminate\Support\ServiceProvider;
 use FiveamCode\LaravelNotionApi\Tests\Plugins\PestPluginHttpRecorder;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Class LaravelNotionApiServiceProvider.
