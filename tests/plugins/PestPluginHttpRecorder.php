@@ -18,14 +18,13 @@ class PestPluginHttpRecorder
             }
 
             $recorder = new HttpRecorder();
+            $httpFakeCallbacks = [];
+            
             foreach ($urls as $url) {
-                Http::fake([
-                    $url => function (Request $request) use ($recorder) {
-                        return $recorder->handle($request);
-                    },
-                ]);
+                $httpFakeCallbacks[$url] = fn (Request $request) => $recorder->handle($request);
             }
 
+            Http::fake($httpFakeCallbacks);
             return $recorder;
         });
     }
