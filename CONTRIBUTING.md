@@ -42,9 +42,9 @@ If the project maintainer has any additional requirements, you will find them li
 
 - **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](https://pear.php.net/package/PHP_CodeSniffer).
 
-- **Add tests!** - Your patch won't be accepted if it doesn't have tests.
+- **Add tests!** - Your pull request won't be accepted if it doesn't have tests. When implementing new tests, please use the Pest PHP framework. You can find examples and detailed documentation at [pestphp.com](https://pestphp.com/).
 
-- **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
+- **Document any change in behaviour** - Make sure the `README.md` is kept up-to-date. If you implement a new feature or propose significant changes to an existing feature, you will have to provide the documentation for these as well. The maintainers of the project will inform you about the process if necessary.
 
 - **Consider our release cycle** - We try to follow [SemVer v2.0.0](https://semver.org/). Randomly breaking public APIs is not an option.
 
@@ -52,4 +52,4 @@ If the project maintainer has any additional requirements, you will find them li
 
 - **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](https://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
 
-**Happy coding**!
+**Happy coding!** 🚀!
