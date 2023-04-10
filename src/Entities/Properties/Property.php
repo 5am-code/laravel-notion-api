@@ -62,7 +62,7 @@ class Property extends Entity
 
     protected function fillFromRaw(): void
     {
-        $this->fillId();
+        parent::fillEssentials();
         $this->fillType();
         $this->fillContent();
     }

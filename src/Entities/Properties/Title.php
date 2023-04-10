@@ -77,6 +77,14 @@ class Title extends Property implements Modifiable
     }
 
     /**
+     * @return string
+     */
+    public function asText(): string
+    {
+        return $this->getPlainText();
+    }
+
+    /**
      * @return RichText
      */
     public function getRichText(): RichText

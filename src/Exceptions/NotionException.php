@@ -16,7 +16,17 @@ class NotionException extends LaravelNotionAPIException
      */
     public static function instance(string $message, array $payload = []): NotionException
     {
-        $e = new NotionException($message);
+        $code = 0;
+
+        $responseDataExists = array_key_exists('responseData', $payload);
+
+        if ($responseDataExists) {
+            $responseData = $payload['responseData'];
+
+            $code = array_key_exists('status', $responseData) ? $responseData['status'] : 0;
+        }
+
+        $e = new NotionException($message, $code);
         $e->payload = $payload;
 
         return $e;
@@ -46,7 +56,7 @@ class NotionException extends LaravelNotionAPIException
 
         return new NotionException(
             $message,
-            0,
+            $response->status(),
             $response->toException()
         );
     }

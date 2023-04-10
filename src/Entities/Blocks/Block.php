@@ -2,9 +2,11 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
 
-use DateTime;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
+use FiveamCode\LaravelNotionApi\Traits\HasArchive;
+use FiveamCode\LaravelNotionApi\Traits\HasParent;
+use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
 use Illuminate\Support\Arr;
 
 /**
@@ -12,6 +14,8 @@ use Illuminate\Support\Arr;
  */
 class Block extends Entity
 {
+    use HasTimestamps, HasArchive, HasParent;
+
     /**
      * @var string
      */
@@ -38,16 +42,6 @@ class Block extends Entity
     protected string $text = '[warning: unsupported in notion api]';
 
     /**
-     * @var DateTime
-     */
-    protected DateTime $createdTime;
-
-    /**
-     * @var DateTime
-     */
-    protected DateTime $lastEditedTime;
-
-    /**
      * @param  array  $responseData
      *
      * @throws HandlingException
@@ -65,12 +59,10 @@ class Block extends Entity
 
     protected function fillFromRaw(): void
     {
-        $this->fillId();
+        parent::fillEssentials();
         $this->fillType();
         $this->fillRawContent();
         $this->fillHasChildren();
-        $this->fillCreatedTime();
-        $this->fillLastEditedTime();
     }
 
     private function fillType(): void
@@ -124,22 +116,6 @@ class Block extends Entity
     public function hasChildren(): bool
     {
         return $this->hasChildren;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedTime(): DateTime
-    {
-        return $this->createdTime;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getLastEditedTime(): DateTime
-    {
-        return $this->lastEditedTime;
     }
 
     public function getContent()

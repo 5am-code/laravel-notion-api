@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Entities;
 
-use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Arr;
@@ -17,6 +16,11 @@ class Entity implements JsonSerializable
      * @var string
      */
     private string $id;
+
+    /**
+     * @var string
+     */
+    protected string $objectType = '';
 
     /**
      * @var array
@@ -68,23 +72,60 @@ class Entity implements JsonSerializable
         $this->responseData = $responseData;
     }
 
-    protected function fillCreatedTime()
+    protected function fillEssentials(): void
     {
-        if (Arr::exists($this->responseData, 'created_time')) {
-            $this->createdTime = new Carbon($this->responseData['created_time']);
+        $this->fillId();
+        $this->fillObjectType();
+        $this->fillTraitAttributes();
+    }
+
+    private function fillTraitAttributes(): void
+    {
+        $traitMapping = [
+            'FiveamCode\LaravelNotionApi\Traits\HasTimestamps' => function ($entity) {
+                $entity->fillTimestampableAttributes();
+            },
+            'FiveamCode\LaravelNotionApi\Traits\HasParent' => function ($entity) {
+                $entity->fillParentAttributes();
+            },
+            'FiveamCode\LaravelNotionApi\Traits\HasArchive' => function ($entity) {
+                $entity->fillArchivedAttributes();
+            },
+        ];
+
+        $traits = $this->class_uses_deep($this);
+        foreach ($traits as $trait) {
+            if (Arr::exists($traitMapping, $trait)) {
+                $traitMapping[$trait]($this);
+            }
         }
     }
 
-    protected function fillLastEditedTime()
+    private function class_uses_deep($class, $autoload = true)
     {
-        if (Arr::exists($this->responseData, 'last_edited_time')) {
-            $this->lastEditedTime = new Carbon($this->responseData['last_edited_time']);
+        $traits = [];
+
+        do {
+            $traits = array_merge(class_uses($class, $autoload), $traits);
+        } while ($class = get_parent_class($class));
+
+        foreach ($traits as $trait => $same) {
+            $traits = array_merge(class_uses($trait, $autoload), $traits);
         }
+
+        return array_unique($traits);
     }
 
-    protected function fillId()
+    private function fillId()
     {
         $this->id = $this->responseData['id'];
+    }
+
+    private function fillObjectType(): void
+    {
+        if (Arr::exists($this->responseData, 'object')) {
+            $this->objectType = $this->responseData['object'];
+        }
     }
 
     /**
@@ -98,6 +139,14 @@ class Entity implements JsonSerializable
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectType(): string
+    {
+        return $this->objectType;
     }
 
     /**

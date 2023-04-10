@@ -1,9 +1,6 @@
-<h1 align="center"> Laravel Notion API</h1>
-<h2 align="center"> Effortless Notion integrations with Laravel</h2>
+<h1 align="center"> Notion for Laravel</h1>
 
-<p align="center">
-<img src="https://5amco.de/images/5am.png" width="200" height="200">
-</p>
+<img src="open-graph.png">
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
@@ -14,90 +11,156 @@ This package provides a simple and crisp way to access the Notion API endpoints,
 
 ## Installation
 
-You can install the package via composer:
+The package is compatible with Laravel 8, 9 and 10 with their respective PHP versions.
 
-```bash
-composer require fiveam-code/laravel-notion-api
-```
+1. Install the package via composer:
 
-### Authorization
+   ```bash
+   composer require fiveam-code/laravel-notion-api
+   ```
 
-The Notion API requires an access token and a Notion integration, [the Notion documentation](https://developers.notion.com/docs/getting-started#before-we-begin) explains how this works. It's important to grant access to the integration within your Notion account to enable the API access.
+2. Get your Notion API access token like explained in [their documentation](https://developers.notion.com/). It's also
+   important to grant access to the integration within your Notion pages, which is described in the developer
+   documentation at Notion as well.
 
-Add your Notion API token to your `.env` file:
+3. Add a new line to your applications `.env` file:
 
-```
-NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
-```
+   ```bash
+   NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
+   ```
 
-## Usage
+4. You're ready to go! You can now access Notion endpoints through the `Notion` facade:
 
-Head over to the [Documentation](https://5amco.de/docs) of this package.
+   ```php
+   use \Notion;
 
-### 🔥 Code Examples to jumpstart your Notion API Project
+   Notion::databases()->find("8284f3ff77e24d4a939d19459e4d6bdc");
+   ```
 
-#### Basic Setup (+ example)
+   That's it.
+
+For detailed usage information and a list of available endpoints see (the docs).
+
+## Examples
+
+All examples refer to our test database, which you can
+find [here](https://dianawebdev.notion.site/8284f3ff77e24d4a939d19459e4d6bdc?v=bc3a9ce8cdb84d3faefc9ae490136ac2).
+
+### Fetch a Notion Database
+
+The `databases()->find()` method returns a `FiveamCode\LaravelNotionApi\Entities\Database` object,
+which contains all the information about the database, including its properties and the possible values for each
+property.
+
 ```php
-use FiveamCode\LaravelNotionApi\Notion; 
+use \Notion;
 
-# Access through Facade (token has to be set in .env)
-\Notion::databases()->find($databaseId);
-
-# Custom instantiation (necessary if you want to access more than one NotionApi integration)
-$notion = new Notion($apiToken, $apiVersion); // version-default is 'v1'
-$notion->databases()->find($databaseId);
+Notion::databases()
+        ->find("8284f3ff77e24d4a939d19459e4d6bdc");
 ```
 
-#### Fetch Page Information
+### Fetch a Notion Page
+
+The `pages()->find()` method returns a `FiveamCode\LaravelNotionApi\Entities\Page` object,
+which contains all the information about the page, including its properties and the possible values for each property.
+
 ```php
-// Returns a specific page
-\Notion::pages()->find($yourPageId);
+Notion::pages()
+        ->find("e7e5e47d-23ca-463b-9750-eb07ca7115e4");
 ```
 
-#### Search
+### Search
+
+The `search()` endpoint returns a collection of pages that match the search query. The scope of the search is limited to
+the workspace that the integration is installed in
+and the pages that are shared with the integration.
+
 ```php
-// Returns a collection pages and databases of your workspace (included in your integration-token)
-\Notion::search($searchText)
+Notion::search("Search term")
         ->query()
         ->asCollection();
 ```
 
-#### Query Database
+### Query Database
+
+The `database()` endpoint allows you to query a specific database and returns a collection of pages (= database
+entries).
+You can filter and sort the results and limit the number of returned entries. For detailed information about the
+available
+filters and sorts, please refer to the [documentation](https://developers.notion.com/reference/post-database-query).
 
 ```php
-// Queries a specific database and returns a collection of pages (= database entries)
-$sortings = new Collection();
-$filters = new Collection();
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 
-$sortings
-  ->add(Sorting::propertySort('Ordered', 'ascending'));
-$sortings
-  ->add(Sorting::timestampSort('created_time', 'ascending'));
+$nameFilter = Filter::textFilter('Name', Operators::EQUALS, 'Ada Lovelace');
 
-$filters
-  ->add(Filter::textFilter('title', ['contains' => 'new']));
-// or
-$filters
-  ->add(Filter::rawFilter('Tags', ['multi_select' => ['contains' => 'great']]));
-  
-\Notion::database($yourDatabaseId)
-      ->filterBy($filters) // filters are optional
-      ->sortBy($sortings) // sorts are optional
-      ->limit(5) // limit is optional
-      ->query()
-      ->asCollection();
+\Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+    ->filterBy($nameFilter)
+    ->limit(5)
+    ->query()
+    ->asCollection();
 ```
 
+Compound filters for AND or OR queries are also available:
 
-### Testing
+```php
+use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
+use FiveamCode\LaravelNotionApi\Query\Sorting;
+
+# Give me all entries that are
+# (KnownFor == UNIVAC || KnownFor == ENIAC)
+# and sort them by name ascending
+
+$filterBag = new FilterBag(Operators::AND);
+
+$filterBag->addFilter(
+    Filter::rawFilter("Known for", [
+        "multi_select" => [Operators::CONTAINS => "UNIVAC"],
+    ])
+);
+
+$filterBag->addFilter(
+    Filter::rawFilter("Known for", [
+        "multi_select" => [Operators::CONTAINS => "ENIAC"],
+    ])
+);
+
+\Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+    ->filterBy($filterBag)
+    ->sortBy(Sorting::propertySort('Name', 'ascending'))
+    ->limit(5)
+    ->query()
+    ->asCollection();
+```
+
+### Testing (pestphp)
+
+You can find even more usage examples by checking out the package tests in the `/tests` directory.
+The tests are making use of Pest PHP and we are working on switching from PHPUNIT to it (todo sentence).
+
+If you want to run the tests in your CLI:
 
 ```bash
-vendor/bin/phpunit tests
+vendor/bin/pest tests
 ```
 
 ## Support
 
-If you use this package in one of your projects or just want to support our development, consider becoming a [Patreon](https://www.patreon.com/bePatron?u=56662485)!
+If you use this package in one of your projects or want to support our development, consider becoming
+a [Patreon Supporter](https://www.patreon.com/bePatron?u=56662485)!
+
+### Supported by Tinkerwell
+
+<a href="https://tinkerwell.app/">
+<img src="https://tinkerwell.app/images/tinkerwell_logo.png" width="64" height="64" alt="Tinkerwell"> <br/>
+</a>
+
+The development of this package is supported by [Tinkerwell](https://tinkerwell.app/).
+
 
 ## Contributing
 
@@ -107,18 +170,14 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email hello@dianaweb.dev instead of using the issue tracker.
 
-## Used By
-
-- Julien Nahum created [notionforms.io](https://notionforms.io) with [laravel-notion-api](https://github.com/5am-code/laravel-notion-api), which allows you to easily create custom forms, based on your selected database within notion.
-- [GitHub Notion Sync](https://githubnotionsync.com/), a service by [Beyond Code](https://beyondco.de) to sync the issues of multiple GitHub repositories into a Notion database
-- [Notion Invoice](https://notioninvoice.com/), the first premium invoicing solution for freelancers and businesses that use Notion. Create beautiful PDF invoices from your Notion data.
-
-Using this package in your project? Open a PR to add it in this section!
-
 ## Credits
 
 - [Diana Scharf](https://github.com/mechelon)
 - [Johannes Güntner](https://github.com/johguentner)
+
+<p align="center">
+<img src="https://5amco.de/images/5am.png" width="200" height="200">
+</p>
 
 ## License
 
