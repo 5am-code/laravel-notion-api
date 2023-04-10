@@ -17,6 +17,28 @@ class Select extends Property implements Modifiable
      */
     private Collection $options;
 
+    
+    /**
+     * @param $id
+     * @return Select
+     */
+    public static function id(string $id): Select
+    {
+        $selectProperty = new Select();
+
+        $selectItem = new SelectItem();
+        $selectItem->setId($id);
+        $selectProperty->content = $selectItem;
+
+        $selectProperty->rawContent = [
+            'select' => [
+                'id' => $selectItem->getId(),
+            ],
+        ];
+
+        return $selectProperty;
+    }
+
     /**
      * @param $name
      * @return Select
