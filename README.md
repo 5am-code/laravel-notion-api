@@ -1,17 +1,29 @@
 <h1 align="center"> Notion for Laravel</h1>
 
-<img src="open-graph.png">
+<div align="center">
+<img src="https://notionforlaravel.com/images/open-graph.png" alt="Notion For Laravel" width="500">
+
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 
 [comment]: <> (![GitHub Actions]&#40;https://github.com/fiveam-code/laravel-notion-api/actions/workflows/main.yml/badge.svg&#41;)
-
+</div>
 This package provides a simple and crisp way to access the Notion API endpoints, query data and update existing entries.
+
+# Documentation
+
+For a extensive documentation, more context and usage examples, head over to the official documentation at [notionforlaravel.com](https://notionforlaravel.com).
+
+
+# Quick Start Guide
+
+All examples refer to our test database, which you can
+find [here](https://dianawebdev.notion.site/8284f3ff77e24d4a939d19459e4d6bdc?v=bc3a9ce8cdb84d3faefc9ae490136ac2).
 
 ## Installation
 
-The package is compatible with Laravel 8, 9 and 10 with their respective PHP versions.
+The package is compatible with Laravel 8, 9 and 10. The minimum PHP requirement is 8.0.
 
 1. Install the package via composer:
 
@@ -43,8 +55,6 @@ For detailed usage information and a list of available endpoints see (the docs).
 
 ## Examples
 
-All examples refer to our test database, which you can
-find [here](https://dianawebdev.notion.site/8284f3ff77e24d4a939d19459e4d6bdc?v=bc3a9ce8cdb84d3faefc9ae490136ac2).
 
 ### Fetch a Notion Database
 
@@ -137,10 +147,10 @@ $filterBag->addFilter(
     ->asCollection();
 ```
 
-### Testing (pestphp)
+### Tests
 
 You can find even more usage examples by checking out the package tests in the `/tests` directory.
-The tests are making use of Pest PHP and we are working on switching from PHPUNIT to it (todo sentence).
+We are using [Pest](https://pestphp.com/) for out tests and are currently in the process of switching all existing PHPUnit tests to Pest.
 
 If you want to run the tests in your CLI:
 
@@ -148,12 +158,9 @@ If you want to run the tests in your CLI:
 vendor/bin/pest tests
 ```
 
-## Support
+# Support
 
-If you use this package in one of your projects or want to support our development, consider becoming
-a [Patreon Supporter](https://www.patreon.com/bePatron?u=56662485)!
-
-### Supported by Tinkerwell
+## Supported by Tinkerwell
 
 <a href="https://tinkerwell.app/">
 <img src="https://tinkerwell.app/images/tinkerwell_logo.png" width="64" height="64" alt="Tinkerwell"> <br/>
@@ -162,15 +169,15 @@ a [Patreon Supporter](https://www.patreon.com/bePatron?u=56662485)!
 The development of this package is supported by [Tinkerwell](https://tinkerwell.app/).
 
 
-## Contributing
+# Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security
+# Security
 
 If you discover any security related issues, please email hello@dianaweb.dev instead of using the issue tracker.
 
-## Credits
+# Credits
 
 - [Diana Scharf](https://github.com/mechelon)
 - [Johannes Güntner](https://github.com/johguentner)
@@ -179,6 +186,6 @@ If you discover any security related issues, please email hello@dianaweb.dev ins
 <img src="https://5amco.de/images/5am.png" width="200" height="200">
 </p>
 
-## License
+# License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
