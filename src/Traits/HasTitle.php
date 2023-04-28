@@ -45,10 +45,11 @@ trait HasTitle
             [
                 'type' => 'text',
                 'text' => [
-                    'content' => $title
-                ]
-            ]
+                    'content' => $title,
+                ],
+            ],
         ];
+
         return $this;
     }
 
