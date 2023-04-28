@@ -91,6 +91,9 @@ class Entity implements JsonSerializable
             'FiveamCode\LaravelNotionApi\Traits\HasArchive' => function ($entity) {
                 $entity->fillArchivedAttributes();
             },
+            'FiveamCode\LaravelNotionApi\Traits\HasTitle' => function ($entity) {
+                $entity->fillTitleAttributes();
+            },
         ];
 
         $traits = $this->class_uses_deep($this);
