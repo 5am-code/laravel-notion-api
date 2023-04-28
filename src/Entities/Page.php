@@ -113,7 +113,7 @@ class Page extends Entity
     {
         parent::fillEssentials();
         $this->fillProperties();
-        $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties
+        $this->fillTitle(); // This has to be called after fillProperties(), since title is provided by properties (hence this is not a trait!)
         $this->fillPageUrl();
         $this->fillIcon();
         $this->fillCover();
