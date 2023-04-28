@@ -27,14 +27,13 @@ class PropertyBuilder
         return self::plain(Property::RICH_TEXT);
     }
 
-
     public static function number($format = 'number'): PropertyBuilder
     {
         return new PropertyBuilder([
             'type' => Property::NUMBER,
             Property::NUMBER => [
                 'format' => $format,
-            ]
+            ],
         ]);
     }
 

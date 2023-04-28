@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Builder;
 
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 
 /**
  * Class DatabaseBuilder.
@@ -19,9 +18,9 @@ class DatabaseBuilder
             'title' => [
                 [
                     'text' => [
-                        'content' => ''
-                    ]
-                ]
+                        'content' => '',
+                    ],
+                ],
             ],
             'parent' => [],
             'properties' => [],
@@ -31,7 +30,7 @@ class DatabaseBuilder
     public function createInPage($pageId): Database
     {
         $this->payload['parent'] = [
-            'page_id' => $pageId
+            'page_id' => $pageId,
         ];
 
         if ($this->payload['properties'] === []) {
@@ -46,22 +45,25 @@ class DatabaseBuilder
         $this->payload['title'] = [
             [
                 'text' => [
-                    'content' => $title
-                ]
-            ]
+                    'content' => $title,
+                ],
+            ],
         ];
+
         return $this;
     }
 
     public function inline(): DatabaseBuilder
     {
         $this->payload['is_inline'] = true;
+
         return $this;
     }
 
     public function addTitleProperty($name = 'Name')
     {
         $this->addProperty($name, PropertyBuilder::title());
+
         return $this;
     }
 
@@ -72,6 +74,7 @@ class DatabaseBuilder
         }
 
         $this->payload['properties'][$title] = $property->payload();
+
         return $this;
     }
 
@@ -79,6 +82,7 @@ class DatabaseBuilder
     {
         $this->payload['properties'][$title] = [];
         $this->payload['properties'][$title][$propertyType] = $content ?? new \stdClass();
+
         return $this;
     }
 
