@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Builder\DatabaseBuilder;
 use FiveamCode\LaravelNotionApi\Entities\Collections\DatabaseCollection;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
@@ -51,5 +52,18 @@ class Databases extends Endpoint implements EndpointInterface
             ->getJson($this->url(Endpoint::DATABASES."/{$databaseId}"));
 
         return new Database($result);
+    }
+
+    public function build()
+    {
+        return new DatabaseBuilder($this);
+    }
+
+    public function create(array $payload): Database
+    {
+        $result = $this
+            ->post($this->url(Endpoint::DATABASES), $payload);
+
+        return new Database($result->json());
     }
 }
