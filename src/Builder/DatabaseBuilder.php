@@ -43,7 +43,7 @@ class DatabaseBuilder
         return $this->databasesEndpoint->create($this->payload());
     }
 
-    public function title($title): DatabaseBuilder
+    public function title(string $title): DatabaseBuilder
     {
         $this->payload['title'] = [
             [
@@ -52,18 +52,59 @@ class DatabaseBuilder
                 ],
             ],
         ];
+        return $this;
+    }
 
+    public function description(string $description): DatabaseBuilder
+    {
+        $this->payload['description'] = [
+            [
+                'text' => [
+                    'content' => $description,
+                ],
+            ],
+        ];
         return $this;
     }
 
     public function inline(): DatabaseBuilder
     {
         $this->payload['is_inline'] = true;
-
         return $this;
     }
 
-    public function addTitle($name = 'Name')
+    public function iconEmoji(string $icon): DatabaseBuilder
+    {
+        $this->payload['icon'] = [
+            'type' => 'emoji',
+            'emoji' => $icon,
+        ];
+        return $this;
+    }
+
+    public function iconExternal(string $url): DatabaseBuilder
+    {
+        $this->payload['icon'] = [
+            'type' => 'external',
+            'external' => [
+                'url' => $url,
+            ],
+        ];
+        return $this;
+    }
+
+    public function coverExternal(string $url): DatabaseBuilder
+    {
+        $this->payload['cover'] = [
+            'type' => 'external',
+            'external' => [
+                'url' => $url,
+            ],
+        ];
+        return $this;
+    }
+
+    public function addTitle(string $name = 'Name')
     {
         $this->add(PropertyBuilder::title($name));
         return $this;
