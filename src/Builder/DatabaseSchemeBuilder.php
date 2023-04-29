@@ -2,7 +2,6 @@
 
 namespace FiveamCode\LaravelNotionApi\Builder;
 
-use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use Illuminate\Support\Collection;
 
 /**
@@ -20,6 +19,7 @@ class DatabaseSchemeBuilder
     public function push(PropertyBuilder $builder): DatabaseSchemeBuilder
     {
         $this->properties->push($builder);
+
         return $this;
     }
 
