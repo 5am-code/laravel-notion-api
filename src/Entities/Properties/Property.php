@@ -14,6 +14,7 @@ class Property extends Entity
     const TITLE = 'title';
     const RICH_TEXT = 'rich_text';
     const NUMBER = 'number';
+    const STATUS = 'status';
     const SELECT = 'select';
     const MULTI_SELECT = 'multi_select';
     const DATE = 'date';

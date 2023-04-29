@@ -5,6 +5,7 @@ namespace FiveamCode\LaravelNotionApi\Builder;
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 use FiveamCode\LaravelNotionApi\Entities\Database;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
+use Illuminate\Support\Collection;
 
 /**
  * Class DatabaseBuilder.
@@ -16,6 +17,8 @@ class DatabaseBuilder
     public function __construct(private Databases $databasesEndpoint)
     {
         $this->payload = [
+            'is_inline' => false,
+            'parent' => [],
             'title' => [
                 [
                     'text' => [
@@ -23,7 +26,6 @@ class DatabaseBuilder
                     ]
                 ]
             ],
-            'parent' => [],
             'properties' => [],
         ];
     }
@@ -31,11 +33,12 @@ class DatabaseBuilder
     public function createInPage($pageId): Database
     {
         $this->payload['parent'] = [
+            'type' => 'page_id',
             'page_id' => $pageId
         ];
 
         if ($this->payload['properties'] === []) {
-            $this->addTitleProperty();
+            $this->addTitle();
         }
 
         return $this->databasesEndpoint->create($this->payload());
@@ -59,23 +62,37 @@ class DatabaseBuilder
         return $this;
     }
 
-    public function addTitleProperty($name = 'Name')
+    public function addTitle($name = 'Name')
     {
-        $this->addProperty($name, PropertyBuilder::title());
+        $this->add(PropertyBuilder::title($name));
         return $this;
     }
 
-    public function addProperty(string $title, string|PropertyBuilder $property): DatabaseBuilder
+    public function add(PropertyBuilder|Collection|DatabaseSchemeBuilder $properties): DatabaseBuilder
     {
-        if (is_string($property)) {
-            $property = PropertyBuilder::plain($property);
+        if ($properties instanceof PropertyBuilder) {
+            $properties = collect([$properties]);
         }
 
-        $this->payload['properties'][$title] = $property->payload();
+        if ($properties instanceof DatabaseSchemeBuilder) {
+            $properties = $properties->getProperties();
+        }
+
+        $properties->each(function (PropertyBuilder $property) {
+            $this->payload['properties'][$property->getName()] = $property->payload();
+        });
+
         return $this;
     }
 
-    public function addRawProperty(string $title, string $propertyType, array $content = null): DatabaseBuilder
+    public function scheme(callable $callback): DatabaseBuilder
+    {
+        $builder = new DatabaseSchemeBuilder();
+        $callback($builder);
+        return $this->add($builder);
+    }
+
+    public function addRaw(string $title, string $propertyType, array $content = null): DatabaseBuilder
     {
         $this->payload['properties'][$title] = [];
         $this->payload['properties'][$title][$propertyType] = $content ?? new \stdClass();
