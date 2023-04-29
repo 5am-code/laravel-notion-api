@@ -52,6 +52,7 @@ class DatabaseBuilder
                 ],
             ],
         ];
+
         return $this;
     }
 
@@ -64,12 +65,14 @@ class DatabaseBuilder
                 ],
             ],
         ];
+
         return $this;
     }
 
     public function inline(): DatabaseBuilder
     {
         $this->payload['is_inline'] = true;
+
         return $this;
     }
 
@@ -79,6 +82,7 @@ class DatabaseBuilder
             'type' => 'emoji',
             'emoji' => $icon,
         ];
+
         return $this;
     }
 
@@ -90,6 +94,7 @@ class DatabaseBuilder
                 'url' => $url,
             ],
         ];
+
         return $this;
     }
 
@@ -101,6 +106,7 @@ class DatabaseBuilder
                 'url' => $url,
             ],
         ];
+
         return $this;
     }
 
