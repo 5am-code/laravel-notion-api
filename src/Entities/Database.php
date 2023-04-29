@@ -19,7 +19,6 @@ class Database extends Entity
 {
     use HasTimestamps, HasArchive, HasParent, HasTitle;
 
-
     /**
      * @var string
      */

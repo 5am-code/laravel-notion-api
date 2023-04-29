@@ -4,7 +4,6 @@ namespace FiveamCode\LaravelNotionApi\Builder;
 
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 use FiveamCode\LaravelNotionApi\Entities\Database;
-use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use Illuminate\Support\Collection;
 
 /**
@@ -22,9 +21,9 @@ class DatabaseBuilder
             'title' => [
                 [
                     'text' => [
-                        'content' => ''
-                    ]
-                ]
+                        'content' => '',
+                    ],
+                ],
             ],
             'properties' => [],
         ];
@@ -49,16 +48,18 @@ class DatabaseBuilder
         $this->payload['title'] = [
             [
                 'text' => [
-                    'content' => $title
-                ]
-            ]
+                    'content' => $title,
+                ],
+            ],
         ];
+
         return $this;
     }
 
     public function inline(): DatabaseBuilder
     {
         $this->payload['is_inline'] = true;
+
         return $this;
     }
 
@@ -96,6 +97,7 @@ class DatabaseBuilder
     {
         $this->payload['properties'][$title] = [];
         $this->payload['properties'][$title][$propertyType] = $content ?? new \stdClass();
+
         return $this;
     }
 
