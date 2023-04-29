@@ -33,7 +33,7 @@ class DatabaseBuilder
     {
         $this->payload['parent'] = [
             'type' => 'page_id',
-            'page_id' => $pageId
+            'page_id' => $pageId,
         ];
 
         if ($this->payload['properties'] === []) {
@@ -107,6 +107,7 @@ class DatabaseBuilder
     public function addTitle(string $name = 'Name')
     {
         $this->add(PropertyBuilder::title($name));
+
         return $this;
     }
 
@@ -131,6 +132,7 @@ class DatabaseBuilder
     {
         $builder = new DatabaseSchemeBuilder();
         $callback($builder);
+
         return $this->add($builder);
     }
 

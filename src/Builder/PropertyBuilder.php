@@ -10,7 +10,6 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
  */
 class PropertyBuilder
 {
-
     public static function bulk(): DatabaseSchemeBuilder
     {
         return new DatabaseSchemeBuilder();
@@ -85,7 +84,7 @@ class PropertyBuilder
     public static function formula(string $name, string $expression)
     {
         return self::raw($name, Property::FORMULA, [
-            'expression' => $expression
+            'expression' => $expression,
         ]);
     }
 
@@ -99,7 +98,7 @@ class PropertyBuilder
         return self::raw($name, Property::ROLLUP, [
             'relation_property_name' => $relationPropertyName,
             'rollup_property_name' => $rollupPropertyName,
-            'function' => $function
+            'function' => $function,
         ]);
     }
 
@@ -108,7 +107,7 @@ class PropertyBuilder
         return self::raw($name, Property::ROLLUP, [
             'relation_property_id' => $relationPropertyId,
             'rollup_property_id' => $rollupPropertyId,
-            'function' => $function
+            'function' => $function,
         ]);
     }
 
@@ -164,7 +163,7 @@ class PropertyBuilder
     public function getName(): string
     {
         if ($this->name == '') {
-            throw new HandlingException("Properties must have a name. No name given for the property structure:" . json_encode($this->payload));
+            throw new HandlingException('Properties must have a name. No name given for the property structure:'.json_encode($this->payload));
         }
 
         return $this->name;
