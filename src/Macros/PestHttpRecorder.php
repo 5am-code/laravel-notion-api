@@ -60,9 +60,13 @@ class HttpRecorder
         // create specific filename for storing snapshots
         $method = Str::lower($request->method());
         $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
-        $query = Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'])));
+        $query = Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'] ?? null)));
 
-        $fileName = "{$method}_{$name}_{$query}.json";
+        if($query != ''){
+            $query = "_{$query}";
+        }
+
+        $fileName = "{$method}_{$name}{$query}.json";
         $directoryPath = "tests/{$this->snapshotDirectory}";
         $filePath = "{$directoryPath}/{$fileName}";
 
@@ -78,6 +82,7 @@ class HttpRecorder
 
             $recordedResponse = [
                 'status' => $response->getStatusCode(),
+                // 'payload' =>json_decode($request->body(), true), //TODO: potentially add request payload to snapshot
                 'data' => json_decode($response->getBody()->getContents(), true),
             ];
 
