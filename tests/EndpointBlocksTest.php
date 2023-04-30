@@ -314,6 +314,7 @@ class EndpointBlocksTest extends NotionApiTest
 
     /**
      * @test
+     *
      * @dataProvider classProvider
      *
      * @param $entityClass

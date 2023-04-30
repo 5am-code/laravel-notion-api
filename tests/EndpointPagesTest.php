@@ -107,7 +107,6 @@ class EndpointPagesTest extends NotionApiTest
     /** @test */
     public function it_assembles_properties_for_a_new_page()
     {
-
         // test values
         $pageId = '0349b883a1c64539b435289ea62b6eab';
         $pageTitle = 'I was updated from Tinkerwell';

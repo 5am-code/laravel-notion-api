@@ -128,7 +128,6 @@ it('creates a filter bag with the OR operator and three conditions', function ()
 });
 
 it('creates a filter bag with with the AND operator and a nested OR condition', function () {
-
     // Filter for all entries that are
     // (KnownFor == Univac && (Name == Grace || Name == Jean))
 
