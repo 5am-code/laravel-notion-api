@@ -33,21 +33,19 @@ class PestHttpRecorder
 
 class HttpRecorder
 {
-    private $stubsFolder = 'snapshots';
+    private $snapshotDirectory = 'snapshots';
 
     private $usePrettyJson = true;
 
     public function storeIn($directory)
     {
-        $this->stubsFolder = $directory;
-
+        $this->snapshotDirectory = $directory;
         return $this;
     }
 
     public function minifyJson()
     {
         $this->usePrettyJson = false;
-
         return $this;
     }
 
@@ -57,14 +55,17 @@ class HttpRecorder
 
         $urlInfo = parse_url($request->url());
 
-        //create specific filename for storing stubs
-        $filename = Str::lower($request->method()).'_';
-        $filename .= Str::slug(Str::replace('/', '-', $urlInfo['path']));
-        $filename .= '_'.Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'])));
-        $filename .= '.json';
+        //create specific filename for storing snapshots
+        $method = Str::lower($request->method());
+        $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
+        $query = Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'])));
 
-        if ($forceRecording || ! File::exists('tests/'.$this->stubsFolder.'/'.$filename)) {
-            File::makeDirectory('tests/'.$this->stubsFolder, 0777, true, true);
+        $fileName = "{$method}_{$name}_{$query}.json";
+        $directoryPath = "tests/{$this->snapshotDirectory}";
+        $filePath = "{$directoryPath}/{$fileName}";
+
+        if ($forceRecording || ! File::exists($filePath)) {
+            File::makeDirectory($directoryPath, 0777, true, true);
 
             $client = new Client();
             $response = $client->request($request->method(), $request->url(), [
@@ -79,14 +80,14 @@ class HttpRecorder
             ];
 
             file_put_contents(
-                'tests/'.$this->stubsFolder.'/'.$filename,
+                $filePath,
                 json_encode($recordedResponse, $this->usePrettyJson ? JSON_PRETTY_PRINT : 0)
             );
 
             return Http::response($recordedResponse['data'], $response->getStatusCode());
         }
 
-        $preRecordedData = json_decode(file_get_contents('tests/'.$this->stubsFolder.'/'.$filename), true);
+        $preRecordedData = json_decode(file_get_contents($filePath), true);
 
         return Http::response($preRecordedData['data'], $preRecordedData['status']);
     }
