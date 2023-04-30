@@ -40,12 +40,14 @@ class HttpRecorder
     public function storeIn($directory)
     {
         $this->snapshotDirectory = $directory;
+
         return $this;
     }
 
     public function minifyJson()
     {
         $this->usePrettyJson = false;
+
         return $this;
     }
 
