@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use FiveamCode\LaravelNotionApi\Tests\Plugins\PestPluginHttpRecorder;
+use FiveamCode\LaravelNotionApi\Tests\Macros\PestHttpRecorder;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -35,7 +35,7 @@ class LaravelNotionApiServiceProvider extends ServiceProvider
         });
 
         if ($this->app->runningInConsole()) {
-            PestPluginHttpRecorder::register();
+            PestHttpRecorder::register();
         }
     }
 }

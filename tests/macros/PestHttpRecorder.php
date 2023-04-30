@@ -1,6 +1,6 @@
 <?php
 
-namespace FiveamCode\LaravelNotionApi\Tests\Plugins;
+namespace FiveamCode\LaravelNotionApi\Tests\Macros;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Client\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class PestPluginHttpRecorder
+class PestHttpRecorder
 {
     public static function register()
     {
