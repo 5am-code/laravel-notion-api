@@ -27,7 +27,7 @@ beforeEach(function () {
         ->storeIn('snapshots/databases');
 });
 
-it('should throw a handling exception if no title property is added', function(){
+it('should throw a handling exception if no title property is added', function () {
     $this->httpRecorder->nameForNextRequest('400-no-title-property');
     $this->expectException(\FiveamCode\LaravelNotionApi\Exceptions\NotionException::class);
     $this->expectExceptionMessage('Bad Request: (validation_error) (Title is not provided)');
@@ -86,7 +86,7 @@ it('should create a new database with all available properties', function () {
         ->description('This Database has been created by a Pest Test from Laravel')
         ->add($scheme)
         ->createInPage('0adbc2eb57e84569a700a70d537615be');
-    
+
     expect($databaseEntity->getCover())->toEqual('https://example.com/cover.jpg');
     expect($databaseEntity->getIcon())->toEqual('https://example.com/cover.jpg');
     //TODO: Currently not supported due to Notion API versioning
