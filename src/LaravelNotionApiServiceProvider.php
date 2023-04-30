@@ -2,7 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
-use FiveamCode\LaravelNotionApi\Tests\Macros\PestHttpRecorder;
+use FiveamCode\LaravelNotionApi\Macros\PestHttpRecorder;
 use Illuminate\Support\ServiceProvider;
 
 /**
