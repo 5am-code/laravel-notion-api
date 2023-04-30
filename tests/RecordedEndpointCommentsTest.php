@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
     Http::recordAndFakeLater('https://api.notion.com/v1/comments*')
-        ->storeIn('__recorded__/comments');
+        ->storeIn('snapshots/comments');
 });
 
 it('should fetch list of comments with an accurate representation of attributes', function () {

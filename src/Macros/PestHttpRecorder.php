@@ -33,7 +33,7 @@ class PestHttpRecorder
 
 class HttpRecorder
 {
-    private $stubsFolder = '__recorded_stubs__';
+    private $stubsFolder = 'snapshots';
 
     private $usePrettyJson = true;
 
