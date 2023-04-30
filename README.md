@@ -1,121 +1,191 @@
 <h1 align="center"> Notion for Laravel</h1>
 
-<img src="https://banners.beyondco.de/Notion%20for%20Laravel.png?theme=light&packageManager=composer+require&packageName=fiveam-code%2Flaravel-notion-api&pattern=architect&style=style_1&description=Effortless+Notion+integrations+with+Laravel&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg">
+<div align="center">
+<img src="https://notionforlaravel.com/images/open-graph.png" alt="Notion For Laravel" width="500">
+
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 
 [comment]: <> (![GitHub Actions]&#40;https://github.com/fiveam-code/laravel-notion-api/actions/workflows/main.yml/badge.svg&#41;)
-
+</div>
 This package provides a simple and crisp way to access the Notion API endpoints, query data and update existing entries.
 
+# Documentation
+
+For a extensive documentation, more context and usage examples, head over to the official documentation at [notionforlaravel.com](https://notionforlaravel.com).
+
+
+# Quick Start Guide
+
+All examples refer to our test database, which you can
+find [here](https://dianawebdev.notion.site/8284f3ff77e24d4a939d19459e4d6bdc?v=bc3a9ce8cdb84d3faefc9ae490136ac2).
 
 ## Installation
 
-1. You can install the package via composer:
+The package is compatible with Laravel 8, 9 and 10. The minimum PHP requirement is 8.0.
 
-    ```bash
-    composer require fiveam-code/laravel-notion-api
-    ```
+1. Install the package via composer:
 
+   ```bash
+   composer require fiveam-code/laravel-notion-api
+   ```
 
 2. Get your Notion API access token like explained in [their documentation](https://developers.notion.com/). It's also
-important to grant access to the integration within your Notion pages, which is described in the developer documentation at Notion as well.
+   important to grant access to the integration within your Notion pages, which is described in the developer
+   documentation at Notion as well.
 
-3. For internal Integrations, please add a new entry to your `.env` like the following:
+3. Add a new line to your applications `.env` file:
 
-    ```bash
-    NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
-    ```
-4. Now you can easily access Notion:
-    ```php
-    use \Notion;
-    
-    Notion::databases()->find($databaseId);
-    ```
+   ```bash
+   NOTION_API_TOKEN="$YOUR_ACCESS_TOKEN"
+   ```
 
-    That's it.
+4. You're ready to go! You can now access Notion endpoints through the `Notion` facade:
+
+   ```php
+   use \Notion;
+
+   Notion::databases()->find("8284f3ff77e24d4a939d19459e4d6bdc");
+   ```
+
+   That's it.
+
+For detailed usage information and a list of available endpoints see (the docs).
+
+## Examples
 
 
-## Usage
+### Fetch a Notion Database
 
-Head over to the [Documentation](https://notionforlaravel.com) of this package.
+The `databases()->find()` method returns a `FiveamCode\LaravelNotionApi\Entities\Database` object,
+which contains all the information about the database, including its properties and the possible values for each
+property.
 
-### 🔥 Code Examples to jumpstart your next Notion API Project
-
-#### Fetch a Notion Database (through a Facade)
 ```php
-use \Notion; 
+use \Notion;
 
 Notion::databases()
-        ->find("a7e5e47d-23ca-463b-9750-eb07ca7115e4");
+        ->find("8284f3ff77e24d4a939d19459e4d6bdc");
 ```
 
-#### Fetch a Notion Page
+### Fetch a Notion Page
+
+The `pages()->find()` method returns a `FiveamCode\LaravelNotionApi\Entities\Page` object,
+which contains all the information about the page, including its properties and the possible values for each property.
+
 ```php
 Notion::pages()
         ->find("e7e5e47d-23ca-463b-9750-eb07ca7115e4");
 ```
 
-#### Search
+### Search
+
+The `search()` endpoint returns a collection of pages that match the search query. The scope of the search is limited to
+the workspace that the integration is installed in
+and the pages that are shared with the integration.
+
 ```php
-// Returns a collection pages and databases of your workspace (included in your integration-token)
-Notion::search("My Notion Search")
+Notion::search("Search term")
         ->query()
         ->asCollection();
 ```
 
-#### Query Database
+### Query Database
+
+The `database()` endpoint allows you to query a specific database and returns a collection of pages (= database
+entries).
+You can filter and sort the results and limit the number of returned entries. For detailed information about the
+available
+filters and sorts, please refer to the [documentation](https://developers.notion.com/reference/post-database-query).
 
 ```php
-// Queries a specific database and returns a collection of pages (= database entries)
-$sortings = new Collection();
-$filters = new Collection();
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
 
-$sortings->add(Sorting::propertySort('Ordered', 'ascending'));
-$sortings->add(Sorting::timestampSort('created_time', 'ascending'));
+$nameFilter = Filter::textFilter('Name', Operators::EQUALS, 'Ada Lovelace');
 
-$filters->add(Filter::textFilter('title', ['contains' => 'new']));
-// or
-$filters->add(Filter::rawFilter('Tags', ['multi_select' => ['contains' => 'great']]));
-  
-Notion::database("a7e5e47d-23ca-463b-9750-eb07ca7115e4")
-      ->filterBy($filters) // filters are optional
-      ->sortBy($sortings) // sorts are optional
-      ->limit(5) // limit is optional
-      ->query()
-      ->asCollection();
+\Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+    ->filterBy($nameFilter)
+    ->limit(5)
+    ->query()
+    ->asCollection();
 ```
 
+Compound filters for AND or OR queries are also available:
 
-### Testing (pestphp)
+```php
+use Illuminate\Support\Collection;
+use FiveamCode\LaravelNotionApi\Query\Filters\Filter;
+use FiveamCode\LaravelNotionApi\Query\Filters\FilterBag;
+use FiveamCode\LaravelNotionApi\Query\Filters\Operators;
+use FiveamCode\LaravelNotionApi\Query\Sorting;
+
+# Give me all entries that are
+# (KnownFor == UNIVAC || KnownFor == ENIAC)
+# and sort them by name ascending
+
+$filterBag = new FilterBag(Operators::AND);
+
+$filterBag->addFilter(
+    Filter::rawFilter("Known for", [
+        "multi_select" => [Operators::CONTAINS => "UNIVAC"],
+    ])
+);
+
+$filterBag->addFilter(
+    Filter::rawFilter("Known for", [
+        "multi_select" => [Operators::CONTAINS => "ENIAC"],
+    ])
+);
+
+\Notion::database("8284f3ff77e24d4a939d19459e4d6bdc")
+    ->filterBy($filterBag)
+    ->sortBy(Sorting::propertySort('Name', 'ascending'))
+    ->limit(5)
+    ->query()
+    ->asCollection();
+```
+
+### Tests
+
+You can find even more usage examples by checking out the package tests in the `/tests` directory.
+We are using [Pest](https://pestphp.com/) for out tests and are currently in the process of switching all existing PHPUnit tests to Pest.
+
+If you want to run the tests in your CLI:
 
 ```bash
 vendor/bin/pest tests
 ```
 
-## Support
+# Support
 
-If you use this package in one of your projects or just want to support our development, consider becoming a [Patreon](https://www.patreon.com/bePatron?u=56662485)!
+## Supported by Tinkerwell
 
-## Contributing
+<a href="https://tinkerwell.app/">
+<img src="https://tinkerwell.app/images/tinkerwell_logo.png" width="64" height="64" alt="Tinkerwell"> <br/>
+</a>
+
+The development of this package is supported by [Tinkerwell](https://tinkerwell.app/).
+
+
+# Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security
+# Security
 
 If you discover any security related issues, please email hello@dianaweb.dev instead of using the issue tracker.
 
-## Credits
+# Credits
 
 - [Diana Scharf](https://github.com/mechelon)
 - [Johannes Güntner](https://github.com/johguentner)
-
 
 <p align="center">
 <img src="https://5amco.de/images/5am.png" width="200" height="200">
 </p>
 
-## License
+# License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

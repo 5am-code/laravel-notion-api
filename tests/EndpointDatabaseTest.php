@@ -29,8 +29,7 @@ use Illuminate\Support\Facades\Http;
  * @see https://developers.notion.com/reference/post-database-query
  */
 it('returns a database endpoint instance', function () {
-
-// TODO update for new Filter behaviour
+    // TODO update for new Filter behaviour
     $endpoint = Notion::database('897e5a76ae524b489fdfe71f5945d1af');
 
     $this->assertInstanceOf(Database::class, $endpoint);
@@ -136,7 +135,6 @@ it('queries a database with filter and sorting and has empty result', function (
 });
 
 it('throws a notion exception for a bad request', function () {
-
     // failing /v1/databases
     Http::fake([
         'https://api.notion.com/v1/databases/8284f3ff77e24d4a939d19459e4d6bdc/query*' => Http::response(
