@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Config;
 
 // uses(NotionApiTest::class)->in(__DIR__);
 uses(NotionApiTest::class)->beforeEach(function () {
-    if (file_exists(__DIR__ . '/../.env.testing')) {
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/..', '.env.testing');
+    if (file_exists(__DIR__.'/../.env.testing')) {
+        $dotenv = Dotenv::createImmutable(__DIR__.'/..', '.env.testing');
         $dotenv->load();
     }
     Config::set('laravel-notion-api.notion-api-token', env('NOTION_API_TOKEN', ''));
