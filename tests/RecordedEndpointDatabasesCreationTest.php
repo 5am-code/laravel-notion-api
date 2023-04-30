@@ -1,6 +1,5 @@
 <?php
 
-use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Builder\PropertyBuilder;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Checkbox;
 use FiveamCode\LaravelNotionApi\Entities\Properties\CreatedBy;
@@ -29,21 +28,20 @@ beforeEach(function () {
 });
 
 it('should create a new database with all available properties', function () {
-
     $this->httpRecorder->nameForNextRequest('all-properties');
 
     $selectOptions = [
         [
             'name' => 'testing',
-            'color' => 'blue'
-        ]
+            'color' => 'blue',
+        ],
     ];
 
     $multiSelectOptions = [
         [
             'name' => 'testing2',
-            'color' => 'yellow'
-        ]
+            'color' => 'yellow',
+        ],
     ];
 
     $scheme = PropertyBuilder::bulk()
