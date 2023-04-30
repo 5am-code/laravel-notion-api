@@ -57,7 +57,7 @@ class HttpRecorder
 
         $urlInfo = parse_url($request->url());
 
-        //create specific filename for storing snapshots
+        // create specific filename for storing snapshots
         $method = Str::lower($request->method());
         $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
         $query = Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'])));
@@ -67,7 +67,7 @@ class HttpRecorder
         $filePath = "{$directoryPath}/{$fileName}";
 
         if ($forceRecording || ! File::exists($filePath)) {
-            File::makeDirectory($directoryPath, 0777, true, true);
+            File::makeDirectory($directoryPath, 0744, true, true);
 
             $client = new Client();
             $response = $client->request($request->method(), $request->url(), [
