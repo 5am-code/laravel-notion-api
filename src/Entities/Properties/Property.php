@@ -115,6 +115,10 @@ class Property extends Entity
             return '';
         }
 
+        if (is_scalar($this->content)) {
+            return $this->content;
+        }
+
         return json_encode($this->content);
     }
 
