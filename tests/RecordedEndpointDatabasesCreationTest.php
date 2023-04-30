@@ -27,6 +27,18 @@ beforeEach(function () {
         ->storeIn('snapshots/databases');
 });
 
+it('should throw a handling exception if no title property is added', function(){
+    $this->httpRecorder->nameForNextRequest('400-no-title-property');
+    $this->expectException(\FiveamCode\LaravelNotionApi\Exceptions\NotionException::class);
+    $this->expectExceptionMessage('Bad Request: (validation_error) (Title is not provided)');
+    $this->expectExceptionCode(400);
+
+    \Notion::databases()
+        ->build()
+        ->add(PropertyBuilder::checkbox('Test Checkbox'))
+        ->createInPage('0adbc2eb57e84569a700a70d537615be');
+});
+
 it('should create a new database with all available properties', function () {
     $this->httpRecorder->nameForNextRequest('all-properties');
 
@@ -74,6 +86,13 @@ it('should create a new database with all available properties', function () {
         ->description('This Database has been created by a Pest Test from Laravel')
         ->add($scheme)
         ->createInPage('0adbc2eb57e84569a700a70d537615be');
+    
+    expect($databaseEntity->getCover())->toEqual('https://example.com/cover.jpg');
+    expect($databaseEntity->getIcon())->toEqual('https://example.com/cover.jpg');
+    //TODO: Currently not supported due to Notion API versioning
+    // expect($databaseEntity->getDescription())->toEqual('This Database has been created by a Pest Test from Laravel');
+    expect($databaseEntity->getTitle())->toEqual('Created By Testing Database');
+    expect($databaseEntity->getParentId())->toEqual('0adbc2eb-57e8-4569-a700-a70d537615be');
 
     expect($databaseEntity->getProperties())->toHaveCount(18);
     expect($databaseEntity->getProperty('Test Title'))->toBeInstanceOf(Title::class);
