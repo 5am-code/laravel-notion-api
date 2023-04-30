@@ -42,7 +42,6 @@ it('should throw correct exception if block_id has not been found when listing c
 });
 
 it('should fetch list of comments with an accurate representation of attributes', function () {
-
     // successfull /v1/comments
     Http::fake([
         'https://api.notion.com/v1/comments?block_id=abf6b0af-6eaa-45ca-9715-9fa147ef6b17*' => Http::response(
@@ -114,7 +113,6 @@ it('should throw correct exception if discussion is not found with discussion_id
 });
 
 it('successfully creates a comment within a page', function () {
-
     // successfull (post) /v1/comments
     Http::fake([
         'https://api.notion.com/v1/comments*' => Http::response(
