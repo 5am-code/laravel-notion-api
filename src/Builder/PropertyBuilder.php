@@ -43,7 +43,7 @@ class PropertyBuilder
         return self::plain($name, Property::CHECKBOX);
     }
 
-    public static function status(string $name): PropertyBuilder
+    public static function status(string $name = 'Status'): PropertyBuilder
     {
         return self::plain($name, Property::STATUS);
     }
