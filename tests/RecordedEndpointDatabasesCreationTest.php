@@ -21,12 +21,16 @@ use FiveamCode\LaravelNotionApi\Entities\Properties\Title;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Url;
 use Illuminate\Support\Facades\Http;
 
+$httpRecorder = null;
+
 beforeEach(function () {
-    Http::recordAndFakeLater('https://api.notion.com/v1/databases*')
+    $this->httpRecorder = Http::recordAndFakeLater('https://api.notion.com/v1/databases*')
         ->storeIn('snapshots/databases');
 });
 
 it('should create a new database with all available properties', function () {
+
+    $this->httpRecorder->nameForNextRequest('all-properties');
 
     $selectOptions = [
         [
