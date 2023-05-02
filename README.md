@@ -3,7 +3,7 @@
 <div align="center">
 <img src="https://notionforlaravel.com/images/open-graph.png" alt="Notion For Laravel" width="500">
 
-
+[![Run tests](https://github.com/5am-code/laravel-notion-api/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/5am-code/laravel-notion-api/actions/workflows/main.yml)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/fiveam-code/laravel-notion-api.svg?style=flat-square)](https://packagist.org/packages/fiveam-code/laravel-notion-api)
 
