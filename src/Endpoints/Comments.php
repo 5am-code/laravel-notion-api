@@ -38,8 +38,10 @@ class Comments extends Endpoint
     }
 
     /**
-     * Retrieve a list of comments
+     * Retrieve a list of comments.
+     *
      * @url https://api.notion.com/{version}/comments?block_id=* [get]
+     *
      * @reference https://developers.notion.com/reference/retrieve-a-comment.
      *
      * @param  string  $blockId
@@ -87,8 +89,10 @@ class Comments extends Endpoint
     }
 
     /**
-     * Create a comment
+     * Create a comment.
+     *
      * @url https://api.notion.com/{version}/comments [post]
+     *
      * @reference https://developers.notion.com/reference/create-a-comment.
      *
      * @param  CommentEntity  $comment
