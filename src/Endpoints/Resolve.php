@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Endpoints;
 
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Block;
 use FiveamCode\LaravelNotionApi\Entities\Database;
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Relation;
@@ -11,6 +12,7 @@ use FiveamCode\LaravelNotionApi\Entities\User;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use FiveamCode\LaravelNotionApi\Notion;
+use FiveamCode\LaravelNotionApi\Traits\HasParent;
 use Illuminate\Support\Collection;
 
 /**
@@ -32,6 +34,8 @@ class Resolve extends Endpoint
     }
 
     /**
+     * Resolve User
+     * 
      * @param  User  $user
      * @return User
      *
@@ -44,6 +48,26 @@ class Resolve extends Endpoint
     }
 
     /**
+     * Resolve Parent of an entity
+     * 
+     * @param  Entity  $entity
+     * @return Page|Database|Block
+     * 
+     * @throws HandlingException
+     * @throws NotionException
+     */
+    public function parentOf(Entity $entity)
+    {
+        if (!in_array(HasParent::class, class_uses_recursive(get_class($entity)))) {
+            throw new HandlingException("The given entity '{$entity->getObjectType()}' does not have a parent.");
+        }
+
+        return $this->parent($entity->getParent());
+    }
+
+    /**
+     * Resolve Parent
+     * 
      * @param  NotionParent  $parent
      * @return Page|Database|Block
      *
@@ -67,6 +91,8 @@ class Resolve extends Endpoint
     }
 
     /**
+     * Resolve Relations
+     * 
      * @param  Relation  $relation
      * @return Collection<Page>
      *
