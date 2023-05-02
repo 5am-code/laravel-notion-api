@@ -18,8 +18,8 @@ class Databases extends Endpoint implements EndpointInterface
 {
     /**
      * List databases
-     * url: https://api.notion.com/{version}/databases
-     * notion-api-docs: https://developers.notion.com/reference/get-databases.
+     * @url https://api.notion.com/{version}/databases
+     * @reference https://developers.notion.com/reference/get-databases.
      *
      * @return DatabaseCollection
      *
@@ -37,8 +37,8 @@ class Databases extends Endpoint implements EndpointInterface
 
     /**
      * Retrieve a database
-     * url: https://api.notion.com/{version}/databases/{database_id}
-     * notion-api-docs: https://developers.notion.com/reference/retrieve-a-database.
+     * @url https://api.notion.com/{version}/databases/{database_id}
+     * @reference https://developers.notion.com/reference/retrieve-a-database.
      *
      * @param  string  $databaseId
      * @return Database
@@ -54,11 +54,29 @@ class Databases extends Endpoint implements EndpointInterface
         return new Database($result);
     }
 
+    /**
+     * Returns a `DatabaseBuilder`reference, which helps building 
+     * the scheme and information for creation a database
+     * 
+     * @return DatabaseBuilder
+     */
     public function build()
     {
         return new DatabaseBuilder($this);
     }
 
+    /**
+     * Create a database
+     * Recommendation: use `build()` to eloquently create databases
+     * @url https://api.notion.com/{version}/databases (post)
+     * @reference https://developers.notion.com/reference/create-a-database.
+     * 
+     * @param  array  $payload
+     * @return Database
+     * 
+     * @throws HandlingException
+     * @throws NotionException
+     */
     public function create(array $payload): Database
     {
         $result = $this
