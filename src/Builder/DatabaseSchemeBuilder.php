@@ -23,7 +23,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param PropertyBuilder $builder
+     * @param  PropertyBuilder  $builder
      * @return DatabaseSchemeBuilder
      */
     public function push(PropertyBuilder $builder): DatabaseSchemeBuilder
@@ -36,7 +36,7 @@ class DatabaseSchemeBuilder
     /**
      * Add raw property to the database scheme.
      * Please reference the Notion API documentation for the content array/object structure.
-     * 
+     *
      * @param  string  $name
      * @param  string  $type
      * @param  array|object  $content
@@ -50,7 +50,7 @@ class DatabaseSchemeBuilder
     /**
      * Add plain property to the database scheme.
      * For simply adding properties, without required content.
-     * 
+     *
      * @param  string  $name
      * @param  string  $type
      * @return DatabaseSchemeBuilder
@@ -61,7 +61,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function title(string $name = 'Name'): DatabaseSchemeBuilder
@@ -70,7 +70,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function richText(string $name = 'Text'): DatabaseSchemeBuilder
@@ -79,7 +79,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function checkbox(string $name = 'Checkbox'): DatabaseSchemeBuilder
@@ -88,10 +88,11 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * (currently not supported)
+     * (currently not supported).
+     *
      * @todo increase Notion API Version, to make this work
-     * 
-     * @param string  $name
+     *
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function status(string $name = 'Status'): DatabaseSchemeBuilder
@@ -100,7 +101,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function select(string $name, array $options): DatabaseSchemeBuilder
@@ -109,8 +110,8 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string  $name
-     * @param array  $options
+     * @param  string  $name
+     * @param  array  $options
      * @return DatabaseSchemeBuilder
      */
     public function multiSelect(string $name, array $options): DatabaseSchemeBuilder
@@ -119,8 +120,8 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $format
+     * @param  string  $name
+     * @param  string  $format
      * @return DatabaseSchemeBuilder
      */
     public function number(string $name = 'Number', string $format = 'number'): DatabaseSchemeBuilder
@@ -129,7 +130,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function date(string $name = 'Date'): DatabaseSchemeBuilder
@@ -138,8 +139,8 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $databaseId
+     * @param  string  $name
+     * @param  string  $databaseId
      * @return DatabaseSchemeBuilder
      */
     public function relation(string $name, string $databaseId): DatabaseSchemeBuilder
@@ -148,8 +149,8 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $expression
+     * @param  string  $name
+     * @param  string  $expression
      * @return DatabaseSchemeBuilder
      */
     public function formula(string $name, string $expression): DatabaseSchemeBuilder
@@ -158,10 +159,10 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupProperty
-     * @param string $relationProperty
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupProperty
+     * @param  string  $relationProperty
+     * @param  string  $function
      * @return DatabaseSchemeBuilder
      */
     public function rollup(string $name, string $rollupProperty, string $relationProperty, string $function): DatabaseSchemeBuilder
@@ -170,10 +171,10 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupPropertyName
-     * @param string $relationPropertyName
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupPropertyName
+     * @param  string  $relationPropertyName
+     * @param  string  $function
      * @return DatabaseSchemeBuilder
      */
     public function rollupByName(string $name, string $rollupPropertyName, string $relationPropertyName, string $function): DatabaseSchemeBuilder
@@ -182,10 +183,10 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupPropertyId
-     * @param string $relationPropertyId
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupPropertyId
+     * @param  string  $relationPropertyId
+     * @param  string  $function
      * @return DatabaseSchemeBuilder
      */
     public function rollupById(string $name, string $rollupPropertyId, string $relationPropertyId, string $function): DatabaseSchemeBuilder
@@ -194,7 +195,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function url(string $name = 'Url'): DatabaseSchemeBuilder
@@ -203,7 +204,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function email(string $name = 'Email'): DatabaseSchemeBuilder
@@ -212,7 +213,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function phoneNumber(string $name = 'Phone Number'): DatabaseSchemeBuilder
@@ -221,7 +222,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function people(string $name = 'People'): DatabaseSchemeBuilder
@@ -230,7 +231,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function files(string $name = 'Files'): DatabaseSchemeBuilder
@@ -239,7 +240,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function createdBy(string $name = 'Created By'): DatabaseSchemeBuilder
@@ -248,7 +249,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function createdTime(string $name = 'Created Time'): DatabaseSchemeBuilder
@@ -257,7 +258,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function lastEditedBy(string $name = 'Last Edited Time'): DatabaseSchemeBuilder
@@ -266,7 +267,7 @@ class DatabaseSchemeBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return DatabaseSchemeBuilder
      */
     public function lastEditedTime(string $name = 'Last Edited Time'): DatabaseSchemeBuilder

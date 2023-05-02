@@ -17,8 +17,10 @@ use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 class Databases extends Endpoint implements EndpointInterface
 {
     /**
-     * List databases
+     * List databases.
+     *
      * @url https://api.notion.com/{version}/databases
+     *
      * @reference https://developers.notion.com/reference/get-databases.
      *
      * @return DatabaseCollection
@@ -36,8 +38,10 @@ class Databases extends Endpoint implements EndpointInterface
     }
 
     /**
-     * Retrieve a database
+     * Retrieve a database.
+     *
      * @url https://api.notion.com/{version}/databases/{database_id}
+     *
      * @reference https://developers.notion.com/reference/retrieve-a-database.
      *
      * @param  string  $databaseId
@@ -55,9 +59,9 @@ class Databases extends Endpoint implements EndpointInterface
     }
 
     /**
-     * Returns a `DatabaseBuilder`reference, which helps building 
-     * the scheme and information for creation a database
-     * 
+     * Returns a `DatabaseBuilder`reference, which helps building
+     * the scheme and information for creation a database.
+     *
      * @return DatabaseBuilder
      */
     public function build()
@@ -67,13 +71,15 @@ class Databases extends Endpoint implements EndpointInterface
 
     /**
      * Create a database
-     * Recommendation: use `build()` to eloquently create databases
+     * Recommendation: use `build()` to eloquently create databases.
+     *
      * @url https://api.notion.com/{version}/databases (post)
+     *
      * @reference https://developers.notion.com/reference/create-a-database.
-     * 
+     *
      * @param  array  $payload
      * @return Database
-     * 
+     *
      * @throws HandlingException
      * @throws NotionException
      */

@@ -12,7 +12,7 @@ class PropertyBuilder
 {
     /**
      * Create a new PropertyBuilder instance, for adding multiple properties at once.
-     * 
+     *
      * @return DatabaseSchemeBuilder
      */
     public static function bulk(): DatabaseSchemeBuilder
@@ -23,7 +23,7 @@ class PropertyBuilder
     /**
      * Add raw property to the database scheme.
      * Please reference the Notion API documentation for the content array/object structure.
-     * 
+     *
      * @param  string  $name
      * @param  string  $type
      * @param  array|object  $content
@@ -40,7 +40,7 @@ class PropertyBuilder
     /**
      * Add plain property to the database scheme.
      * For simply adding properties, without required content.
-     * 
+     *
      * @param  string  $name
      * @param  string  $type
      * @return PropertyBuilder
@@ -51,7 +51,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function title(string $name = 'Name'): PropertyBuilder
@@ -60,7 +60,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function richText(string $name = 'Text'): PropertyBuilder
@@ -69,7 +69,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function checkbox(string $name = 'Checkbox'): PropertyBuilder
@@ -78,10 +78,11 @@ class PropertyBuilder
     }
 
     /**
-     * (currently not supported)
+     * (currently not supported).
+     *
      * @todo increase Notion API Version, to make this work
-     * 
-     * @param string  $name
+     *
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function status(string $name = 'Status'): PropertyBuilder
@@ -90,8 +91,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
-     * @param array $options
+     * @param  string  $name
+     * @param  array  $options
      * @return PropertyBuilder
      */
     public static function select(string $name, array $options): PropertyBuilder
@@ -102,8 +103,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
-     * @param array  $options
+     * @param  string  $name
+     * @param  array  $options
      * @return PropertyBuilder
      */
     public static function multiSelect(string $name, array $options): PropertyBuilder
@@ -114,8 +115,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string  $name
-     * @param string  $format
+     * @param  string  $name
+     * @param  string  $format
      * @return PropertyBuilder
      */
     public static function number(string $name = 'Number', $format = 'number'): PropertyBuilder
@@ -126,7 +127,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function date(string $name = 'Date'): PropertyBuilder
@@ -135,8 +136,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $databaseId
+     * @param  string  $name
+     * @param  string  $databaseId
      * @return PropertyBuilder
      */
     public static function relation(string $name, string $databaseId): PropertyBuilder
@@ -147,8 +148,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $expression
+     * @param  string  $name
+     * @param  string  $expression
      * @return PropertyBuilder
      */
     public static function formula(string $name, string $expression)
@@ -159,10 +160,10 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupProperty
-     * @param string $relationProperty
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupProperty
+     * @param  string  $relationProperty
+     * @param  string  $function
      * @return PropertyBuilder
      */
     public static function rollup(string $name, string $rollupProperty, string $relationProperty, string $function): PropertyBuilder
@@ -171,10 +172,10 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupPropertyName
-     * @param string $relationPropertyName
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupPropertyName
+     * @param  string  $relationPropertyName
+     * @param  string  $function
      * @return PropertyBuilder
      */
     public static function rollupByName(string $name, string $rollupPropertyName, string $relationPropertyName, string $function): PropertyBuilder
@@ -187,10 +188,10 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param string $rollupPropertyId
-     * @param string $relationPropertyId
-     * @param string $function
+     * @param  string  $name
+     * @param  string  $rollupPropertyId
+     * @param  string  $relationPropertyId
+     * @param  string  $function
      * @return PropertyBuilder
      */
     public static function rollupById(string $name, string $rollupPropertyId, string $relationPropertyId, string $function): PropertyBuilder
@@ -203,7 +204,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function url(string $name = 'Url'): PropertyBuilder
@@ -212,7 +213,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function email(string $name = 'Email'): PropertyBuilder
@@ -221,7 +222,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function phoneNumber(string $name = 'Phone Number'): PropertyBuilder
@@ -230,7 +231,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function people(string $name = 'People'): PropertyBuilder
@@ -239,7 +240,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function files(string $name = 'Files'): PropertyBuilder
@@ -248,7 +249,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function createdBy(string $name = 'Created By'): PropertyBuilder
@@ -257,7 +258,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function createdTime(string $name = 'Created Time'): PropertyBuilder
@@ -266,7 +267,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function lastEditedBy(string $name = 'Last Edited By'): PropertyBuilder
@@ -275,7 +276,7 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return PropertyBuilder
      */
     public static function lastEditedTime(string $name = 'Last Edited Time'): PropertyBuilder
@@ -284,8 +285,8 @@ class PropertyBuilder
     }
 
     /**
-     * @param string $name
-     * @param array $payload
+     * @param  string  $name
+     * @param  array  $payload
      */
     private function __construct(private string $name, private array $payload)
     {
@@ -293,12 +294,13 @@ class PropertyBuilder
 
     /**
      * @return string
+     *
      * @throws HandlingException
      */
     public function getName(): string
     {
         if ($this->name == '') {
-            throw new HandlingException('Properties must have a name. No name given for the property structure:' . json_encode($this->payload));
+            throw new HandlingException('Properties must have a name. No name given for the property structure:'.json_encode($this->payload));
         }
 
         return $this->name;
