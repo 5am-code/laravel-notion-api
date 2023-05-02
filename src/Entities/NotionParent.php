@@ -18,7 +18,7 @@ class NotionParent extends Entity
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
-        
+
         if (
             $responseData['object'] !== 'page_id'
             && $responseData['object'] !== 'database_id'
