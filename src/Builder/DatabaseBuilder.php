@@ -18,7 +18,8 @@ class DatabaseBuilder
 
     /**
      * DatabaseBuilder constructor.
-     * @param Databases $databasesEndpoint
+     *
+     * @param  Databases  $databasesEndpoint
      */
     public function __construct(private Databases $databasesEndpoint)
     {
@@ -38,8 +39,8 @@ class DatabaseBuilder
 
     /**
      * Creates database within given page.
-     * 
-     * @param string $pageId
+     *
+     * @param  string  $pageId
      * @return Database
      */
     public function createInPage($pageId): Database
@@ -58,8 +59,8 @@ class DatabaseBuilder
 
     /**
      * Sets the title for the database creation.
-     * 
-     * @param string $title
+     *
+     * @param  string  $title
      * @return DatabaseBuilder
      */
     public function title(string $title): DatabaseBuilder
@@ -77,8 +78,8 @@ class DatabaseBuilder
 
     /**
      * Sets the description for the database creation.
-     * 
-     * @param string $description
+     *
+     * @param  string  $description
      * @return DatabaseBuilder
      */
     public function description(string $description): DatabaseBuilder
@@ -96,8 +97,9 @@ class DatabaseBuilder
 
     /**
      * Sets the created database as inline (currently not supported).
+     *
      * @todo increase Notion API Version, to make this work
-     * 
+     *
      * @return DatabaseBuilder
      */
     public function inline(): DatabaseBuilder
@@ -109,8 +111,8 @@ class DatabaseBuilder
 
     /**
      * Sets the icon for the database creation.
-     * 
-     * @param string $icon
+     *
+     * @param  string  $icon
      * @return DatabaseBuilder
      */
     public function iconEmoji(string $icon): DatabaseBuilder
@@ -125,8 +127,8 @@ class DatabaseBuilder
 
     /**
      * Sets the icon for the database creation.
-     * 
-     * @param string $url
+     *
+     * @param  string  $url
      * @return DatabaseBuilder
      */
     public function iconExternal(string $url): DatabaseBuilder
@@ -143,8 +145,8 @@ class DatabaseBuilder
 
     /**
      * Sets the cover for the database creation.
-     * 
-     * @param string $url
+     *
+     * @param  string  $url
      * @return DatabaseBuilder
      */
     public function coverExternal(string $url): DatabaseBuilder
@@ -161,8 +163,8 @@ class DatabaseBuilder
 
     /**
      * Adds the property `title` database creation.
-     * 
-     * @param string $name
+     *
+     * @param  string  $name
      * @return DatabaseBuilder
      */
     public function addTitle(string $name = 'Name')
@@ -174,8 +176,8 @@ class DatabaseBuilder
 
     /**
      * Adds one or multiple properties to the database creation.
-     * 
-     * @param PropertyBuilder|Collection|DatabaseSchemeBuilder $properties
+     *
+     * @param  PropertyBuilder|Collection|DatabaseSchemeBuilder  $properties
      * @return DatabaseBuilder
      */
     public function add(PropertyBuilder|Collection|DatabaseSchemeBuilder $properties): DatabaseBuilder
@@ -197,8 +199,8 @@ class DatabaseBuilder
 
     /**
      * Adds multiple properties to the database creation, similar to a Laravel migration.
-     * 
-     * @param callable $callback
+     *
+     * @param  callable  $callback
      * @return DatabaseBuilder
      */
     public function scheme(callable $callback): DatabaseBuilder
@@ -211,10 +213,10 @@ class DatabaseBuilder
 
     /**
      * Adds a raw property to the database creation.
-     * 
-     * @param string $title
-     * @param string $propertyType
-     * @param array|null $content
+     *
+     * @param  string  $title
+     * @param  string  $propertyType
+     * @param  array|null  $content
      * @return DatabaseBuilder
      */
     public function addRaw(string $title, string $propertyType, array $content = null): DatabaseBuilder
@@ -227,7 +229,7 @@ class DatabaseBuilder
 
     /**
      * Returns the payload for the database creation.
-     * 
+     *
      * @return array
      */
     public function payload(): array
