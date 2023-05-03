@@ -34,8 +34,8 @@ class Resolve extends Endpoint
     }
 
     /**
-     * Resolve User
-     * 
+     * Resolve User.
+     *
      * @param  User  $user
      * @return User
      *
@@ -48,17 +48,17 @@ class Resolve extends Endpoint
     }
 
     /**
-     * Resolve Parent of an entity
-     * 
+     * Resolve Parent of an entity.
+     *
      * @param  Entity  $entity
      * @return Page|Database|Block
-     * 
+     *
      * @throws HandlingException
      * @throws NotionException
      */
     public function parentOf(Entity $entity)
     {
-        if (!in_array(HasParent::class, class_uses_recursive(get_class($entity)))) {
+        if (! in_array(HasParent::class, class_uses_recursive(get_class($entity)))) {
             throw new HandlingException("The given entity '{$entity->getObjectType()}' does not have a parent.");
         }
 
@@ -66,8 +66,8 @@ class Resolve extends Endpoint
     }
 
     /**
-     * Resolve Parent
-     * 
+     * Resolve Parent.
+     *
      * @param  NotionParent  $parent
      * @return Page|Database|Block
      *
@@ -91,8 +91,8 @@ class Resolve extends Endpoint
     }
 
     /**
-     * Resolve Relations
-     * 
+     * Resolve Relations.
+     *
      * @param  Relation  $relation
      * @return Collection<Page>
      *
