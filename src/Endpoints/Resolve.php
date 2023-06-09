@@ -74,7 +74,7 @@ class Resolve extends Endpoint
      * @throws HandlingException
      * @throws NotionException
      */
-    public function parent(NotionParent $parent): Page|Database|Block
+    public function parent(NotionParent $parent): Page|Database|Block|NotionParent
     {
         switch ($parent->getObjectType()) {
             case 'page_id':
@@ -83,8 +83,9 @@ class Resolve extends Endpoint
                 return $this->notion->databases()->find($parent->getId());
             case 'block_id':
                 return $this->notion->block($parent->getId())->retrieve();
-            case 'workspace_id':
-                throw new HandlingException('A Notion Workspace cannot be resolved by the Notion API.');
+            case 'workspace':
+                return $parent;
+                // throw new HandlingException('A Notion Workspace cannot be resolved by the Notion API.');
             default:
                 throw new HandlingException('Unknown parent type while resolving the notion parent');
         }

@@ -22,7 +22,7 @@ class NotionParent extends Entity
         if (
             $responseData['object'] !== 'page_id'
             && $responseData['object'] !== 'database_id'
-            && $responseData['object'] !== 'workspace_id'
+            && $responseData['object'] !== 'workspace'
             && $responseData['object'] !== 'block_id'
         ) {
             throw HandlingException::instance('invalid json-array: the given object is not a valid parent');
