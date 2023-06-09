@@ -1,0 +1,81 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "database",
+        "id": "8a0ef209-8c8a-4fd1-a21c-db7ab327e870",
+        "cover": null,
+        "icon": {
+            "type": "external",
+            "external": {
+                "url": "https:\/\/www.notion.so\/icons\/people_red.svg"
+            }
+        },
+        "created_time": "2023-06-09T16:32:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_time": "2023-06-09T16:35:00.000Z",
+        "title": [
+            {
+                "type": "text",
+                "text": {
+                    "content": "Test Table as Parent",
+                    "link": null
+                },
+                "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                },
+                "plain_text": "Test Table as Parent",
+                "href": null
+            }
+        ],
+        "description": [],
+        "is_inline": true,
+        "properties": {
+            "Tags": {
+                "id": "[PdA",
+                "name": "Tags",
+                "type": "multi_select",
+                "multi_select": {
+                    "options": []
+                }
+            },
+            "Name": {
+                "id": "title",
+                "name": "Name",
+                "type": "title",
+                "title": []
+            }
+        },
+        "parent": {
+            "type": "page_id",
+            "page_id": "c3b3afe9-1381-470f-a8b1-4a44b9a3bf81"
+        },
+        "url": "https:\/\/www.notion.so\/8a0ef2098c8a4fd1a21cdb7ab327e870",
+        "public_url": null,
+        "archived": false
+    }
+}

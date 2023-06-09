@@ -1,5 +1,18 @@
 {
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
     "status": 200,
+    "payload": "block_id=cb588bcbcbdb4f2eac3db05446b8f5d9&page_size=100&",
     "data": {
         "object": "list",
         "results": [

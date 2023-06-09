@@ -1,0 +1,69 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "page",
+        "id": "a652fac3-51cc-4cc7-9f5b-17eb702793ed",
+        "created_time": "2023-05-03T00:07:00.000Z",
+        "last_edited_time": "2023-06-09T16:38:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "cover": null,
+        "icon": {
+            "type": "external",
+            "external": {
+                "url": "https:\/\/www.notion.so\/icons\/people_red.svg"
+            }
+        },
+        "parent": {
+            "type": "page_id",
+            "page_id": "5ac149b9-d8f1-4d8d-ac05-facefc16ebf7"
+        },
+        "archived": false,
+        "properties": {
+            "title": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "Page for Page Parent Resolve Testing",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "Page for Page Parent Resolve Testing",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "url": "https:\/\/www.notion.so\/Page-for-Page-Parent-Resolve-Testing-a652fac351cc4cc79f5b17eb702793ed",
+        "public_url": null
+    }
+}
