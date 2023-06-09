@@ -1,7 +1,6 @@
 <?php
 
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
-use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use Illuminate\Support\Facades\Http;
 
 $httpRecorder = null;
@@ -49,7 +48,7 @@ it('should resolve the page parent of a page', function () {
     expect($parentPage->getTitle())->toBe('Resolve Endpoint - Testing Suite');
 });
 
-it('should resolve the database parent of a page', function(){
+it('should resolve the database parent of a page', function () {
     $page = Notion::pages()->find('415d9b6c6e454f42aab2b6e13804cfe9');
 
     $database = Notion::resolve()->parent($page->getParent());
@@ -58,7 +57,7 @@ it('should resolve the database parent of a page', function(){
     expect($database->getTitle())->toBe('Test Table as Parent');
 });
 
-it('should resolve the block parent of a block', function(){
+it('should resolve the block parent of a block', function () {
     $block = Notion::block('d5f9419b44204c909501b1e2b7569503')->retrieve();
 
     $parentBlock = Notion::resolve()->parent($block->getParent());
@@ -67,7 +66,7 @@ it('should resolve the block parent of a block', function(){
     expect($parentBlock->getType())->toBe('paragraph');
 });
 
-it('should resolve the page parent of a block', function(){
+it('should resolve the page parent of a block', function () {
     $block = Notion::block('0971ac1a-b6f2-4acc-b706-f5f2ed16ffd6')->retrieve();
 
     $pageParent = Notion::resolve()->parent($block->getParent());
@@ -76,11 +75,11 @@ it('should resolve the page parent of a block', function(){
     expect($pageParent->getTitle())->toBe('Page for Block Parent Resolve Testing');
 });
 
-it('should throw a handling exception when unknown parent type', function(){
-    expect(fn() => new NotionParent(['object' => 'unknown', 'id' => '1234']))->toThrow('invalid json-array: the given object is not a valid parent');
+it('should throw a handling exception when unknown parent type', function () {
+    expect(fn () => new NotionParent(['object' => 'unknown', 'id' => '1234']))->toThrow('invalid json-array: the given object is not a valid parent');
 });
 
-it('should resolve the pages of a database relation', function(){
+it('should resolve the pages of a database relation', function () {
     $page = Notion::pages()->find('1c56e2ad3d95458c935dae6d57769037');
 
     $relationPropertyItems = $page->getProperty('Parent Relation Database');
