@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -41,7 +40,6 @@ class HttpRecorder
 
     private $requestNames = [];
 
-    
     public function storeIn($directory)
     {
         $this->snapshotDirectory = $directory;
@@ -82,7 +80,7 @@ class HttpRecorder
         // filter out Notion API Token Header
         $header = Arr::except($header, ['Authorization']);
 
-        if ($forceRecording || !File::exists($filePath)) {
+        if ($forceRecording || ! File::exists($filePath)) {
             File::makeDirectory($directoryPath, 0744, true, true);
 
             $client = new Client();
