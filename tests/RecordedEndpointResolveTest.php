@@ -1,6 +1,8 @@
 <?php
 
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
+use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Facades\Http;
 
 $httpRecorder = null;
@@ -73,10 +75,20 @@ it('should resolve the page parent of a block', function () {
     expect($pageParent)->toBeInstanceOf(\FiveamCode\LaravelNotionApi\Entities\Page::class);
     expect($pageParent->getId())->toBe('d946d011-966d-4b14-973f-dc5580f5b024');
     expect($pageParent->getTitle())->toBe('Page for Block Parent Resolve Testing');
+
+    $pageParent = Notion::resolve()->parentOf($block);
+    expect($pageParent)->toBeInstanceOf(\FiveamCode\LaravelNotionApi\Entities\Page::class);
+    expect($pageParent->getId())->toBe('d946d011-966d-4b14-973f-dc5580f5b024');
+    expect($pageParent->getTitle())->toBe('Page for Block Parent Resolve Testing');
 });
 
 it('should throw a handling exception when unknown parent type', function () {
     expect(fn () => new NotionParent(['object' => 'unknown', 'id' => '1234']))->toThrow('invalid json-array: the given object is not a valid parent');
+});
+
+it('should throw a handling exception when entity without parent', function () {
+    $entityWithoutParent = new User(['object' => 'user', 'id' => '1234']);
+    expect(fn () => Notion::resolve()->parentOf($entityWithoutParent))->toThrow("The given entity 'user' does not have a parent.");
 });
 
 it('should resolve the pages of a database relation', function () {
@@ -91,3 +103,16 @@ it('should resolve the pages of a database relation', function () {
     expect($relationPages->first()->getId())->toBe('cfb10a19-30cc-43a9-8db0-04c43f8cf315');
     expect($relationPages->first()->getTitle())->toBe('test 1');
 });
+
+it('should resolve the page titles of a database relation', function () {
+    $page = Notion::pages()->find('1c56e2ad3d95458c935dae6d57769037');
+
+    $relationPropertyItems = $page->getProperty('Parent Relation Database');
+    $relationPageTitles = Notion::resolve()->relations($relationPropertyItems, true);
+
+    expect($relationPageTitles)->toBeInstanceOf(\Illuminate\Support\Collection::class);
+    expect($relationPageTitles->count())->toBe(3);
+    expect($relationPageTitles->first())->toBeString();
+    expect($relationPageTitles->first())->toBe('test 1');
+});
+
