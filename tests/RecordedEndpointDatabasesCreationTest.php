@@ -122,9 +122,9 @@ it('should create a new database with all available properties', function () {
 
     expect($databaseEntity->getProperty('Test Relation')->getRelation()[0])->toBe('375da18a-b01d-42d1-8e95-a9dc6a901db1');
 
-    expect($databaseEntity->getProperty('Test Rollup')->getContent()["rollup_property_name"])->toBe("Tag");
-    expect($databaseEntity->getProperty('Test Rollup')->getContent()["relation_property_name"])->toBe("Test Relation");
-    expect($databaseEntity->getProperty('Test Rollup')->getContent()["function"])->toBe("unique");
+    expect($databaseEntity->getProperty('Test Rollup')->getContent()['rollup_property_name'])->toBe('Tag');
+    expect($databaseEntity->getProperty('Test Rollup')->getContent()['relation_property_name'])->toBe('Test Relation');
+    expect($databaseEntity->getProperty('Test Rollup')->getContent()['function'])->toBe('unique');
 
     expect($databaseEntity->getProperty('Test Select')->getOptions())->toHaveCount(count($selectOptions));
     expect($databaseEntity->getProperty('Test Select')->getOptions()[0]->getName())->toEqual($selectOptions[0]['name']);
@@ -143,11 +143,10 @@ it('should create a new database with default title property', function () {
     $databaseEntity = Notion::databases()
         ->build()
         ->createInPage('0adbc2eb57e84569a700a70d537615be');
-    
+
     expect($databaseEntity->getProperties())->toHaveCount(1);
     expect($databaseEntity->getProperty('Name'))->toBeInstanceOf(Title::class);
 });
-
 
 it('should create a new database with emoji icon', function () {
     $this->httpRecorder->nameForNextRequest('only-title-properties');
@@ -156,7 +155,7 @@ it('should create a new database with emoji icon', function () {
         ->build()
         ->iconEmoji('👍')
         ->createInPage('0adbc2eb57e84569a700a70d537615be');
-    
+
     expect($databaseEntity->getProperties())->toHaveCount(1);
     expect($databaseEntity->getProperty('Name'))->toBeInstanceOf(Title::class);
     expect($databaseEntity->getIcon())->toBe('👍');
