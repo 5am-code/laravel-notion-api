@@ -44,13 +44,28 @@ it('should resolve the page parent of a page', function () {
     $page = Notion::pages()->find('a652fac351cc4cc79f5b17eb702793ed');
     $parentPage = Notion::resolve()->parent($page->getParent());
 
+    expect($page->getParent()->isPage())->toBeTrue();
+
     expect($parentPage)->toBeInstanceOf(\FiveamCode\LaravelNotionApi\Entities\Page::class);
     expect($parentPage->getId())->toBe('5ac149b9-d8f1-4d8d-ac05-facefc16ebf7');
     expect($parentPage->getTitle())->toBe('Resolve Endpoint - Testing Suite');
 });
 
+it('should return the workspace parent of a page without resolving it', function () {
+    $page = Notion::pages()->find('91f70932ee6347b59bc243e09b4cc9b0');
+    $parentWorkspace = Notion::resolve()->parent($page->getParent());
+
+    expect($page->getParent()->isWorkspace())->toBeTrue();
+    
+    expect($parentWorkspace)->toBeInstanceOf(NotionParent::class);
+    expect($parentWorkspace->getId())->toBe('1');
+    expect($parentWorkspace->getObjectType())->toBe('workspace');
+});
+
 it('should resolve the database parent of a page', function () {
     $page = Notion::pages()->find('415d9b6c6e454f42aab2b6e13804cfe9');
+
+    expect($page->getParent()->isDatabase())->toBeTrue();
 
     $database = Notion::resolve()->parent($page->getParent());
     expect($database)->toBeInstanceOf(\FiveamCode\LaravelNotionApi\Entities\Database::class);
@@ -60,6 +75,8 @@ it('should resolve the database parent of a page', function () {
 
 it('should resolve the block parent of a block', function () {
     $block = Notion::block('d5f9419b44204c909501b1e2b7569503')->retrieve();
+
+    expect($block->getParent()->isBlock())->toBeTrue();
 
     $parentBlock = Notion::resolve()->parent($block->getParent());
     expect($parentBlock)->toBeInstanceOf(\FiveamCode\LaravelNotionApi\Entities\Blocks\Block::class);
