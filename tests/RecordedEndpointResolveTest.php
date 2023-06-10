@@ -1,6 +1,5 @@
 <?php
 
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\NotionParent;
 use FiveamCode\LaravelNotionApi\Entities\User;
 use Illuminate\Support\Facades\Http;
@@ -115,4 +114,3 @@ it('should resolve the page titles of a database relation', function () {
     expect($relationPageTitles->first())->toBeString();
     expect($relationPageTitles->first())->toBe('test 1');
 });
-
