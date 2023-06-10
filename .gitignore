@@ -4,3 +4,4 @@ vendor
 coverage/
 .phpunit.cache/
 .env*
+coverage-report

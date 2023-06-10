@@ -70,7 +70,7 @@ class HttpRecorder
         $header = $request->headers();
         $method = Str::lower($request->method());
         $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
-        $payload = ($method === 'get') ? $urlInfo['query'] : $request->body();
+        $payload = ($method === 'get') ? ($urlInfo['query'] ?? null) : $request->body();
         $queryName = array_pop($this->requestNames) ?? hash('adler32', $payload);
 
         $fileName = "{$method}_{$name}_{$queryName}.json";
