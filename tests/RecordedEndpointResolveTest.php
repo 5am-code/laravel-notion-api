@@ -56,7 +56,7 @@ it('should return the workspace parent of a page without resolving it', function
     $parentWorkspace = Notion::resolve()->parent($page->getParent());
 
     expect($page->getParent()->isWorkspace())->toBeTrue();
-    
+
     expect($parentWorkspace)->toBeInstanceOf(NotionParent::class);
     expect($parentWorkspace->getId())->toBe('1');
     expect($parentWorkspace->getObjectType())->toBe('workspace');
