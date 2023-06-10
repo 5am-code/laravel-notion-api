@@ -65,6 +65,6 @@ class NotionParent extends Entity
      */
     public function isWorkspace(): bool
     {
-        return $this->getObjectType() === 'workspace_id';
+        return $this->getObjectType() === 'workspace';
     }
 }
