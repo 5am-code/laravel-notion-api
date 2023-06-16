@@ -157,7 +157,7 @@ class Property extends Entity
 
     /**
      * @param  string  $propertyKey
-     * @param $rawContent
+     * @param  $rawContent
      * @return Property
      *
      * @throws HandlingException
