@@ -10,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 class Url extends Property implements Modifiable
 {
     /**
-     * @param $url
+     * @param  $url
      * @return Url
      */
     public static function value(string $url): Url

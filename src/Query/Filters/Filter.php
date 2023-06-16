@@ -53,7 +53,7 @@ class Filter extends QueryHelper
      *
      * @param  string  $property
      * @param  string  $comparisonOperator
-     * @param $value
+     * @param  $value
      * @return Filter
      */
     public static function textFilter(string $property, string $comparisonOperator, string $value): Filter
@@ -160,8 +160,8 @@ class Filter extends QueryHelper
     /**
      * Checks if the given comparison operator is valid for the given filter type.
      *
-     * @param $filterType
-     * @param $operator
+     * @param  $filterType
+     * @param  $operator
      *
      * @throws HandlingException
      */
