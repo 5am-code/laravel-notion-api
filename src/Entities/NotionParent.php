@@ -25,7 +25,7 @@ class NotionParent extends Entity
             && $responseData['object'] !== 'workspace'
             && $responseData['object'] !== 'block_id'
         ) {
-            throw HandlingException::instance('invalid json-array: the given object is not a valid parent');
+            throw HandlingException::instance('Invalid JSON: The given object is not a valid parent');
         }
 
         $this->fillFromRaw();
