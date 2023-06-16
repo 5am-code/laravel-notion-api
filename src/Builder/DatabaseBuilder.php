@@ -21,7 +21,6 @@ class DatabaseBuilder
      */
     private Databases $databasesEndpoint;
 
-
     /**
      * DatabaseBuilder constructor.
      *

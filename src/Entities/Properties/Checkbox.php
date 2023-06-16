@@ -11,7 +11,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 class Checkbox extends Property implements Modifiable
 {
     /**
-     * @param $checked
+     * @param  $checked
      * @return Checkbox
      */
     public static function value(bool $checked): Checkbox

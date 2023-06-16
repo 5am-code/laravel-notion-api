@@ -10,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 class Email extends Property implements Modifiable
 {
     /**
-     * @param $email
+     * @param  $email
      * @return Email
      */
     public static function value(string $email): Email
