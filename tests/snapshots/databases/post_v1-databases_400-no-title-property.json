@@ -1,0 +1,47 @@
+{
+    "header": {
+        "Content-Length": [
+            "191"
+        ],
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Content-Type": [
+            "application\/json"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "post",
+    "status": 400,
+    "payload": {
+        "is_inline": false,
+        "parent": {
+            "type": "page_id",
+            "page_id": "0adbc2eb57e84569a700a70d537615be"
+        },
+        "title": [
+            {
+                "text": {
+                    "content": ""
+                }
+            }
+        ],
+        "properties": {
+            "Test Checkbox": {
+                "type": "checkbox",
+                "checkbox": []
+            }
+        }
+    },
+    "data": {
+        "object": "error",
+        "status": 400,
+        "code": "validation_error",
+        "message": "Title is not provided"
+    }
+}

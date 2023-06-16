@@ -7,12 +7,16 @@ use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 
+$httpRecorder = null;
+
 beforeEach(function () {
-    Http::recordAndFakeLater('https://api.notion.com/v1/comments*')
+    $this->httpRecorder = Http::recordAndFakeLater('https://api.notion.com/v1/comments*')
         ->storeIn('snapshots/comments');
 });
 
 it('should fetch list of comments with an accurate representation of attributes', function () {
+    $this->httpRecorder->nameForNextRequest('list-of-comments');
+
     $commentCollection = \Notion::comments()->ofBlock('cb588bcbcbdb4f2eac3db05446b8f5d9');
 
     $collection = $commentCollection->asCollection();
@@ -41,6 +45,7 @@ it('should fetch list of comments with an accurate representation of attributes'
 });
 
 it('should throw correct exception if block_id has not been found when listing comments', function () {
+    $this->httpRecorder->nameForNextRequest('comment-not-found');
     $this->expectException(NotionException::class);
     $this->expectExceptionMessage('Not Found');
     $this->expectExceptionCode(404);
