@@ -18,14 +18,16 @@ class NotionParent extends Entity
     protected function setResponseData(array $responseData): void
     {
         parent::setResponseData($responseData);
+
         if (
             $responseData['object'] !== 'page_id'
             && $responseData['object'] !== 'database_id'
-            && $responseData['object'] !== 'workspace_id'
+            && $responseData['object'] !== 'workspace'
             && $responseData['object'] !== 'block_id'
         ) {
             throw HandlingException::instance('invalid json-array: the given object is not a valid parent');
         }
+
         $this->fillFromRaw();
     }
 
@@ -63,6 +65,6 @@ class NotionParent extends Entity
      */
     public function isWorkspace(): bool
     {
-        return $this->getObjectType() === 'workspace_id';
+        return $this->getObjectType() === 'workspace';
     }
 }

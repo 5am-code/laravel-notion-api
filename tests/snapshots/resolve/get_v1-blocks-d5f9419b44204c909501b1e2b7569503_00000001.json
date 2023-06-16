@@ -1,0 +1,59 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "block",
+        "id": "d5f9419b-4420-4c90-9501-b1e2b7569503",
+        "parent": {
+            "type": "block_id",
+            "block_id": "0971ac1a-b6f2-4acc-b706-f5f2ed16ffd6"
+        },
+        "created_time": "2023-06-09T16:39:00.000Z",
+        "last_edited_time": "2023-06-09T16:39:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "has_children": false,
+        "archived": false,
+        "type": "paragraph",
+        "paragraph": {
+            "color": "default",
+            "text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "Of this child block",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "Of this child block",
+                    "href": null
+                }
+            ]
+        }
+    }
+}

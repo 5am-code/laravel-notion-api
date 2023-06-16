@@ -1,0 +1,69 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "page",
+        "id": "d946d011-966d-4b14-973f-dc5580f5b024",
+        "created_time": "2023-06-09T16:38:00.000Z",
+        "last_edited_time": "2023-06-09T16:39:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "cover": null,
+        "icon": {
+            "type": "external",
+            "external": {
+                "url": "https:\/\/www.notion.so\/icons\/traffic-cone_red.svg"
+            }
+        },
+        "parent": {
+            "type": "page_id",
+            "page_id": "5ac149b9-d8f1-4d8d-ac05-facefc16ebf7"
+        },
+        "archived": false,
+        "properties": {
+            "title": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "Page for Block Parent Resolve Testing",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "Page for Block Parent Resolve Testing",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "url": "https:\/\/www.notion.so\/Page-for-Block-Parent-Resolve-Testing-d946d011966d4b14973fdc5580f5b024",
+        "public_url": null
+    }
+}
