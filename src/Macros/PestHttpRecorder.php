@@ -34,11 +34,11 @@ class PestHttpRecorder
 
 class HttpRecorder
 {
-    private $snapshotDirectory = 'snapshots';
+    private string $snapshotDirectory = 'snapshots';
 
-    private $usePrettyJson = true;
+    private bool $usePrettyJson = true;
 
-    private $requestNames = [];
+    private array $requestNames = [];
 
     public function storeIn($directory)
     {

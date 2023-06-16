@@ -85,9 +85,8 @@ class Resolve extends Endpoint
                 return $this->notion->block($parent->getId())->retrieve();
             case 'workspace':
                 return $parent;
-                // throw new HandlingException('A Notion Workspace cannot be resolved by the Notion API.');
             default:
-                throw new HandlingException('Unknown parent type while resolving the notion parent');
+                throw new HandlingException('Unknown parent type while resolving the Notion parent');
         }
     }
 

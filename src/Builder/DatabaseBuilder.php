@@ -17,12 +17,19 @@ class DatabaseBuilder
     private array $payload;
 
     /**
+     * @var Databases
+     */
+    private Databases $databasesEndpoint;
+
+
+    /**
      * DatabaseBuilder constructor.
      *
      * @param  Databases  $databasesEndpoint
      */
-    public function __construct(private Databases $databasesEndpoint)
+    public function __construct(Databases $databasesEndpoint)
     {
+        $this->databasesEndpoint = $databasesEndpoint;
         $this->payload = [
             'is_inline' => false,
             'parent' => [],
@@ -43,7 +50,7 @@ class DatabaseBuilder
      * @param  string  $pageId
      * @return Database
      */
-    public function createInPage($pageId): Database
+    public function createInPage(string $pageId): Database
     {
         $this->payload['parent'] = [
             'type' => 'page_id',
@@ -219,7 +226,7 @@ class DatabaseBuilder
      * @param  array|null  $content
      * @return DatabaseBuilder
      */
-    public function addRaw(string $title, string $propertyType, array $content = null): DatabaseBuilder
+    public function addRaw(string $title, string $propertyType, ?array $content = null): DatabaseBuilder
     {
         $this->payload['properties'][$title] = [];
         $this->payload['properties'][$title][$propertyType] = $content ?? new \stdClass();
