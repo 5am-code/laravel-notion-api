@@ -82,7 +82,7 @@ it('should resolve the page parent of a block', function () {
 });
 
 it('should throw a handling exception when unknown parent type', function () {
-    expect(fn () => new NotionParent(['object' => 'unknown', 'id' => '1234']))->toThrow('invalid json-array: the given object is not a valid parent');
+    expect(fn () => new NotionParent(['object' => 'unknown', 'id' => '1234']))->toThrow('Invalid JSON: The given object is not a valid parent');
 });
 
 it('should throw a handling exception when entity without parent', function () {
