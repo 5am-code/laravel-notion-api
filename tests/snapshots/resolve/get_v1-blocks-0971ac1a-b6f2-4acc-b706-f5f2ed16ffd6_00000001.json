@@ -1,0 +1,59 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "block",
+        "id": "0971ac1a-b6f2-4acc-b706-f5f2ed16ffd6",
+        "parent": {
+            "type": "page_id",
+            "page_id": "d946d011-966d-4b14-973f-dc5580f5b024"
+        },
+        "created_time": "2023-06-09T16:38:00.000Z",
+        "last_edited_time": "2023-06-09T16:39:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
+        },
+        "has_children": true,
+        "archived": false,
+        "type": "paragraph",
+        "paragraph": {
+            "color": "default",
+            "text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "This is a parent block",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "This is a parent block",
+                    "href": null
+                }
+            ]
+        }
+    }
+}

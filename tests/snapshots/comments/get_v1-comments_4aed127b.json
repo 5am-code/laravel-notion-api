@@ -1,0 +1,22 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 404,
+    "payload": "block_id=cbf6b0af-6eaa-45ca-9715-9fa147ef6b17&page_size=100&",
+    "data": {
+        "object": "error",
+        "status": 404,
+        "code": "object_not_found",
+        "message": "Could not find block with ID: cbf6b0af-6eaa-45ca-9715-9fa147ef6b17. Make sure the relevant pages and databases are shared with your integration."
+    }
+}

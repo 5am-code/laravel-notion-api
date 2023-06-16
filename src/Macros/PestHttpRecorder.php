@@ -4,6 +4,7 @@ namespace FiveamCode\LaravelNotionApi\Macros;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -37,6 +38,8 @@ class HttpRecorder
 
     private $usePrettyJson = true;
 
+    private $requestNames = [];
+
     public function storeIn($directory)
     {
         $this->snapshotDirectory = $directory;
@@ -51,20 +54,31 @@ class HttpRecorder
         return $this;
     }
 
+    public function nameForNextRequest($name)
+    {
+        array_push($this->requestNames, $name);
+    }
+
     public function handle(Request $request)
     {
         $forceRecording = in_array('--force-recording', $_SERVER['argv']);
 
         $urlInfo = parse_url($request->url());
+        $payload = null;
 
         // create specific filename for storing snapshots
+        $header = $request->headers();
         $method = Str::lower($request->method());
         $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
-        $query = Str::slug(Str::replace('&', '_', Str::replace('=', '-', $urlInfo['query'])));
+        $payload = ($method === 'get') ? ($urlInfo['query'] ?? null) : $request->body();
+        $queryName = array_pop($this->requestNames) ?? hash('adler32', $payload);
 
-        $fileName = "{$method}_{$name}_{$query}.json";
+        $fileName = "{$method}_{$name}_{$queryName}.json";
         $directoryPath = "tests/{$this->snapshotDirectory}";
         $filePath = "{$directoryPath}/{$fileName}";
+
+        // filter out Notion API Token Header
+        $header = Arr::except($header, ['Authorization']);
 
         if ($forceRecording || ! File::exists($filePath)) {
             File::makeDirectory($directoryPath, 0744, true, true);
@@ -77,7 +91,10 @@ class HttpRecorder
             ]);
 
             $recordedResponse = [
+                'header' => $header,
+                'method' => $method,
                 'status' => $response->getStatusCode(),
+                'payload' => ($method === 'get') ? $payload : json_decode($payload, true),
                 'data' => json_decode($response->getBody()->getContents(), true),
             ];
 
