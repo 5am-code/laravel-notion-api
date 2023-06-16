@@ -63,10 +63,10 @@ class MakeNotionModel extends Command
             $propertyTitleMap .= "        '$propName' => '{$propertyInfo->getTitle()}',\n";
         }
 
-        $contents = "<?php
+        $contents = '<?php
 
 
-";
+';
         File::ensureDirectoryExists('app/NotionModels');
 
         File::put("app/NotionModels/$databaseName.php", $contents);

@@ -10,7 +10,7 @@ use FiveamCode\LaravelNotionApi\Entities\Contracts\Modifiable;
 class PhoneNumber extends Property implements Modifiable
 {
     /**
-     * @param $phoneNumber
+     * @param  $phoneNumber
      * @return PhoneNumber
      */
     public static function value(string $phoneNumber): PhoneNumber
