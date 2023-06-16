@@ -18,7 +18,7 @@ class Select extends Property implements Modifiable
     private Collection $options;
 
     /**
-     * @param $name
+     * @param  $name
      * @return Select
      */
     public static function value(string $name): Select

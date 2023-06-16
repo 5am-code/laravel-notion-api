@@ -186,8 +186,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $property
+     * @param  $propertyTitle
+     * @param  $property
      * @return Page
      */
     public function set(string $propertyKey, Property $property): Page
@@ -204,8 +204,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $number
+     * @param  $propertyTitle
+     * @param  $number
      * @return Page
      */
     public function setNumber(string $propertyTitle, float $number): Page
@@ -216,8 +216,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $text
+     * @param  $propertyTitle
+     * @param  $text
      * @return Page
      */
     public function setTitle(string $propertyTitle, string $text): Page
@@ -228,8 +228,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $text
+     * @param  $propertyTitle
+     * @param  $text
      * @return Page
      */
     public function setText(string $propertyTitle, string $text): Page
@@ -240,8 +240,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $name
+     * @param  $propertyTitle
+     * @param  $name
      * @return Page
      */
     public function setSelect(string $propertyTitle, string $name): Page
@@ -252,8 +252,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $url
+     * @param  $propertyTitle
+     * @param  $url
      * @return Page
      */
     public function setUrl(string $propertyTitle, string $url): Page
@@ -264,8 +264,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $phoneNumber
+     * @param  $propertyTitle
+     * @param  $phoneNumber
      * @return Page
      */
     public function setPhoneNumber(string $propertyTitle, string $phoneNumber): Page
@@ -276,8 +276,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $email
+     * @param  $propertyTitle
+     * @param  $email
      * @return Page
      */
     public function setEmail(string $propertyTitle, string $email): Page
@@ -288,8 +288,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $names
+     * @param  $propertyTitle
+     * @param  $names
      * @return Page
      */
     public function setMultiSelect(string $propertyTitle, array $names): Page
@@ -300,8 +300,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $checked
+     * @param  $propertyTitle
+     * @param  $checked
      * @return Page
      */
     public function setCheckbox(string $propertyTitle, bool $checked): Page
@@ -312,9 +312,9 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $start
-     * @param $end
+     * @param  $propertyTitle
+     * @param  $start
+     * @param  $end
      * @return Page
      */
     public function setDate(string $propertyTitle, DateTime $start, ?DateTime $end = null): Page
@@ -325,9 +325,9 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $start
-     * @param $end
+     * @param  $propertyTitle
+     * @param  $start
+     * @param  $end
      * @return Page
      */
     public function setDateTime(string $propertyTitle, DateTime $start, ?DateTime $end = null): Page
@@ -338,8 +338,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $relationIds
+     * @param  $propertyTitle
+     * @param  $relationIds
      * @return Page
      */
     public function setRelation(string $propertyTitle, array $relationIds): Page
@@ -350,8 +350,8 @@ class Page extends Entity
     }
 
     /**
-     * @param $propertyTitle
-     * @param $userIds
+     * @param  $propertyTitle
+     * @param  $userIds
      * @return Page
      */
     public function setPeople(string $propertyTitle, array $userIds): Page

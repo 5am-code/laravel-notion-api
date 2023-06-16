@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 class People extends Property implements Modifiable
 {
     /**
-     * @param $userIds
+     * @param  $userIds
      * @return People
      */
     public static function value(array $userIds): People

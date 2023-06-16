@@ -19,7 +19,7 @@ class MultiSelect extends Property implements Modifiable
     private Collection $options;
 
     /**
-     * @param $names
+     * @param  $names
      * @return MultiSelect
      */
     public static function value(array $names): MultiSelect

@@ -14,8 +14,8 @@ use Illuminate\Support\Arr;
 class Date extends Property implements Modifiable
 {
     /**
-     * @param $start
-     * @param $end
+     * @param  $start
+     * @param  $end
      * @return Date
      */
     public static function value(?DateTime $start, ?DateTime $end = null): Date
@@ -46,8 +46,8 @@ class Date extends Property implements Modifiable
     }
 
     /**
-     * @param $start
-     * @param $end
+     * @param  $start
+     * @param  $end
      * @return Date
      */
     public static function valueWithTime(?DateTime $start, ?DateTime $end = null): Date

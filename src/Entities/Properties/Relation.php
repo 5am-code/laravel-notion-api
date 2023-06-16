@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 class Relation extends Property implements Modifiable
 {
     /**
-     * @param $relationIds
+     * @param  $relationIds
      * @return Relation
      */
     public static function value(array $relationIds): Relation
