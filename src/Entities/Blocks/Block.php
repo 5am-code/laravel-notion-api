@@ -142,7 +142,7 @@ class Block extends Entity
     }
 
     /**
-     * @param $rawContent
+     * @param  $rawContent
      * @return Block
      *
      * @throws HandlingException
