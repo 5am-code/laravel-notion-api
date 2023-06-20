@@ -330,7 +330,7 @@ class EndpointBlocksTest extends NotionApiTest
      *
      * @dataProvider classProvider
      *
-     * @param $entityClass
+     * @param  $entityClass
      */
     public function it_throws_an_handling_exception_for_wrong_type($entityClass)
     {
