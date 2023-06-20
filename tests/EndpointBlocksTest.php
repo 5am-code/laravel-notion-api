@@ -13,6 +13,7 @@ use FiveamCode\LaravelNotionApi\Entities\Blocks\Image;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\NumberedListItem;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Paragraph;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Pdf;
+use FiveamCode\LaravelNotionApi\Entities\Blocks\Quote;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\ToDo;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Toggle;
 use FiveamCode\LaravelNotionApi\Entities\Blocks\Video;
@@ -100,7 +101,7 @@ class EndpointBlocksTest extends NotionApiTest
         $blockChildrenCollection = $blockChildren->asCollection();
         $this->assertContainsOnly(Block::class, $blockChildrenCollection);
         $this->assertIsIterable($blockChildrenCollection);
-        $this->assertCount(13, $blockChildrenCollection);
+        $this->assertCount(14, $blockChildrenCollection);
 
         // check paragraph
         $blockChild = $blockChildrenCollection[0];
@@ -201,6 +202,13 @@ class EndpointBlocksTest extends NotionApiTest
         $this->assertEquals('TestCaption', $blockChild->getCaption()->getPlainText());
         $this->assertEquals('external', $blockChild->getHostingType());
         $this->assertEquals('https://notion.so/testpdf.pdf', $blockChild->getUrl());
+
+        // check quote
+        $blockChild = $blockChildrenCollection[13];
+        $this->assertInstanceOf(Quote::class, $blockChild);
+        $this->assertEquals('quote', $blockChild->getType());
+        $this->assertFalse($blockChild->hasChildren());
+        $this->assertEquals('quote_block', $blockChild->getContent()->getPlainText());
     }
 
     /** @test */
@@ -251,6 +259,7 @@ class EndpointBlocksTest extends NotionApiTest
         $file = File::create('https://images.unsplash.com/photo-1593642533144-3d62aa4783ec?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb', 'Testcaption');
         $video = Video::create('https://www.w3schools.com/html/mov_bbb.mp4', 'TestCaption');
         $pdf = Pdf::create('https://notion.so/testpdf.pdf', 'TestCaption');
+        $quote = Quote::create('New TextBlock');
 
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($paragraph);
         $this->assertInstanceOf(Block::class, $parentBlock);
@@ -291,7 +300,10 @@ class EndpointBlocksTest extends NotionApiTest
         $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($pdf);
         $this->assertInstanceOf(Block::class, $parentBlock);
 
-        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle, $embed, $image, $video, $pdf]);
+        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append($quote);
+        $this->assertInstanceOf(Block::class, $parentBlock);
+
+        $parentBlock = Notion::block('1d719dd1-563b-4387-b74f-20da92b827fb')->append([$paragraph, $bulletedListItem, $headingOne, $headingTwo, $headingThree, $numberedListItem, $toDo, $toggle, $embed, $image, $video, $pdf, $quote]);
         $this->assertInstanceOf(Block::class, $parentBlock);
     }
 
@@ -309,6 +321,7 @@ class EndpointBlocksTest extends NotionApiTest
             [Paragraph::class],
             [ToDo::class],
             [Toggle::class],
+            [Quote::class],
         ];
     }
 
@@ -322,7 +335,7 @@ class EndpointBlocksTest extends NotionApiTest
     public function it_throws_an_handling_exception_for_wrong_type($entityClass)
     {
         $this->expectException(HandlingException::class);
-        $paragraph = $entityClass::create(new \stdClass());
+        $entityClass::create(new \stdClass());
     }
 
     /** @test */
