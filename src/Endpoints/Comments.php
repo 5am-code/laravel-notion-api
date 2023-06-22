@@ -38,14 +38,15 @@ class Comments extends Endpoint
     }
 
     /**
-     * Retrieve a list of comments
-     * url: https://api.notion.com/{version}/comments?block_id=* [get]
-     * notion-api-docs: https://developers.notion.com/reference/retrieve-a-comment.
+     * Retrieve a list of comments.
+     *
+     * @url https://api.notion.com/{version}/comments?block_id=* [get]
+     *
+     * @reference https://developers.notion.com/reference/retrieve-a-comment.
      *
      * @param  string  $blockId
      * @return CommentCollection
      *
-     * @throws HandlingException
      * @throws NotionException
      */
     public function ofBlock(string $blockId): CommentCollection
@@ -88,14 +89,15 @@ class Comments extends Endpoint
     }
 
     /**
-     * Create a comment
-     * url: https://api.notion.com/{version}/comments [post]
-     * notion-api-docs: https://developers.notion.com/reference/create-a-comment.
+     * Create a comment.
+     *
+     * @url https://api.notion.com/{version}/comments [post]
+     *
+     * @reference https://developers.notion.com/reference/create-a-comment.
      *
      * @param  CommentEntity  $comment
      * @return CommentEntity
      *
-     * @throws HandlingException
      * @throws NotionException
      */
     public function create($comment): CommentEntity

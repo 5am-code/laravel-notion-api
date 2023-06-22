@@ -253,6 +253,7 @@ class EndpointPagesTest extends NotionApiTest
         $this->assertInstanceOf(Email::class, $mailProp);
         $this->assertEquals($emailValue, $mailProp->getContent());
         $this->assertEquals($emailValue, $mailProp->getEmail());
+        $this->assertEquals($emailValue, $mailProp->asText());
         $mailContent = $mailProp->getRawContent();
         $this->assertArrayHasKey('email', $mailContent);
         $this->assertEquals($mailContent['email'], $emailValue);
@@ -279,6 +280,7 @@ class EndpointPagesTest extends NotionApiTest
         $numberProp = $page->getProperty($numberKey);
         $this->assertEquals($numberValue, $numberProp->getContent());
         $this->assertEquals($numberValue, $numberProp->getNumber());
+        $this->assertEquals($numberValue, $numberProp->asText());
         $numberContent = $numberProp->getRawContent();
         $this->assertArrayHasKey('number', $numberContent);
         $this->assertEquals($numberContent['number'], $numberValue);
@@ -306,6 +308,7 @@ class EndpointPagesTest extends NotionApiTest
         $phoneProp = $page->getProperty($phoneKey);
         $this->assertEquals($phoneValue, $phoneProp->getPhoneNumber());
         $this->assertEquals($phoneProp->getContent(), $phoneProp->getPhoneNumber());
+        $this->assertEquals($phoneProp->getContent(), $phoneProp->asText());
         $phoneContent = $phoneProp->getRawContent();
         $this->assertArrayHasKey('phone_number', $phoneContent);
         $this->assertEquals($phoneContent['phone_number'], $phoneValue);
@@ -335,6 +338,7 @@ class EndpointPagesTest extends NotionApiTest
         $textProp = $page->getProperty($textKey);
         $this->assertInstanceOf(RichText::class, $textProp->getContent());
         $this->assertEquals($textValue, $textProp->getContent()->getPlainText());
+        $this->assertEquals($textValue, $textProp->asText());
         $textContent = $textProp->getRawContent();
         $this->assertArrayHasKey('rich_text', $textContent);
         $this->assertCount(1, $textContent['rich_text']);
@@ -349,6 +353,7 @@ class EndpointPagesTest extends NotionApiTest
         $urlProp = $page->getProperty($urlKey);
         $this->assertEquals($urlValue, $urlProp->getUrl());
         $this->assertEquals($urlProp->getContent(), $urlProp->getUrl());
+        $this->assertEquals($urlProp->getContent(), $urlProp->asText());
         $urlContent = $urlProp->getRawContent();
         $this->assertArrayHasKey('url', $urlContent);
         $this->assertEquals($urlValue, $urlContent['url']);

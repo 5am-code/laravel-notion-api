@@ -17,7 +17,7 @@ class Title extends Property implements Modifiable
     protected string $plainText = '';
 
     /**
-     * @param $text
+     * @param  $text
      * @return Title
      */
     public static function value($text): Title

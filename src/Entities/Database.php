@@ -8,6 +8,7 @@ use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Traits\HasArchive;
 use FiveamCode\LaravelNotionApi\Traits\HasParent;
 use FiveamCode\LaravelNotionApi\Traits\HasTimestamps;
+use FiveamCode\LaravelNotionApi\Traits\HasTitle;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -16,12 +17,7 @@ use Illuminate\Support\Collection;
  */
 class Database extends Entity
 {
-    use HasTimestamps, HasArchive, HasParent;
-
-    /**
-     * @var string
-     */
-    protected string $title = '';
+    use HasTimestamps, HasArchive, HasParent, HasTitle;
 
     /**
      * @var string
@@ -52,11 +48,6 @@ class Database extends Entity
      * @var string
      */
     private string $url;
-
-    /**
-     * @var ?RichText
-     */
-    protected ?RichText $richTitle = null;
 
     /**
      * @var ?RichText
@@ -102,19 +93,10 @@ class Database extends Entity
         parent::fillEssentials();
         $this->fillIcon();
         $this->fillCover();
-        $this->fillTitle();
         $this->fillIsInline();
         $this->fillDescription();
         $this->fillProperties();
         $this->fillDatabaseUrl();
-    }
-
-    private function fillTitle(): void
-    {
-        if (Arr::exists($this->responseData, 'title') && is_array($this->responseData['title'])) {
-            $this->title = Arr::first($this->responseData['title'], null, ['plain_text' => ''])['plain_text'];
-            $this->richTitle = new RichText($this->responseData['title']);
-        }
     }
 
     private function fillIsInline(): void
@@ -191,14 +173,6 @@ class Database extends Entity
         }
 
         return $this->propertyMap[$propertyKey];
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     /**

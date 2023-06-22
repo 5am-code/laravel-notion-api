@@ -98,7 +98,7 @@ class Database extends Endpoint
     }
 
     /**
-     * @param $filter
+     * @param  $filter
      * @return Database $this
      *
      * @throws HandlingException

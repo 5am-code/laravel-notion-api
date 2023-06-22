@@ -11,6 +11,27 @@ use Illuminate\Support\Arr;
  */
 class Property extends Entity
 {
+    const TITLE = 'title';
+    const RICH_TEXT = 'rich_text';
+    const NUMBER = 'number';
+    const STATUS = 'status';
+    const SELECT = 'select';
+    const MULTI_SELECT = 'multi_select';
+    const DATE = 'date';
+    const PEOPLE = 'people';
+    const FILES = 'files';
+    const CHECKBOX = 'checkbox';
+    const URL = 'url';
+    const EMAIL = 'email';
+    const PHONE_NUMBER = 'phone_number';
+    const FORMULA = 'formula';
+    const RELATION = 'relation';
+    const ROLLUP = 'rollup';
+    const CREATED_TIME = 'created_time';
+    const CREATED_BY = 'created_by';
+    const LAST_EDITED_TIME = 'last_edited_time';
+    const LAST_EDITED_BY = 'last_edited_by';
+
     /**
      * @var string
      */
@@ -115,6 +136,10 @@ class Property extends Entity
             return '';
         }
 
+        if (is_scalar($this->content)) {
+            return $this->content;
+        }
+
         return json_encode($this->content);
     }
 
@@ -136,7 +161,7 @@ class Property extends Entity
 
     /**
      * @param  string  $propertyKey
-     * @param $rawContent
+     * @param  $rawContent
      * @return Property
      *
      * @throws HandlingException

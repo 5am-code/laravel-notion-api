@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi\Traits;
 
+use FiveamCode\LaravelNotionApi\Entities\NotionParent;
 use Illuminate\Support\Arr;
 
 /**
@@ -53,5 +54,16 @@ trait HasParent
     public function getParentType(): string
     {
         return $this->parentType;
+    }
+
+    /**
+     * @return NotionParent
+     */
+    public function getParent()
+    {
+        return new NotionParent([
+            'id' => $this->getParentId(),
+            'object' => $this->getParentType(),
+        ]);
     }
 }

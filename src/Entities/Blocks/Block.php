@@ -142,7 +142,7 @@ class Block extends Entity
     }
 
     /**
-     * @param $rawContent
+     * @param  $rawContent
      * @return Block
      *
      * @throws HandlingException
@@ -175,6 +175,7 @@ class Block extends Entity
             case 'video':
             case 'file':
             case 'pdf':
+            case 'quote':
                 $class = str_replace('_', '', ucwords($type, '_'));
 
                 return 'FiveamCode\\LaravelNotionApi\\Entities\\Blocks\\'.$class;

@@ -72,7 +72,7 @@ class SelectItem extends Entity
     }
 
     /**
-     * @param $color
+     * @param  $color
      */
     public function setColor($color): void
     {
@@ -80,7 +80,7 @@ class SelectItem extends Entity
     }
 
     /**
-     * @param $name
+     * @param  $name
      */
     public function setName($name): void
     {
