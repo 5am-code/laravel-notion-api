@@ -238,7 +238,7 @@ class Notion
      */
     public function checkValidVersion(string $version): void
     {
-        if (!$this->validVersions->contains($version)) {
+        if (! $this->validVersions->contains($version)) {
             throw HandlingException::instance('Invalid version for Notion-API endpoint', ['invalidVersion' => $version]);
         }
     }

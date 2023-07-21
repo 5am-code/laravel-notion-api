@@ -14,7 +14,7 @@ class PestHttpRecorder
     public static function register()
     {
         Http::macro('recordAndFakeLater', function (array|string $urls = ['*']) {
-            if (!is_array($urls)) {
+            if (! is_array($urls)) {
                 $urls = [$urls];
             }
 
@@ -73,7 +73,9 @@ class HttpRecorder
         $payload = ($method === 'get') ? ($urlInfo['query'] ?? null) : $request->body();
         $queryName = array_pop($this->requestNames) ?? ($payload ? hash('adler32', $payload) : '');
 
-        if ($queryName != '') $queryName = '_' . $queryName;
+        if ($queryName != '') {
+            $queryName = '_'.$queryName;
+        }
 
         $fileName = "{$method}_{$name}{$queryName}.json";
         $directoryPath = "tests/{$this->snapshotDirectory}";
@@ -82,7 +84,7 @@ class HttpRecorder
         // filter out Notion API Token Header
         $header = Arr::except($header, ['Authorization']);
 
-        if ($forceRecording || !File::exists($filePath)) {
+        if ($forceRecording || ! File::exists($filePath)) {
             File::makeDirectory($directoryPath, 0744, true, true);
 
             $client = new Client();
