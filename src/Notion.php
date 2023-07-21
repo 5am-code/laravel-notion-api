@@ -7,6 +7,7 @@ use FiveamCode\LaravelNotionApi\Endpoints\Comments;
 use FiveamCode\LaravelNotionApi\Endpoints\Database;
 use FiveamCode\LaravelNotionApi\Endpoints\Databases;
 use FiveamCode\LaravelNotionApi\Endpoints\Endpoint;
+use FiveamCode\LaravelNotionApi\Endpoints\Page;
 use FiveamCode\LaravelNotionApi\Endpoints\Pages;
 use FiveamCode\LaravelNotionApi\Endpoints\Resolve;
 use FiveamCode\LaravelNotionApi\Endpoints\Search;
@@ -153,6 +154,16 @@ class Notion
     }
 
     /**
+     * @return Page
+     *
+     * @throws HandlingException
+     */
+    public function page(string $pageId): Page
+    {
+        return new Page($this, $pageId);
+    }
+
+    /**
      * @param  string  $blockId
      * @return Block
      *
@@ -227,7 +238,7 @@ class Notion
      */
     public function checkValidVersion(string $version): void
     {
-        if (! $this->validVersions->contains($version)) {
+        if (!$this->validVersions->contains($version)) {
             throw HandlingException::instance('Invalid version for Notion-API endpoint', ['invalidVersion' => $version]);
         }
     }

@@ -166,7 +166,7 @@ class Property extends Entity
      *
      * @throws HandlingException
      */
-    public static function fromResponse(string $propertyKey, $rawContent): Property
+    public static function fromResponse(?string $propertyKey, $rawContent): Property
     {
         $propertyClass = self::mapTypeToClass($rawContent['type']);
         $property = new $propertyClass($propertyKey);
