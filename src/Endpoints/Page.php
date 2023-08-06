@@ -12,7 +12,6 @@ use FiveamCode\LaravelNotionApi\Notion;
  */
 class Page extends Endpoint
 {
-
     /**
      * @var ?string
      */
@@ -25,12 +24,12 @@ class Page extends Endpoint
     }
 
     /**
-     * Retrieve a page property item
-     * 
+     * Retrieve a page property item.
+     *
      * @url https://api.notion.com/{version}/pages/{page_id}/properties/{property_id} [get]
      *
      * @reference https://developers.notion.com/reference/retrieve-a-page-property.
-     * 
+     *
      * @param  string  $propertyId
      * @return Page
      *
@@ -40,7 +39,7 @@ class Page extends Endpoint
     public function property(string $propertyId): Property
     {
         $response = $this->get(
-            $this->url(Endpoint::PAGES . '/' . $this->pageId . '/' . 'properties' . '/' . urlencode($propertyId))
+            $this->url(Endpoint::PAGES.'/'.$this->pageId.'/'.'properties'.'/'.urlencode($propertyId))
         );
 
         return Property::fromResponse(

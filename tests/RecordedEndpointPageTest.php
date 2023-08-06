@@ -1,11 +1,6 @@
 <?php
 
-use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
-use FiveamCode\LaravelNotionApi\Entities\Comment;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
-use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 
 $httpRecorder = null;
@@ -18,7 +13,6 @@ beforeEach(function () {
 });
 
 it('should fetch specific property items of a page', function () {
-
     $this->httpRecorder->nameForNextRequest('database-for-properties');
     $databaseStructure = \Notion::databases()->find('cdd4befe814144f7b1eecb9c123bd4fb');
 
@@ -26,8 +20,9 @@ it('should fetch specific property items of a page', function () {
 
     foreach ($propertyKeys as $propertyKey) {
         try {
-
-            if ($propertyKey == 'Rollup' || $propertyKey == 'Person' || $propertyKey == 'Name') continue;
+            if ($propertyKey == 'Rollup' || $propertyKey == 'Person' || $propertyKey == 'Name') {
+                continue;
+            }
             $id = $databaseStructure->getProperty($propertyKey)->getId();
             $property = \Notion::page('f1884dca3885460e93f52bf4da7cce8e')->property($id);
 
