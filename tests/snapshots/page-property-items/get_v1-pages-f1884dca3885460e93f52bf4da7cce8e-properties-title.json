@@ -1,0 +1,46 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "list",
+        "results": [
+            {
+                "object": "property_item",
+                "type": "title",
+                "id": "title",
+                "title": {
+                    "type": "text",
+                    "text": {
+                        "content": "Testpage",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "Testpage",
+                    "href": null
+                }
+            }
+        ],
+        "next_cursor": null,
+        "has_more": false,
+        "request_id": "bff15ba9-7c9c-4f90-984b-42791c5a76cb"
+    }
+}

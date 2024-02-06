@@ -1,0 +1,22 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "property_item",
+        "type": "email",
+        "id": "%5CqH%60",
+        "email": "test@test.de"
+    }
+}

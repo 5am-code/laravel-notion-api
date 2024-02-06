@@ -71,9 +71,13 @@ class HttpRecorder
         $method = Str::lower($request->method());
         $name = Str::slug(Str::replace('/', '-', $urlInfo['path']));
         $payload = ($method === 'get') ? ($urlInfo['query'] ?? null) : $request->body();
-        $queryName = array_pop($this->requestNames) ?? hash('adler32', $payload);
+        $queryName = array_pop($this->requestNames) ?? ($payload ? hash('adler32', $payload) : '');
 
-        $fileName = "{$method}_{$name}_{$queryName}.json";
+        if ($queryName != '') {
+            $queryName = '_'.$queryName;
+        }
+
+        $fileName = "{$method}_{$name}{$queryName}.json";
         $directoryPath = "tests/{$this->snapshotDirectory}";
         $filePath = "{$directoryPath}/{$fileName}";
 

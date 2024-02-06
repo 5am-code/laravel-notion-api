@@ -75,7 +75,21 @@ class Property extends Entity
     protected function setResponseData(array $responseData): void
     {
         if (! Arr::exists($responseData, 'id')) {
-            throw HandlingException::instance('invalid json-array: no id provided');
+            throw HandlingException::instance('invalid json-array for property: no id provided');
+        }
+        $this->responseData = $responseData;
+        $this->fillFromRaw();
+    }
+
+    /**
+     * @param  array  $responseData
+     *
+     * @throws HandlingException
+     */
+    protected function setObjectResponseData(array $responseData): void
+    {
+        if (! Arr::exists($responseData, 'object') || ! Arr::exists($responseData, 'id')) {
+            throw HandlingException::instance('invalid json-array for property: no object or id provided');
         }
         $this->responseData = $responseData;
         $this->fillFromRaw();
@@ -90,9 +104,7 @@ class Property extends Entity
 
     private function fillType(): void
     {
-        if (Arr::exists($this->responseData, 'type')) {
-            $this->type = $this->responseData['type'];
-        }
+        $this->type = self::extractType($this->responseData);
     }
 
     private function fillContent(): void
@@ -100,6 +112,15 @@ class Property extends Entity
         if (Arr::exists($this->responseData, $this->getType())) {
             $this->rawContent = $this->responseData[$this->getType()];
             $this->content = $this->rawContent;
+
+            return;
+        }
+
+        if (Arr::exists($this->responseData, 'object') && Arr::exists($this->responseData, $this->getObjectType())) {
+            $this->rawContent = $this->responseData[$this->getObjectType()];
+            $this->content = $this->rawContent;
+
+            return;
         }
     }
 
@@ -166,7 +187,7 @@ class Property extends Entity
      *
      * @throws HandlingException
      */
-    public static function fromResponse(string $propertyKey, $rawContent): Property
+    public static function fromResponse(?string $propertyKey, array $rawContent): Property
     {
         $propertyClass = self::mapTypeToClass($rawContent['type']);
         $property = new $propertyClass($propertyKey);
@@ -174,6 +195,46 @@ class Property extends Entity
         $property->setResponseData($rawContent);
 
         return $property;
+    }
+
+    /**
+     * @param  string  $id
+     * @param  $rawContent
+     * @return Property
+     *
+     * @throws HandlingException
+     */
+    public static function fromObjectResponse(string $id, array $rawContent): Property|EntityCollection
+    {
+        $propertyClass = self::mapTypeToClass(self::extractType($rawContent));
+        $property = new $propertyClass();
+        $rawContent['id'] = $id;
+
+        $property->setObjectResponseData($rawContent);
+
+        return $property;
+    }
+
+    // private static function
+
+    public static function extractType(array $rawContent)
+    {
+        if (Arr::exists($rawContent, 'type')) {
+            return $rawContent['type'];
+        }
+
+        if (
+            Arr::exists($rawContent, 'object')
+            && $rawContent['object'] == 'list'
+            && Arr::exists($rawContent, 'results')
+            && is_array($rawContent['results'])
+            && count($rawContent['results']) > 0
+            && Arr::exists($rawContent['results'][0], 'type')
+        ) {
+            return $rawContent['results'][0]['type'];
+        }
+
+        return null;
     }
 
     /**
