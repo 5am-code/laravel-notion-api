@@ -6,8 +6,6 @@ use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Comment;
 use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
-use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
-use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
 use Illuminate\Support\Facades\Http;
 
 $httpRecorder = null;
@@ -20,7 +18,6 @@ beforeEach(function () {
 });
 
 it('should fetch specific property items of a page', function () {
-
     $this->httpRecorder->nameForNextRequest('database-for-properties');
     $databaseStructure = \Notion::databases()->find('cdd4befe814144f7b1eecb9c123bd4fb');
 

@@ -14,7 +14,6 @@ use FiveamCode\LaravelNotionApi\Notion;
  */
 class Page extends Endpoint
 {
-
     /**
      * @var ?string
      */
@@ -27,12 +26,12 @@ class Page extends Endpoint
     }
 
     /**
-     * Retrieve a page property item
-     * 
+     * Retrieve a page property item.
+     *
      * @url https://api.notion.com/{version}/pages/{page_id}/properties/{property_id} [get]
      *
      * @reference https://developers.notion.com/reference/retrieve-a-page-property.
-     * 
+     *
      * @param  string  $propertyId
      * @return Page
      *
