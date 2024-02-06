@@ -41,17 +41,19 @@ class Page extends Endpoint
     public function property(string $propertyId): Property|EntityCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::PAGES . '/' . $this->pageId . '/' . 'properties' . '/' . rawurlencode(rawurldecode($propertyId)))
+            $this->url(Endpoint::PAGES.'/'.$this->pageId.'/'.'properties'.'/'.rawurlencode(rawurldecode($propertyId)))
         );
 
         $rawContent = $response->json();
 
-        if($rawContent['object'] === 'list'){
-            if(count($rawContent['results']) === 0) return new EntityCollection();
+        if ($rawContent['object'] === 'list') {
+            if (count($rawContent['results']) === 0) {
+                return new EntityCollection();
+            }
 
             $type = $rawContent['results'][0]['type'];
 
-            return match($type){
+            return match ($type) {
                 'people' => new UserCollection($rawContent),
                 default => new EntityCollection($rawContent)
             };
