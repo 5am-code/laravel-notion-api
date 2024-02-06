@@ -74,7 +74,7 @@ class Property extends Entity
      */
     protected function setResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'id')) {
+        if (! Arr::exists($responseData, 'id')) {
             throw HandlingException::instance('invalid json-array for property: no id provided');
         }
         $this->responseData = $responseData;
@@ -88,7 +88,7 @@ class Property extends Entity
      */
     protected function setObjectResponseData(array $responseData): void
     {
-        if (!Arr::exists($responseData, 'object') || !Arr::exists($responseData, 'id')) {
+        if (! Arr::exists($responseData, 'object') || ! Arr::exists($responseData, 'id')) {
             throw HandlingException::instance('invalid json-array for property: no object or id provided');
         }
         $this->responseData = $responseData;
@@ -112,12 +112,14 @@ class Property extends Entity
         if (Arr::exists($this->responseData, $this->getType())) {
             $this->rawContent = $this->responseData[$this->getType()];
             $this->content = $this->rawContent;
+
             return;
         }
 
         if (Arr::exists($this->responseData, 'object') && Arr::exists($this->responseData, $this->getObjectType())) {
             $this->rawContent = $this->responseData[$this->getObjectType()];
             $this->content = $this->rawContent;
+
             return;
         }
     }
@@ -264,7 +266,7 @@ class Property extends Entity
             case 'relation':
                 $class = str_replace('_', '', ucwords($type, '_'));
 
-                return 'FiveamCode\\LaravelNotionApi\\Entities\\Properties\\' . $class;
+                return 'FiveamCode\\LaravelNotionApi\\Entities\\Properties\\'.$class;
             case 'text':
             case 'rich_text':
                 // TODO: Depending on the Notion API version.

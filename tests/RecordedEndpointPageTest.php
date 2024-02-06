@@ -1,10 +1,6 @@
 <?php
 
-use Carbon\Carbon;
-use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
 use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
-use FiveamCode\LaravelNotionApi\Entities\Comment;
-use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use Illuminate\Support\Facades\Http;
 

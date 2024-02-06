@@ -14,9 +14,8 @@ class UserCollection extends EntityCollection
     {
         $this->collection = new Collection();
         foreach ($this->rawResults as $userChild) {
-
             //TODO: create a new type for 'people' (outer layer for user)
-            if($userChild['type'] === 'people') {
+            if ($userChild['type'] === 'people') {
                 $userChild = $userChild['people'];
             }
 
