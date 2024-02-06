@@ -2,6 +2,8 @@
 
 namespace FiveamCode\LaravelNotionApi\Endpoints;
 
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\UserCollection;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Exceptions\HandlingException;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
@@ -37,15 +39,28 @@ class Page extends Endpoint
      * @throws HandlingException
      * @throws NotionException
      */
-    public function property(string $propertyId): Property
+    public function property(string $propertyId): Property|EntityCollection
     {
         $response = $this->get(
-            $this->url(Endpoint::PAGES . '/' . $this->pageId . '/' . 'properties' . '/' . urlencode($propertyId))
+            $this->url(Endpoint::PAGES . '/' . $this->pageId . '/' . 'properties' . '/' . rawurlencode(rawurldecode($propertyId)))
         );
 
-        return Property::fromResponse(
-            propertyKey: null,
-            rawContent: $response->json()
+        $rawContent = $response->json();
+
+        if($rawContent['object'] === 'list'){
+            if(count($rawContent['results']) === 0) return new EntityCollection();
+
+            $type = $rawContent['results'][0]['type'];
+
+            return match($type){
+                'people' => new UserCollection($rawContent),
+                default => new EntityCollection($rawContent)
+            };
+        }
+
+        return Property::fromObjectResponse(
+            id: $propertyId,
+            rawContent: $rawContent
         );
     }
 }

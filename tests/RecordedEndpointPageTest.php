@@ -2,7 +2,9 @@
 
 use Carbon\Carbon;
 use FiveamCode\LaravelNotionApi\Entities\Collections\CommentCollection;
+use FiveamCode\LaravelNotionApi\Entities\Collections\EntityCollection;
 use FiveamCode\LaravelNotionApi\Entities\Comment;
+use FiveamCode\LaravelNotionApi\Entities\Entity;
 use FiveamCode\LaravelNotionApi\Entities\Properties\Property;
 use FiveamCode\LaravelNotionApi\Entities\PropertyItems\RichText;
 use FiveamCode\LaravelNotionApi\Exceptions\NotionException;
@@ -25,16 +27,13 @@ it('should fetch specific property items of a page', function () {
     $propertyKeys = $databaseStructure->getProperties()->map(fn ($o) => $o->getTitle());
 
     foreach ($propertyKeys as $propertyKey) {
-        try {
+        $id = $databaseStructure->getProperty($propertyKey)->getId();
+        $property = \Notion::page('f1884dca3885460e93f52bf4da7cce8e')->property($id);
 
-            if ($propertyKey == 'Rollup' || $propertyKey == 'Person' || $propertyKey == 'Name') continue;
-            $id = $databaseStructure->getProperty($propertyKey)->getId();
-            $property = \Notion::page('f1884dca3885460e93f52bf4da7cce8e')->property($id);
-
+        if ($propertyKey == 'Rollup' || $propertyKey == 'Person' || $propertyKey == 'Name') {
+            expect($property)->toBeInstanceOf(EntityCollection::class);
+        } else {
             expect($property)->toBeInstanceOf(Property::class);
-        } catch (\Exception $e) {
-            // dd($id);
-            dd($propertyKey, $e->getMessage());
         }
     }
 });
