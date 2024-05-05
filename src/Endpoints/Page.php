@@ -51,11 +51,18 @@ class Page extends Endpoint
                 return new EntityCollection();
             }
 
-            $type = $rawContent['results'][0]['type'];
+            $type = $rawContent['type'] ?? $rawContent['results'][0]['type'];
+
+            // if($type === 'rollup'){
+            //     dd($rawContent['type']);
+            // }
+            // if($)
+            // dd("HI");
 
             return match ($type) {
                 'people' => new UserCollection($rawContent),
-                default => new EntityCollection($rawContent)
+                // 'rollup' => new Collection
+                default => dd($rawContent) && new EntityCollection($rawContent)
             };
         }
 
