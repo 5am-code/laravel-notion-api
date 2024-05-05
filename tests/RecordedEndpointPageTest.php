@@ -24,14 +24,14 @@ it('should fetch specific property items of a page', function () {
 
     expect($propertyKeys)->toBeInstanceOf(\Illuminate\Support\Collection::class);
     expect($propertyKeys)->toHaveCount(16);
-    
+
     // dd($propertyKeys);
 
     foreach ($propertyKeys as $propertyKey) {
         $id = $databaseStructure->getProperty($propertyKey)->getId();
         $property = \Notion::page('f1884dca3885460e93f52bf4da7cce8e')->property($id);
 
-        match($propertyKey){
+        match ($propertyKey) {
             'Rollup' => dd($property->asCollection()) && expect($property->asCollection()->first())->toBeInstanceOf(Rollup::class),
             // default => throw new \Exception('Unknown property key')
             default => null
