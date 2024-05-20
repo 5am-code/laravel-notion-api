@@ -2,6 +2,7 @@
 
 namespace FiveamCode\LaravelNotionApi;
 
+use FiveamCode\LaravelNotionApi\Console\Commands\MakeNotionModel;
 use FiveamCode\LaravelNotionApi\Macros\PestHttpRecorder;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,10 @@ class LaravelNotionApiServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-notion-api.php'),
             ], 'config');
+
+            $this->commands([
+                MakeNotionModel::class,
+            ]);
         }
     }
 
