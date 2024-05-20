@@ -37,7 +37,7 @@ class People extends Property implements Modifiable
     {
         parent::fillFromRaw();
         if (! is_array($this->rawContent)) {
-            throw HandlingException::instance('The property-type is people, however the raw data-structure does not reprecent this type (= array of items). Please check the raw response-data.');
+            throw HandlingException::instance('The property-type is people, however the raw data-structure does not represent this type (= array of items). Please check the raw response-data.');
         }
 
         $this->content = new Collection();

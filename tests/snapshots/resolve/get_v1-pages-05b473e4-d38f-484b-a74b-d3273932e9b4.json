@@ -15,9 +15,9 @@
     "payload": null,
     "data": {
         "object": "page",
-        "id": "1c56e2ad-3d95-458c-935d-ae6d57769037",
+        "id": "05b473e4-d38f-484b-a74b-d3273932e9b4",
         "created_time": "2023-06-09T16:50:00.000Z",
-        "last_edited_time": "2023-06-09T16:52:00.000Z",
+        "last_edited_time": "2023-06-09T16:51:00.000Z",
         "created_by": {
             "object": "user",
             "id": "04536682-603a-4531-a18f-4fa89fdfb4a8"
@@ -30,22 +30,16 @@
         "icon": null,
         "parent": {
             "type": "database_id",
-            "database_id": "274ec07d-ae73-4f3a-a907-5f879ca0b6d7"
+            "database_id": "96f3b744-c9b5-48f2-849f-521aa7a83f27"
         },
         "archived": false,
         "properties": {
-            "Parent Relation Database": {
-                "id": "GyPD",
+            "Origin Relation Database ": {
+                "id": "RI]J",
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "cfb10a19-30cc-43a9-8db0-04c43f8cf315"
-                    },
-                    {
-                        "id": "e226b338-0118-461d-a9ed-09c9a6f1e4e2"
-                    },
-                    {
-                        "id": "05b473e4-d38f-484b-a74b-d3273932e9b4"
+                        "id": "1c56e2ad-3d95-458c-935d-ae6d57769037"
                     }
                 ],
                 "has_more": false
@@ -57,7 +51,7 @@
                     {
                         "type": "text",
                         "text": {
-                            "content": "Origin Relation Page",
+                            "content": "test 3",
                             "link": null
                         },
                         "annotations": {
@@ -68,13 +62,14 @@
                             "code": false,
                             "color": "default"
                         },
-                        "plain_text": "Origin Relation Page",
+                        "plain_text": "test 3",
                         "href": null
                     }
                 ]
             }
         },
-        "url": "https:\/\/www.notion.so\/Origin-Relation-Page-1c56e2ad3d95458c935dae6d57769037",
-        "public_url": null
+        "url": "https:\/\/www.notion.so\/test-3-05b473e4d38f484ba74bd3273932e9b4",
+        "public_url": null,
+        "request_id": "4f72d166-90f2-48fa-84a2-e90954ce3b07"
     }
 }

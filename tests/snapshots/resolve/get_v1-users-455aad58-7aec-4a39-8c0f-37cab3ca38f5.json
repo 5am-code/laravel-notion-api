@@ -1,0 +1,27 @@
+{
+    "header": {
+        "User-Agent": [
+            "GuzzleHttp\/7"
+        ],
+        "Host": [
+            "api.notion.com"
+        ],
+        "Notion-Version": [
+            "2021-05-13"
+        ]
+    },
+    "method": "get",
+    "status": 200,
+    "payload": null,
+    "data": {
+        "object": "user",
+        "id": "455aad58-7aec-4a39-8c0f-37cab3ca38f5",
+        "name": "TestUser for NotionForLaravel",
+        "avatar_url": null,
+        "type": "person",
+        "person": {
+            "email": "testuser@5amco.de"
+        },
+        "request_id": "0f768f61-2b53-46b7-a04a-32c3862edab3"
+    }
+}
