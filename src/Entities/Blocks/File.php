@@ -15,7 +15,7 @@ class File extends BaseFileBlock
         return $file;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'file';
         parent::__construct($responseData);

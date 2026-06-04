@@ -17,7 +17,7 @@ class HeadingOne extends TextBlock
         return $headingOne;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'heading_1';
         parent::__construct($responseData);

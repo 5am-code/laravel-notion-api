@@ -49,7 +49,7 @@ class EntityCollection
      * @throws HandlingException
      * @throws NotionException
      */
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->setResponseData($responseData);
     }

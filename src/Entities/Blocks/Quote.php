@@ -17,7 +17,7 @@ class Quote extends TextBlock
         return $quote;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'quote';
         parent::__construct($responseData);

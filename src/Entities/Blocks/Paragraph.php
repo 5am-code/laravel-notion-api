@@ -17,7 +17,7 @@ class Paragraph extends TextBlock
         return $paragraph;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'paragraph';
         parent::__construct($responseData);

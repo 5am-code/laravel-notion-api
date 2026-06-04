@@ -17,7 +17,7 @@ class BulletedListItem extends TextBlock
         return $bulletedListItem;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'bulleted_list_item';
         parent::__construct($responseData);

@@ -35,7 +35,7 @@ class Entity implements JsonSerializable
      * @throws HandlingException
      * @throws NotionException
      */
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         if ($responseData != null) {
             $this->setResponseData($responseData);

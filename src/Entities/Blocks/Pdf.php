@@ -15,7 +15,7 @@ class Pdf extends BaseFileBlock
         return $pdf;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'pdf';
         parent::__construct($responseData);

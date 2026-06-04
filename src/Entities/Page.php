@@ -88,7 +88,7 @@ class Page extends Entity
      * @throws HandlingException
      * @throws NotionException
      */
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->properties = new Collection();
         parent::__construct($responseData);

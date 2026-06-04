@@ -60,7 +60,7 @@ class Property extends Entity
      *
      * @throws HandlingException
      */
-    public function __construct(string $title = null)
+    public function __construct(?string $title = null)
     {
         if ($title !== null) {
             $this->title = $title;
