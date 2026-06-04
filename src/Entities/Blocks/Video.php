@@ -15,7 +15,7 @@ class Video extends BaseFileBlock
         return $video;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'video';
         parent::__construct($responseData);

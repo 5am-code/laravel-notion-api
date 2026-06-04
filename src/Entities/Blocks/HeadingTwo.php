@@ -17,7 +17,7 @@ class HeadingTwo extends TextBlock
         return $headingTwo;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'heading_2';
         parent::__construct($responseData);

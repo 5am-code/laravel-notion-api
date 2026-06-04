@@ -15,7 +15,7 @@ class Image extends BaseFileBlock
         return $image;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'image';
         parent::__construct($responseData);

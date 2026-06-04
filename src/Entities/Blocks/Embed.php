@@ -34,7 +34,7 @@ class Embed extends Block implements Modifiable
         return $embed;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'embed';
         parent::__construct($responseData);

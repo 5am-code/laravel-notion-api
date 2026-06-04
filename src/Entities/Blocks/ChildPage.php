@@ -7,7 +7,7 @@ namespace FiveamCode\LaravelNotionApi\Entities\Blocks;
  */
 class ChildPage extends Block
 {
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'child_page';
         parent::__construct($responseData);

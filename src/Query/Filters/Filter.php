@@ -34,9 +34,9 @@ class Filter extends QueryHelper
      */
     public function __construct(
         string $property,
-        string $filterType = null,
-        array $filterConditions = null,
-        array $filterDefinition = null
+        ?string $filterType = null,
+        ?array $filterConditions = null,
+        ?array $filterDefinition = null
     ) {
         parent::__construct();
 

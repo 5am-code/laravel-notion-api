@@ -17,7 +17,7 @@ class NumberedListItem extends TextBlock
         return $numberedListItem;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'numbered_list_item';
         parent::__construct($responseData);

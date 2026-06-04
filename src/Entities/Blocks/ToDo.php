@@ -17,7 +17,7 @@ class ToDo extends TextBlock
         return $toDo;
     }
 
-    public function __construct(array $responseData = null)
+    public function __construct(?array $responseData = null)
     {
         $this->type = 'to_do';
         parent::__construct($responseData);

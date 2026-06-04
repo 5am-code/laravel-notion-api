@@ -29,7 +29,7 @@ class Sorting extends QueryHelper
      *
      * @throws HandlingException
      */
-    public function __construct(string $direction, string $property = null, string $timestamp = null)
+    public function __construct(string $direction, ?string $property = null, ?string $timestamp = null)
     {
         parent::__construct();
 
