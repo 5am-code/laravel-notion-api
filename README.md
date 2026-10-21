@@ -23,7 +23,7 @@ find [here](https://dianawebdev.notion.site/8284f3ff77e24d4a939d19459e4d6bdc?v=b
 
 ## Installation
 
-The package is compatible with Laravel 8, 9 and 10. The minimum PHP requirement is 8.0.
+The package requires PHP `^8.0`. Its Composer constraint permits `illuminate/support` 8.x through 12.x; the checked-in CI matrix currently tests Laravel 8, 11, and 12, but not 9 or 10.
 
 1. Install the package via composer:
 
